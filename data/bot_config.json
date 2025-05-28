@@ -1,0 +1,33 @@
+{
+  "global_settings": {
+    "dm_invite_enabled": true,
+    "dm_invite_chance": 0.3,
+    "target_group": "@arayisonlyvips",
+    "spam_protection_enabled": true,
+    "anti_spam_cooldown_base": 30,
+    "anti_spam_cooldown_max": 300
+  },
+  "bot_specific": {
+    "test_bot": {
+      "dm_invite_enabled": false,
+      "spam_protection_enabled": true,
+      "reply_mode": "gpt",
+      "auto_menu_enabled": true,
+      "auto_menu_threshold": 3,
+      "vip_price": "500",
+      "special_restrictions": {},
+      "dm_invite_reason": "Test amaçlı devre dışı",
+      "spam_protection_type": "enhanced",
+      "max_messages_per_minute": 1
+    }
+  },
+  "default_bot_config": {
+    "dm_invite_enabled": true,
+    "spam_protection_enabled": true,
+    "reply_mode": "manualplus",
+    "auto_menu_enabled": true,
+    "auto_menu_threshold": 3,
+    "vip_price": "300",
+    "special_restrictions": {}
+  }
+}

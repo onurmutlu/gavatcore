@@ -1,0 +1,39 @@
+{
+  "_description": "GAVATCORE GPT Sistemi Konfigürasyonu",
+  "_last_updated": "2025-01-26",
+  "_note": "OpenAI API key .env dosyasından OPENAI_API_KEY olarak alınır",
+  
+  "model": "gpt-3.5-turbo",
+  "temperature": 0.8,
+  "max_tokens": 150,
+  "top_p": 0.9,
+  "frequency_penalty": 0.5,
+  "presence_penalty": 0.3,
+  "timeout": 10,
+  
+  "anti_spam_settings": {
+    "min_message_interval": 30,
+    "max_messages_per_hour": 10,
+    "context_cache_duration": 600
+  },
+  
+  "message_generation": {
+    "enable_flirt_generator": true,
+    "enable_mention_replies": true,
+    "enable_shadow_persona": false,
+    "enable_context_analysis": true
+  },
+  
+  "fallback_mode": {
+    "enabled": true,
+    "use_templates_when_api_fails": true,
+    "log_api_failures": true
+  },
+  
+  "quality_control": {
+    "min_message_length": 5,
+    "max_message_length": 300,
+    "similarity_threshold": 0.8,
+    "avoid_repetition": true
+  }
+} 

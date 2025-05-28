@@ -37,7 +37,8 @@ DEFAULT_USER_PROFILE = {
         "name": ""
     },
     "use_default_templates": True,
-    "_template": DEFAULT_USER_TEMPLATE
+    "_template": DEFAULT_USER_TEMPLATE,
+    "phone": ""   # <-- ŞOVCU/PRODUCER için EKLENDİ!
 }
 
 DEFAULT_BOT_PROFILE = {
@@ -54,15 +55,16 @@ DEFAULT_BOT_PROFILE = {
     "_template": DEFAULT_BOT_TEMPLATE
 }
 
-def generate_showcu_persona(username: str) -> dict:
+def generate_showcu_persona(username: str, phone: str = "") -> dict:
     """
-    Yeni bir şovcu için default profil döner.
+    Yeni bir içerik üretici/şovcu için default profil oluşturur.
     """
     return {
         "username": username,
         "display_name": username,
         "created_at": datetime.datetime.utcnow().isoformat(),
-        **DEFAULT_USER_PROFILE
+        "phone": phone,  # <-- Öncelik burada
+        **DEFAULT_USER_PROFILE,
     }
 
 def generate_bot_persona(username: str) -> dict:

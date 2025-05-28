@@ -1,0 +1,111 @@
+{
+  "_description": "GPT API başarısız olduğunda kullanılacak fallback şablonları",
+  "_last_updated": "2025-01-26",
+  
+  "flirty": [
+    "Selam canım! Nasılsın? 😘",
+    "Bugün çok güzelsin! 💕",
+    "Sohbet etmek ister misin? 😊",
+    "Keyifler nasıl? 🌸",
+    "Merhaba tatlım! 💋",
+    "Göz göze gelirsek ne yaparsın? 😉",
+    "Bugün özel bir şeyler söylemek ister misin? 💫",
+    "Seni düşünüyordum... 🦋",
+    "Flört etmeye ne dersin? 😘",
+    "Gözlerin çok güzel ✨"
+  ],
+  
+  "mention_reply": [
+    "Evet canım, buradayım! 😊",
+    "Beni çağırdın mı? 💕",
+    "Söyle bakalım! 😘",
+    "Dinliyorum seni! 🎧",
+    "Ne var ne yok? 😉",
+    "Nasıl yardım edebilirim? 🤗",
+    "Buradayım tatlım! 🌸",
+    "Evet? Söyle! 💋",
+    "Ne merak ediyorsun? 🤔",
+    "Hemen geliyorum! 🏃‍♀️"
+  ],
+  
+  "group_context": [
+    "Harika sohbet! 🎉",
+    "Çok eğlenceli! 😄",
+    "Devam edelim! 💪",
+    "Süper! 🌟",
+    "Mükemmel! ✨",
+    "Bu konuyu seviyorum! 💕",
+    "Çok güzel! 👏",
+    "Katılıyorum! 😊",
+    "Aynen öyle! 💯",
+    "Haklısın! 🎯"
+  ],
+  
+  "casual": [
+    "Merhaba! Nasılsınız? 😊",
+    "Keyifler nasıl? 💕",
+    "Selam! Ne var ne yok? 🌸",
+    "Bugün nasıl geçiyor? ☀️",
+    "Sohbet edelim mi? 💬",
+    "Kim aktif? 🙋‍♀️",
+    "Nasıl gidiyor? 😄",
+    "Her şey yolunda mı? 🤗",
+    "Güzel bir gün! 🌺",
+    "Enerjim tavan! ⚡"
+  ],
+  
+  "greeting": [
+    "Merhaba! 👋",
+    "Selam canım! 😊",
+    "Günaydın! ☀️",
+    "Hey! Nasılsın? 💕",
+    "İyi akşamlar! 🌙",
+    "Hoş geldin! 🤗",
+    "Selam tatlım! 🌸",
+    "Merhaba güzelim! 💋",
+    "Hey! Buradayım! 😘",
+    "Selam! Özlemişim! 💫"
+  ],
+  
+  "time_based": {
+    "morning": [
+      "Günaydın! Kahve içerken sizi düşünüyorum ☕",
+      "Sabah sabah keyifler nasıl? 🌅",
+      "Uyanır uyanmaz buraya geldim 😴",
+      "Günaydın canım! Bugün güzel geçecek 🌸",
+      "Sabah enerjisi! Kim hazır? ⚡"
+    ],
+    "midday": [
+      "Öğlen molası! Kim aktif? ☀️",
+      "Bugün çok güzel geçiyor 😄",
+      "Enerjim tavan! Sohbet edelim 💪",
+      "Öğlen keyfi başladı! 🎉",
+      "Güneşli bir gün! 🌟"
+    ],
+    "evening": [
+      "Akşam keyfi başladı 🌙",
+      "Gece daha güzel olacak gibi 💄",
+      "Romantik bir akşam için kim hazır? 💋",
+      "Akşam sohbeti en güzeli 🔥",
+      "Gece planları var mı? 😘"
+    ],
+    "late_night": [
+      "Gece kuşları burada mı? 🌃",
+      "Sessizlik çok seksi 😈",
+      "Gece sırları paylaşalım 🤫",
+      "Gece daha gizemli 💫",
+      "Uykusuzlar kulübü! 🦋"
+    ]
+  },
+  
+  "shadow_persona": [
+    "Nasılsınız? 😊",
+    "Keyifler nasıl?",
+    "Selam! Ne var ne yok?",
+    "Merhaba canım! 💕",
+    "Bugün çok güzelsin! 😘",
+    "Seni özledim 💋",
+    "Flört etmek ister misin? 😉",
+    "Gözlerin çok güzel ✨"
+  ]
+} 

@@ -1,0 +1,29 @@
+{
+  "username": "babagavat",
+  "profile_type": "spambot",
+  "is_spam_active": true,
+  "is_dm_active": true,
+  "is_group_active": true,
+  "engaging_messages": [
+    "Merhaba! Nasılsınız? 😊",
+    "Selam! Ne yapıyorsunuz? 👋",
+    "Hey! Keyifler nasıl? 🌟",
+    "Merhaba arkadaşlar! 💫",
+    "Selam canlar! Nasıl gidiyor? 🎉",
+    "Günaydın! Harika bir gün dilerim! ☀️",
+    "İyi akşamlar! Keyifli sohbetler! 🌙",
+    "Herkese selam! 🙋‍♂️",
+    "Merhaba güzel insanlar! 💝",
+    "Selamlar! Bugün nasıl geçiyor? 🌈"
+  ],
+  "response_style": "friendly",
+  "tone": "warm",
+  "topics": [
+    "genel",
+    "sohbet",
+    "günlük",
+    "sosyal"
+  ],
+  "created_at": "2025-05-27T19:55:41.895619",
+  "updated_at": "2025-05-27T19:55:41.895619"
+}

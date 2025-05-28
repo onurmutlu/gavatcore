@@ -1,0 +1,363 @@
+# Gavatcore Optimize Edilmiş Sistem Requirements
+# Performance ve veritabanı optimizasyonları için gerekli paketler
+
+# Core Telegram Bot Framework
+telethon==1.40.0
+aiogram==3.20.0
+
+# Async Database Drivers
+asyncpg==0.30.0          # PostgreSQL async driver
+aiosqlite==0.21.0        # SQLite async driver
+motor==3.7.1             # MongoDB async driver
+redis[hiredis]==6.1.0    # Redis with hiredis for performance
+
+# Database ORMs and Tools
+sqlalchemy[asyncio]==2.0.41
+alembic==1.14.0
+
+# HTTP Clients
+aiohttp==3.11.18
+httpx==0.28.1
+aiofiles==24.1.0
+
+# Performance Monitoring
+psutil==6.1.0            # System monitoring
+structlog==25.3.0        # Structured logging
+python-json-logger==3.3.0
+
+# Caching and Serialization
+pickle5==0.0.12          # Enhanced pickle (Python < 3.8)
+zstandard==0.23.0        # Fast compression
+lz4==4.3.3               # Ultra-fast compression
+
+# Data Processing
+pydantic==2.11.5         # Data validation
+attrs==25.3.0            # Class decorators
+typing-extensions==4.13.2
+
+# Async Utilities
+anyio==4.9.0
+sniffio==1.3.1
+
+# Configuration Management
+python-dotenv==1.1.0
+pyyaml==6.0.2
+
+# Security and Encryption
+cryptography==45.0.2
+pyjwt==2.10.1
+
+# Development and Testing
+pytest==8.3.5
+pytest-asyncio==0.25.0
+mypy==1.15.0
+black==24.10.0
+isort==5.13.2
+
+# Monitoring and Metrics
+prometheus-client==0.21.1
+grafana-api==1.0.3
+
+# Connection Pooling
+aiopg==1.4.0             # PostgreSQL connection pooling
+aiomysql==0.2.0          # MySQL connection pooling (optional)
+
+# Message Queue (optional)
+celery[redis]==5.4.0
+kombu==5.4.2
+
+# File Handling
+pathlib2==2.3.7
+filelock==3.18.0
+
+# JSON Processing
+orjson==3.10.12          # Fast JSON library
+ujson==5.10.0            # Ultra-fast JSON
+
+# Network Utilities
+dnspython==2.7.0
+certifi==2025.4.26
+
+# Time and Date
+python-dateutil==2.9.0
+pytz==2024.2
+
+# Memory Optimization
+pympler==0.9             # Memory profiling
+memory-profiler==0.61.0
+
+# Process Management
+supervisor==4.2.5        # Process management (optional)
+
+# Backup and Storage
+boto3==1.35.84           # AWS S3 (optional)
+azure-storage-blob==12.24.0  # Azure Blob (optional)
+
+# Performance Profiling
+py-spy==0.3.14           # Sampling profiler
+line-profiler==4.1.3    # Line-by-line profiler
+
+# Database Migration
+yoyo-migrations==8.2.0  # Database migrations
+
+# Configuration Validation
+cerberus==1.3.5
+jsonschema==4.23.0
+
+# Async Context Managers
+async-timeout==5.0.1
+asyncio-throttle==1.0.2
+
+# Rate Limiting
+aiolimiter==1.1.0
+slowapi==0.1.9
+
+# Distributed Computing (optional)
+dask[complete]==2024.12.1
+distributed==2024.12.1
+
+# Machine Learning (optional - for predictive caching)
+scikit-learn==1.6.0
+numpy==2.2.1
+pandas==2.2.3
+
+# Graph Database (optional)
+neo4j==5.27.0
+
+# Time Series Database (optional)
+influxdb-client==1.48.0
+
+# Message Serialization
+msgpack==1.1.0
+protobuf==5.29.2
+
+# Async File I/O
+aiofiles==24.1.0
+
+# WebSocket Support
+websockets==14.1
+
+# HTTP/2 Support
+h2==4.1.0
+
+# DNS Resolution
+aiodns==3.2.0
+
+# SSL/TLS
+pyopenssl==24.3.0
+
+# System Integration
+systemd-python==235     # Linux systemd integration (Linux only)
+
+# Backup Utilities
+python-redis-lock==4.0.0
+portalocker==3.1.1
+
+# Development Tools
+pre-commit==4.0.1
+bandit==1.8.0           # Security linting
+safety==3.2.11          # Dependency vulnerability checking
+
+# Documentation
+sphinx==8.1.3
+sphinx-rtd-theme==3.0.2
+
+# API Documentation
+fastapi==0.115.6        # Optional API server
+uvicorn==0.34.0         # ASGI server
+
+# Monitoring Dashboards
+dash==2.18.2            # Optional monitoring dashboard
+plotly==5.24.1
+
+# Container Support
+docker==7.1.0           # Docker API client
+
+# Cloud Native
+kubernetes==31.0.0      # Kubernetes client (optional)
+
+# Observability
+opentelemetry-api==1.29.0
+opentelemetry-sdk==1.29.0
+opentelemetry-instrumentation==0.50b0
+
+# Error Tracking
+sentry-sdk==2.19.2
+
+# Feature Flags
+flagsmith==3.9.0
+
+# Circuit Breaker
+pybreaker==1.2.0
+
+# Retry Logic
+tenacity==9.0.0
+
+# Load Balancing
+haproxy-stats==2.2.0    # HAProxy stats (optional)
+
+# Service Discovery
+consul-python==1.1.0    # Consul client (optional)
+etcd3==0.12.0           # etcd client (optional)
+
+# Message Brokers
+pika==1.3.2             # RabbitMQ client (optional)
+kafka-python==2.0.2     # Apache Kafka client (optional)
+
+# Distributed Tracing
+jaeger-client==4.8.0    # Jaeger tracing (optional)
+
+# Configuration Management
+consul-template==1.0.0  # Consul template (optional)
+vault-client==0.1.0     # HashiCorp Vault (optional)
+
+# Health Checks
+healthcheck==1.3.3
+
+# Graceful Shutdown
+graceful==0.1.1
+
+# Signal Handling
+python-signal==0.1.0
+
+# Process Utilities
+psutil==6.1.0
+
+# System Information
+distro==1.9.0
+
+# Platform Detection
+platform-info==1.0.0
+
+# Environment Detection
+python-environ==0.4.54
+
+# Resource Limits
+resource==0.2.1
+
+# Memory Management
+gc-utils==0.1.0
+
+# Thread Pool Management
+concurrent-futures==3.1.1
+
+# Async Pool Management
+aiopool==0.1.0
+
+# Connection Management
+connection-pool==0.0.3
+
+# Session Management
+aiohttp-session==2.12.0
+
+# Cookie Management
+aiohttp-cookies==0.1.0
+
+# CORS Support
+aiohttp-cors==0.7.0
+
+# Compression
+brotli==1.1.0
+gzip-stream==0.1.0
+
+# Encoding
+chardet==5.2.0
+charset-normalizer==3.4.2
+
+# URL Parsing
+yarl==1.20.0
+furl==2.1.3
+
+# Regular Expressions
+regex==2024.11.6
+
+# String Processing
+unidecode==1.3.8
+
+# Text Processing
+ftfy==6.3.1
+
+# Internationalization
+babel==2.16.0
+
+# Timezone Handling
+tzlocal==5.2
+
+# Data Structures
+sortedcontainers==2.4.0
+blist==1.3.6
+
+# Algorithms
+more-itertools==10.5.0
+
+# Functional Programming
+toolz==1.0.0
+funcy==2.0
+
+# Decorators
+decorator==5.1.1
+
+# Context Managers
+contextlib2==21.6.0
+
+# Async Generators
+async-generator==1.10
+
+# Async Iterators
+aioitertools==0.12.0
+
+# Event Loop Utilities
+uvloop==0.21.0          # Fast event loop (Unix only)
+
+# Performance Utilities
+cython==3.0.11          # C extensions
+numba==0.60.0           # JIT compilation (optional)
+
+# Native Extensions
+cffi==1.17.1
+
+# File System Monitoring
+watchdog==6.0.0
+
+# Directory Utilities
+pathtools==0.1.2
+
+# File Utilities
+send2trash==1.8.3
+
+# Archive Handling
+zipfile36==0.1.3
+
+# Checksum Utilities
+crc32c==2.7.1
+
+# Binary Data
+bitarray==3.0.0
+
+# Hashing
+xxhash==3.5.0
+
+# Text Processing
+ftfy==6.3.1
+
+# Internationalization
+babel==2.16.0
+
+# Timezone Handling
+tzlocal==5.2
+
+# Regular Expressions
+regex==2024.11.6
+
+# String Processing
+unidecode==1.3.8
+
+# URL Parsing
+furl==2.1.3
+
+# Compression
+brotli==1.1.0
+
+# Time and Date
+python-dateutil==2.9.0
+pytz==2024.2 

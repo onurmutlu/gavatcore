@@ -1,0 +1,86 @@
+{
+  "8098920008": {
+    "user_id": 8098920008,
+    "bot_username": "unknown_bot",
+    "demo_expired_at": "2025-05-26T13:56:59.046186",
+    "service_suspended": true,
+    "admin_notified": true,
+    "profile_data": {
+      "type": "bot",
+      "reply_mode": "manualplus",
+      "autospam": false
+    }
+  },
+  "5102913957": {
+    "user_id": 5102913957,
+    "bot_username": "unknown_bot",
+    "demo_expired_at": "2025-05-26T14:10:37.128057",
+    "service_suspended": true,
+    "admin_notified": true,
+    "profile_data": {
+      "type": "bot",
+      "reply_mode": "manualplus",
+      "autospam": false
+    }
+  },
+  "1126649147": {
+    "user_id": 1126649147,
+    "bot_username": "unknown_bot",
+    "demo_expired_at": "2025-05-26T14:29:42.887388",
+    "service_suspended": true,
+    "admin_notified": true,
+    "profile_data": {
+      "type": "bot",
+      "reply_mode": "manualplus",
+      "autospam": false
+    }
+  },
+  "6900254620": {
+    "user_id": 6900254620,
+    "bot_username": "unknown_bot",
+    "demo_expired_at": "2025-05-26T16:13:20.907628",
+    "service_suspended": true,
+    "admin_notified": true,
+    "profile_data": {
+      "type": "bot",
+      "reply_mode": "manualplus",
+      "autospam": false
+    }
+  },
+  "7921405889": {
+    "user_id": 7921405889,
+    "bot_username": "unknown_bot",
+    "demo_expired_at": "2025-05-26T17:16:25.500228",
+    "service_suspended": true,
+    "admin_notified": true,
+    "profile_data": {
+      "type": "bot",
+      "reply_mode": "manualplus",
+      "autospam": false
+    }
+  },
+  "5888690766": {
+    "user_id": 5888690766,
+    "bot_username": "unknown_bot",
+    "demo_expired_at": "2025-05-26T17:32:57.376107",
+    "service_suspended": true,
+    "admin_notified": true,
+    "profile_data": {
+      "type": "bot",
+      "reply_mode": "manualplus",
+      "autospam": false
+    }
+  },
+  "1307841742": {
+    "user_id": 1307841742,
+    "bot_username": "unknown_bot",
+    "demo_expired_at": "2025-05-26T18:35:27.122115",
+    "service_suspended": true,
+    "admin_notified": true,
+    "profile_data": {
+      "type": "bot",
+      "reply_mode": "manualplus",
+      "autospam": false
+    }
+  }
+}
