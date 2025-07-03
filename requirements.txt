@@ -1,0 +1,35 @@
+# Temel bağımlılıklar
+requests>=2.31.0
+python-telegram-bot>=20.7
+filelock>=3.13.1
+python-dotenv>=1.0.1
+telethon>=1.34.0
+
+# Loglama ve hata izleme
+python-json-logger>=2.0.7
+structlog>=24.1.0  # Yapılandırılmış loglama
+
+# Güvenlik
+pyjwt>=2.8.0
+cryptography>=41.0.0
+
+# Dosya işlemleri ve performans
+ijson>=3.2.3  # Büyük JSON dosyaları için streaming parser
+portalocker>=2.8.0  # Cross-platform dosya kilitleme
+zstandard>=0.22.0  # Yüksek performanslı sıkıştırma
+jsonschema>=4.21.1  # JSON şema doğrulama
+redis>=5.0.1  # Distributed locking için
+python-redis-lock>=4.0.0  # Redis tabanlı distributed lock
+pathlib>=1.0.1  # Path işlemleri için
+typing-extensions>=4.9.0  # Gelişmiş tip tanımlamaları
+
+# Tip kontrolü ve geliştirici araçları
+mypy>=1.8.0
+types-requests>=2.31.0
+types-redis>=4.6.0.20240106
+types-jsonschema>=4.21.0.20240118
+types-filelock>=3.2.7
+
+# Not: asyncio, threading, multiprocessing, json, shutil, tempfile, 
+# logging, time, datetime, os, typing gibi modüller Python'un 
+# standart kütüphanesinin parçasıdır. 

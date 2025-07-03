@@ -1,0 +1,86 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv
+env/
+venv/
+ENV/
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+
+# IDE ve Editör Dosyaları
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Proje Spesifik
+logs/*
+!logs/.gitkeep
+sessions/*
+!sessions/.gitkeep
+data/*
+!data/.gitkeep
+!data/personas/.gitkeep
+!data/templates/.gitkeep
+
+# Veritabanı ve Cache
+*.sqlite3
+*.db
+*.rdb
+redis-*.aof
+*.lock
+*.json.lock
+merged.json
+test_*.json
+
+# Dağıtım ve Paketleme
+dist/
+build/
+*.egg-info/
+*.egg
+MANIFEST
+
+# Dokümantasyon
+docs/_build/
+site/
+
+# Geçici Dosyalar
+*.log
+*.pot
+*.pid
+*.bak
+*.tmp
+*~
+.env.local
+.env.*.local
+
+# Sertifikalar ve Hassas Bilgiler
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.priv
+*.pub
+
+# Telegram Session Dosyaları
+*.session
+*.session-journal
+
+# Metrik ve Yedekleme Dosyaları
+metrics_*.csv
+metrics_*.jsonl
+backup_*.zip
+backup_*.tar.gz 
