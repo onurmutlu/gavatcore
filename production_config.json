@@ -1,0 +1,9 @@
+{
+  "environment": "production",
+  "debug": false,
+  "log_level": "INFO",
+  "api_host": "0.0.0.0",
+  "api_port": 8000,
+  "workers": 8,
+  "babagavat_mode": "sokak_zekasi_maksimum"
+}

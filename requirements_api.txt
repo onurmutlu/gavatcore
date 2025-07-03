@@ -1,0 +1,20 @@
+# 🚀 Production Bot Management API v6.0 Requirements 🚀
+# Flutter Admin Panel Backend Dependencies
+
+# Flask & API Framework
+Flask==2.3.3
+Flask-CORS==4.0.0
+
+# System & Process Management
+psutil==5.9.6
+
+# Utilities
+python-dotenv==1.0.0
+requests==2.31.0
+
+# Existing dependencies (from main project)
+telethon==1.30.3
+asyncio-throttle==1.0.2
+
+# Performance & Monitoring
+memory-profiler==0.61.0 

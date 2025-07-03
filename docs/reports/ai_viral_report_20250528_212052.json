@@ -1,0 +1,23 @@
+{
+  "total_invites_sent": 5,
+  "successful_joins": 0,
+  "spam_messages_sent": 8,
+  "dm_conversations": 0,
+  "conversion_rate": 0.0,
+  "daily_growth": [
+    {
+      "day": 1,
+      "invites_sent": 5,
+      "spam_messages": 8,
+      "timestamp": "2025-05-28T21:20:52.099041"
+    }
+  ],
+  "bot_performance": {
+    "ॱᴬᴰᴹॱ 𝐦𝐨𝐝Geisha™ | VIP⛓️": {
+      "spam_sent": 8,
+      "invites_sent": 5,
+      "dm_conversations": 0,
+      "start_time": 1748456452.072193
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "test_suite": "GavatBaba Test Suite",
+  "timestamp": "2025-05-29T04:57:52.489980",
+  "duration_seconds": 0.057405,
+  "summary": {
+    "total_tests": 10,
+    "passed": 9,
+    "failed": 1,
+    "errors": 0,
+    "success_rate": 90.0
+  },
+  "test_results": [
+    {
+      "test_name": "Database Tables",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T04:57:52.442536"
+    },
+    {
+      "test_name": "Spam Score Calculation",
+      "status": "FAIL",
+      "result": false,
+      "timestamp": "2025-05-29T04:57:52.443387"
+    },
+    {
+      "test_name": "Transaction Score Calculation",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T04:57:52.445745"
+    },
+    {
+      "test_name": "Engagement Score Calculation",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T04:57:52.446276"
+    },
+    {
+      "test_name": "Pattern Detection",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T04:57:52.446932"
+    },
+    {
+      "test_name": "Trust Score Updates",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T04:57:52.459024"
+    },
+    {
+      "test_name": "Female User Detection",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T04:57:52.459422"
+    },
+    {
+      "test_name": "Invite Candidate System",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T04:57:52.468508"
+    },
+    {
+      "test_name": "Message Analysis Flow",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T04:57:52.484600"
+    },
+    {
+      "test_name": "Admin Reports",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T04:57:52.489841"
+    }
+  ],
+  "status": "FAILED"
+}

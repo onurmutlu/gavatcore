@@ -1,0 +1,35 @@
+# Core Dependencies
+python-dotenv==1.0.1
+
+# Telegram
+Telethon==1.40.0
+
+# Async Database Drivers
+asyncpg==0.30.0          # PostgreSQL async driver
+motor==3.7.0             # MongoDB async driver
+redis[hiredis]==5.0.1    # Redis with async support
+
+# AI
+openai==1.59.7
+
+# Utilities
+structlog==24.4.0        # Structured logging
+cachetools==5.5.0        # Caching
+backoff==2.2.1           # Retry logic
+aiofiles==24.1.0         # Async file operations
+
+# Database Tools
+pymongo==4.10.1          # MongoDB Python driver (motor dependency)
+
+# Monitoring
+prometheus-client==0.21.5 # Metrics
+psutil==6.1.1            # System monitoring
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.25.2
+pytest-mock==3.14.0
+
+# Development
+ipython==8.31.0
+watchdog==6.0.0 

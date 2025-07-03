@@ -1,0 +1,369 @@
+{
+  "demo_report": {
+    "timestamp": "2025-05-29T06:05:07.448941",
+    "duration_seconds": 63.442336,
+    "demo_users_count": 7,
+    "demo_performers_count": 5,
+    "onur_metodu_status": "successfully_demonstrated"
+  },
+  "user_reports": [
+    {
+      "user_data": {
+        "user_id": 100001,
+        "username": "ahmet_whale",
+        "profile_type": "whale_user",
+        "description": "Balina kullanıcı - Çok yüksek harcama",
+        "initial_coins": 10000,
+        "spending_pattern": "high_volume",
+        "expected_segment": "ErkoSegment.WHALE"
+      },
+      "coin_stats": {
+        "balance": 0,
+        "total_earned": 0,
+        "total_spent": 0,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 0
+        },
+        "babagavat_status": "yeni_kullanici"
+      },
+      "erko_profile": {
+        "segment": "newbie",
+        "risk_level": "medium",
+        "babagavat_score": 0.4,
+        "street_smart_rating": 0.5,
+        "spending_pattern": {
+          "total_transactions": 0,
+          "spending_transactions": 0,
+          "earning_transactions": 0,
+          "average_spending": 0,
+          "max_single_spending": 0,
+          "spending_frequency": "low",
+          "preferred_times": [],
+          "babagavat_analysis": "normal"
+        },
+        "red_flags": [],
+        "green_flags": [],
+        "babagavat_notes": "🌱 BabaGAVAT: Yeni kullanıcı - Onboarding sürecini optimize et!"
+      },
+      "transaction_count": 0
+    },
+    {
+      "user_data": {
+        "user_id": 100002,
+        "username": "mehmet_vip",
+        "profile_type": "vip_user",
+        "description": "VIP kullanıcı - Premium müşteri",
+        "initial_coins": 2000,
+        "spending_pattern": "premium",
+        "expected_segment": "ErkoSegment.VIP"
+      },
+      "coin_stats": {
+        "balance": 0,
+        "total_earned": 0,
+        "total_spent": 0,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 0
+        },
+        "babagavat_status": "yeni_kullanici"
+      },
+      "erko_profile": {
+        "segment": "newbie",
+        "risk_level": "medium",
+        "babagavat_score": 0.4,
+        "street_smart_rating": 0.5,
+        "spending_pattern": {
+          "total_transactions": 0,
+          "spending_transactions": 0,
+          "earning_transactions": 0,
+          "average_spending": 0,
+          "max_single_spending": 0,
+          "spending_frequency": "low",
+          "preferred_times": [],
+          "babagavat_analysis": "normal"
+        },
+        "red_flags": [],
+        "green_flags": [],
+        "babagavat_notes": "🌱 BabaGAVAT: Yeni kullanıcı - Onboarding sürecini optimize et!"
+      },
+      "transaction_count": 0
+    },
+    {
+      "user_data": {
+        "user_id": 100003,
+        "username": "ali_hot",
+        "profile_type": "hot_user",
+        "description": "Aktif kullanıcı - Yüksek etkileşim",
+        "initial_coins": 500,
+        "spending_pattern": "active",
+        "expected_segment": "ErkoSegment.HOT"
+      },
+      "coin_stats": {
+        "balance": 0,
+        "total_earned": 0,
+        "total_spent": 0,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 0
+        },
+        "babagavat_status": "yeni_kullanici"
+      },
+      "erko_profile": {
+        "segment": "newbie",
+        "risk_level": "medium",
+        "babagavat_score": 0.4,
+        "street_smart_rating": 0.5,
+        "spending_pattern": {
+          "total_transactions": 0,
+          "spending_transactions": 0,
+          "earning_transactions": 0,
+          "average_spending": 0,
+          "max_single_spending": 0,
+          "spending_frequency": "low",
+          "preferred_times": [],
+          "babagavat_analysis": "normal"
+        },
+        "red_flags": [],
+        "green_flags": [],
+        "babagavat_notes": "🌱 BabaGAVAT: Yeni kullanıcı - Onboarding sürecini optimize et!"
+      },
+      "transaction_count": 0
+    },
+    {
+      "user_data": {
+        "user_id": 100004,
+        "username": "emre_cold",
+        "profile_type": "cold_user",
+        "description": "Soğuk kullanıcı - Düşük aktivite",
+        "initial_coins": 100,
+        "spending_pattern": "passive",
+        "expected_segment": "ErkoSegment.COLD"
+      },
+      "coin_stats": {
+        "balance": 85,
+        "total_earned": 100,
+        "total_spent": 15,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 15,
+          "last_reset": "2025-05-29"
+        },
+        "babagavat_status": "normal_kullanici"
+      },
+      "erko_profile": {
+        "segment": "newbie",
+        "risk_level": "medium",
+        "babagavat_score": 0.7,
+        "street_smart_rating": 0.7,
+        "spending_pattern": {
+          "total_transactions": 4,
+          "spending_transactions": 3,
+          "earning_transactions": 1,
+          "average_spending": 5.0,
+          "max_single_spending": 5,
+          "spending_frequency": "low",
+          "preferred_times": [
+            "03:00"
+          ],
+          "babagavat_analysis": "normal"
+        },
+        "red_flags": [],
+        "green_flags": [],
+        "babagavat_notes": "🌱 BabaGAVAT: Yeni kullanıcı - Onboarding sürecini optimize et!"
+      },
+      "transaction_count": 4
+    },
+    {
+      "user_data": {
+        "user_id": 100005,
+        "username": "can_ghost",
+        "profile_type": "ghost_user",
+        "description": "Hayalet kullanıcı - Minimal aktivite",
+        "initial_coins": 50,
+        "spending_pattern": "minimal",
+        "expected_segment": "ErkoSegment.GHOST"
+      },
+      "coin_stats": {
+        "balance": 45,
+        "total_earned": 50,
+        "total_spent": 5,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 5,
+          "last_reset": "2025-05-29"
+        },
+        "babagavat_status": "normal_kullanici"
+      },
+      "erko_profile": {
+        "segment": "newbie",
+        "risk_level": "medium",
+        "babagavat_score": 0.9,
+        "street_smart_rating": 0.7,
+        "spending_pattern": {
+          "total_transactions": 2,
+          "spending_transactions": 1,
+          "earning_transactions": 1,
+          "average_spending": 5.0,
+          "max_single_spending": 5,
+          "spending_frequency": "low",
+          "preferred_times": [
+            "03:00"
+          ],
+          "babagavat_analysis": "normal"
+        },
+        "red_flags": [],
+        "green_flags": [],
+        "babagavat_notes": "🌱 BabaGAVAT: Yeni kullanıcı - Onboarding sürecini optimize et!"
+      },
+      "transaction_count": 2
+    },
+    {
+      "user_data": {
+        "user_id": 100006,
+        "username": "burak_risky",
+        "profile_type": "risky_user",
+        "description": "Riskli kullanıcı - Şüpheli pattern",
+        "initial_coins": 1000,
+        "spending_pattern": "suspicious",
+        "expected_segment": "ErkoSegment.REGULAR",
+        "expected_risk": "ErkoRiskLevel.HIGH"
+      },
+      "coin_stats": {
+        "balance": 0,
+        "total_earned": 0,
+        "total_spent": 0,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 0
+        },
+        "babagavat_status": "yeni_kullanici"
+      },
+      "erko_profile": {
+        "segment": "newbie",
+        "risk_level": "medium",
+        "babagavat_score": 0.4,
+        "street_smart_rating": 0.5,
+        "spending_pattern": {
+          "total_transactions": 0,
+          "spending_transactions": 0,
+          "earning_transactions": 0,
+          "average_spending": 0,
+          "max_single_spending": 0,
+          "spending_frequency": "low",
+          "preferred_times": [],
+          "babagavat_analysis": "normal"
+        },
+        "red_flags": [],
+        "green_flags": [],
+        "babagavat_notes": "🌱 BabaGAVAT: Yeni kullanıcı - Onboarding sürecini optimize et!"
+      },
+      "transaction_count": 0
+    },
+    {
+      "user_data": {
+        "user_id": 100007,
+        "username": "cem_newbie",
+        "profile_type": "newbie_user",
+        "description": "Yeni kullanıcı - Öğrenme aşaması",
+        "initial_coins": 200,
+        "spending_pattern": "learning",
+        "expected_segment": "ErkoSegment.NEWBIE"
+      },
+      "coin_stats": {
+        "balance": 25,
+        "total_earned": 25,
+        "total_spent": 0,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 20,
+          "spent": 0,
+          "last_reset": "2025-05-29"
+        },
+        "babagavat_status": "yeni_kullanici"
+      },
+      "erko_profile": {
+        "segment": "newbie",
+        "risk_level": "medium",
+        "babagavat_score": 0.6,
+        "street_smart_rating": 0.5,
+        "spending_pattern": {
+          "total_transactions": 5,
+          "spending_transactions": 0,
+          "earning_transactions": 5,
+          "average_spending": 0,
+          "max_single_spending": 0,
+          "spending_frequency": "low",
+          "preferred_times": [],
+          "babagavat_analysis": "normal"
+        },
+        "red_flags": [],
+        "green_flags": [],
+        "babagavat_notes": "🌱 BabaGAVAT: Yeni kullanıcı - Onboarding sürecini optimize et!"
+      },
+      "transaction_count": 5
+    }
+  ],
+  "leaderboard": [
+    {
+      "rank": 1,
+      "user_id": 100004,
+      "balance": 85,
+      "total_earned": 100,
+      "total_spent": 15,
+      "babagavat_tier": "bronze",
+      "babagavat_status": "normal_kullanici"
+    },
+    {
+      "rank": 2,
+      "user_id": 100005,
+      "balance": 45,
+      "total_earned": 50,
+      "total_spent": 5,
+      "babagavat_tier": "bronze",
+      "babagavat_status": "normal_kullanici"
+    },
+    {
+      "rank": 3,
+      "user_id": 100007,
+      "balance": 25,
+      "total_earned": 25,
+      "total_spent": 0,
+      "babagavat_tier": "bronze",
+      "babagavat_status": "yeni_kullanici"
+    }
+  ],
+  "segment_statistics": {
+    "segments": {
+      "newbie": {
+        "count": 7,
+        "avg_babagavat_score": 0.54,
+        "total_spending": 20
+      }
+    },
+    "babagavat_analysis": "segment_distribution_completed",
+    "timestamp": "2025-05-29T06:05:07.447699"
+  },
+  "high_risk_users": [],
+  "babagavat_analysis": "comprehensive_coin_system_demo_completed",
+  "system_performance": {
+    "coin_service": "operational",
+    "erko_analyzer": "operational",
+    "segmentation": "accurate",
+    "risk_assessment": "functional",
+    "sokak_zekasi": "maksimum"
+  }
+}

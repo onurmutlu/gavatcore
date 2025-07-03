@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="GAVATCore Panel - Yayıncı & Admin Yönetim Sistemi">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="SEFER Panel">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <!-- Telegram WebApp -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <title>SEFER Panel</title>
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    // Flutter web entegrasyonu
+    var serviceWorkerVersion = null;
+    var scriptLoaded = false;
+    function loadMainDartJs() {
+      if (scriptLoaded) {
+        return;
+      }
+      scriptLoaded = true;
+      var scriptTag = document.createElement('script');
+      scriptTag.src = 'main.dart.js';
+      scriptTag.type = 'application/javascript';
+      document.body.append(scriptTag);
+    }
+
+    // Telegram WebApp hazır olduğunda
+    window.onTelegramWebAppReady = function() {
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
+      
+      // Dark mode kontrolü
+      if (window.Telegram.WebApp.colorScheme === 'dark') {
+        document.body.classList.add('dark-mode');
+      }
+      
+      loadMainDartJs();
+    };
+  </script>
+
+  <style>
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #1a1a1a;
+    }
+    .loading img {
+      width: 120px;
+      height: 120px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .dark-mode {
+      background-color: #1a1a1a;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="loading">
+    <img src="icons/Icon-192.png" alt="Loading...">
+  </div>
+  
+  <script>
+    window.addEventListener('load', function(ev) {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/flutter_service_worker.js");
+      }
+      
+      // Eğer Telegram WebApp yoksa direkt yükle
+      if (typeof window.Telegram === 'undefined') {
+        loadMainDartJs();
+      }
+    });
+  </script>
+</body>
+</html>

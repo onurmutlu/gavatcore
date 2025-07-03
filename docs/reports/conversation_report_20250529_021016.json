@@ -1,0 +1,16 @@
+{
+  "total_conversations": 0,
+  "successful_replies": 0,
+  "dm_conversations": 0,
+  "group_engagements": 0,
+  "ban_incidents": 0,
+  "daily_growth": [
+    {
+      "day": 1,
+      "conversations_sent": 0,
+      "dm_conversations": 0,
+      "timestamp": "2025-05-29T02:10:16.817263"
+    }
+  ],
+  "bot_performance": {}
+}

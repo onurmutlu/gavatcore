@@ -1,0 +1,55 @@
+{
+  "test_start_time": "2025-05-29T08:35:04.204232",
+  "redis_tests": {
+    "operations": [
+      {
+        "set_get": true
+      },
+      {
+        "coin_cache": true
+      }
+    ],
+    "success": true
+  },
+  "mongodb_tests": {
+    "operations": [
+      {
+        "insert": true
+      },
+      {
+        "find": true
+      }
+    ],
+    "success": true
+  },
+  "coin_system_tests": {
+    "operations": [
+      {
+        "balance_query": true
+      },
+      {
+        "add_coins": false
+      },
+      {
+        "balance_updated": true
+      }
+    ],
+    "success": false
+  },
+  "erko_analyzer_tests": {
+    "operations": [
+      {
+        "user_analysis": true
+      },
+      {
+        "profile_valid": true
+      },
+      {
+        "segment_stats": true
+      }
+    ],
+    "success": true
+  },
+  "overall_success": false,
+  "test_end_time": "2025-05-29T08:35:04.370133"
+}

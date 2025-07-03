@@ -1,0 +1,107 @@
+{
+  "test_suite": "BabaGAVAT Coin System Test Suite - Onur Metodu",
+  "timestamp": "2025-05-29T08:20:32.841159",
+  "duration_seconds": 68.777628,
+  "summary": {
+    "total_tests": 15,
+    "passed": 12,
+    "failed": 3,
+    "errors": 0,
+    "success_rate": 80.0,
+    "onur_metodu_status": "entegre_ve_test_edildi"
+  },
+  "test_results": [
+    {
+      "test_name": "Coin Service Initialization",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T08:19:24.079470"
+    },
+    {
+      "test_name": "Coin Balance Operations",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T08:19:34.575127"
+    },
+    {
+      "test_name": "Coin Transaction Processing",
+      "status": "FAIL",
+      "result": false,
+      "timestamp": "2025-05-29T08:19:34.579354"
+    },
+    {
+      "test_name": "Daily Limits System",
+      "status": "FAIL",
+      "result": false,
+      "timestamp": "2025-05-29T08:20:00.813106"
+    },
+    {
+      "test_name": "Referral Bonus System",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T08:20:06.085056"
+    },
+    {
+      "test_name": "Message to Performer System",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T08:20:16.583219"
+    },
+    {
+      "test_name": "Daily Task Rewards",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T08:20:21.849746"
+    },
+    {
+      "test_name": "Admin Coin Management",
+      "status": "FAIL",
+      "result": false,
+      "timestamp": "2025-05-29T08:20:21.853740"
+    },
+    {
+      "test_name": "Tier System",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T08:20:21.867407"
+    },
+    {
+      "test_name": "Transaction History",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T08:20:32.372692"
+    },
+    {
+      "test_name": "Leaderboard System",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T08:20:32.375612"
+    },
+    {
+      "test_name": "ErkoAnalyzer Integration",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T08:20:32.396194"
+    },
+    {
+      "test_name": "User Segmentation",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T08:20:32.811085"
+    },
+    {
+      "test_name": "Risk Assessment",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T08:20:32.820970"
+    },
+    {
+      "test_name": "Spending Pattern Analysis",
+      "status": "PASS",
+      "result": true,
+      "timestamp": "2025-05-29T08:20:32.841074"
+    }
+  ],
+  "babagavat_analysis": "coin_system_comprehensive_test_completed",
+  "status": "FAILED"
+}

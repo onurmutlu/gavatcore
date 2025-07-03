@@ -1,0 +1,111 @@
+{
+  "conversation_starters": {
+    "samimi_sohbet": [
+      "Bugün nasıl geçiyor gününüz? 😊",
+      "Bu grupta güzel insanlar varmış, tanışalım mı? 🤗",
+      "Herkese günaydın! Kahve içen var mı? ☕",
+      "Bugün hava çok güzel, dışarı çıkacak olan var mı? 🌞",
+      "Bu akşam ne yapıyorsunuz? Film önerisi alırım 🎬",
+      "Müzik dinleyen var mı? Son çıkan şarkılar nasıl? 🎵",
+      "Hafta sonu planları neler? Paylaşalım 📅",
+      "Bu grupta çok pozitif enerji var! 💫",
+      "Yeni üyeyim, herkesi tanımak isterim 👋",
+      "Bugün motivasyonum yüksek, sizin nasıl? 💪"
+    ],
+    "merak_uyandiran": [
+      "Bu grupta ilginç konular konuşuluyor mu? 🤔",
+      "Sizce en güzel hobiler neler? 🎨",
+      "Hangi konularda sohbet etmeyi seviyorsunuz? 💭",
+      "Bu grupta kaç kişiyiz acaba? 📊",
+      "En sevdiğiniz yemek nedir? Merak ettim 🍕",
+      "Hangi şehirlerdensiniz? Coğrafya merakım var 🗺️",
+      "Kitap okuyan var mı? Öneri alırım 📚",
+      "Spor yapan var mı aramızda? 🏃‍♂️",
+      "Seyahat etmeyi seven var mı? 🧳",
+      "Teknoloji ile ilgilenen var mı? 💻"
+    ],
+    "grup_aktivitesi": [
+      "Bu grupta etkinlik yapıyor muyuz? 🎉",
+      "Grup oyunu oynayan var mı? 🎮",
+      "Birlikte film izleme etkinliği olsa katılır mıydınız? 🍿",
+      "Grup içi yarışma düzenlesek nasıl olur? 🏆",
+      "Sesli sohbet yapan var mı? 🎤",
+      "Fotoğraf paylaşımı yapıyor muyuz? 📸",
+      "Grup kuralları neler? Yeni üyeyim 📋",
+      "Bu grupta en aktif saatler ne zaman? ⏰",
+      "Haftalık toplantı var mı? 📅",
+      "Grup admini kimler? Tanışmak isterim 👥"
+    ],
+    "pozitif_enerji": [
+      "Herkese güzel bir gün dilerim! ✨",
+      "Bu grupta çok güzel enerji var! 🌟",
+      "Pozitif düşünceleri paylaşalım 💫",
+      "Bugün güzel bir şey yaşayan var mı? 😊",
+      "Motivasyon sözü paylaşan var mı? 💪",
+      "Gülümseyen herkese selam! 😄",
+      "İyi dileklerimizi paylaşalım 🙏",
+      "Bugün minnettar olduğunuz şey nedir? 🙏",
+      "Pozitif haberler paylaşalım 📰",
+      "Birbirimizi destekleyelim! 🤝"
+    ],
+    "arayisvips_soft_mention": [
+      "Bu tür sohbetleri @arayisonlyvips'te de yapıyoruz, orası da güzel 💬",
+      "Benzer konuları @arayisonlyvips grubunda da konuşuyoruz 🗣️",
+      "@arayisonlyvips'te de böyle samimi sohbetler oluyor 😊",
+      "Bu konuyu @arayisonlyvips'te de açmıştım, ilgi görmüştü 📝",
+      "@arayisonlyvips grubunda da güzel insanlar var 👥",
+      "Bu tür paylaşımları @arayisonlyvips'te de yapıyoruz 📤",
+      "@arayisonlyvips'te de aktif sohbetler dönüyor 💭",
+      "Benzer ilgi alanları @arayisonlyvips'te de var 🎯",
+      "@arayisonlyvips grubunda da böyle konuşuyoruz 🗨️",
+      "Bu konuda @arayisonlyvips'te de güzel tartışmalar oluyor 💡"
+    ]
+  },
+  "persona_mapping": {
+    "yayincilara": {
+      "primary_categories": ["samimi_sohbet", "pozitif_enerji"],
+      "secondary_categories": ["arayisvips_soft_mention"],
+      "tone": "samimi_ve_arkadas_canlisi",
+      "emoji_usage": "moderate"
+    },
+    "xxxgeisha": {
+      "primary_categories": ["merak_uyandiran", "grup_aktivitesi"],
+      "secondary_categories": ["arayisvips_soft_mention"],
+      "tone": "cekici_ve_gizemli",
+      "emoji_usage": "elegant"
+    },
+    "babagavat": {
+      "primary_categories": ["grup_aktivitesi", "pozitif_enerji"],
+      "secondary_categories": ["arayisvips_soft_mention"],
+      "tone": "guclu_ve_otoriter",
+      "emoji_usage": "minimal"
+    }
+  },
+  "ai_optimization_config": {
+    "categories": [
+      "samimi_sohbet",
+      "merak_uyandiran", 
+      "grup_aktivitesi",
+      "pozitif_enerji",
+      "arayisvips_soft_mention"
+    ],
+    "success_metrics": {
+      "reply_rate": "high_priority",
+      "dm_conversion": "medium_priority", 
+      "group_engagement": "high_priority",
+      "ban_avoidance": "critical_priority"
+    },
+    "timing_optimization": {
+      "peak_hours": [19, 20, 21, 22],
+      "avoid_hours": [2, 3, 4, 5, 6, 7],
+      "weekend_boost": true
+    }
+  },
+  "anti_spam_features": {
+    "natural_conversation": true,
+    "context_aware": true,
+    "group_specific": true,
+    "time_based_variation": true,
+    "engagement_tracking": true
+  }
+} 

@@ -81,6 +81,9 @@ class AIVoiceEngine:
         # Aktif sesli oturumlar
         self.active_sessions: Dict[str, VoiceSession] = {}
         
+        # Initialization flag
+        self.is_initialized = False
+        
         # Karakter ses konfigürasyonları
         self.character_voices = {
             "geisha": {
@@ -211,6 +214,25 @@ AI Assistant olarak yardımsever ve bilgilendirici bir yanıt ver:
         }
         
         logger.info("🎤 AI Voice Engine başlatıldı - GPT-4 FULL POWER!")
+    
+    async def initialize(self) -> bool:
+        """🎤 Voice Engine'i başlat"""
+        try:
+            logger.info("🎤 AI Voice Engine başlatılıyor...")
+            
+            # OpenAI client test
+            if self.api_key:
+                # Test API connection (optional)
+                self.is_initialized = True
+                logger.info("🎤 AI Voice Engine başlatıldı - GPT-4 FULL POWER!")
+                return True
+            else:
+                logger.warning("⚠️ OpenAI API key missing - Voice Engine disabled")
+                return False
+                
+        except Exception as e:
+            logger.error(f"❌ Voice Engine initialization error: {e}")
+            return False
     
     async def start_voice_session(self, user_id: str, character_id: str) -> str:
         """Sesli oturum başlat"""

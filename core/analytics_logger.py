@@ -1,103 +1,109 @@
+"""
+Character Analytics Logger Module
+
+Bu modül, karakter etkileşimlerini JSONL formatında kaydeder.
+Async ve sync kullanımı destekler.
+"""
+
 import json
+import os
+import asyncio
 from datetime import datetime
 from pathlib import Path
-import portalocker  # pip install portalocker
+from typing import Dict, Any, Optional, Union
 
-ANALYTICS_DIR = Path("data/analytics")
-ANALYTICS_DIR.mkdir(parents=True, exist_ok=True)
-MAX_ANALYTICS_SIZE = 5 * 1024 * 1024  # 5 MB
+class CharacterAnalyticsLogger:
+    def __init__(self, log_dir: str = "logs/characters") -> None:
+        """
+        Analytics logger'ı başlat.
+        
+        Args:
+            log_dir: Log dosyalarının tutulacağı dizin
+        """
+        self.log_dir = Path(log_dir)
+        self._ensure_log_directory()
+    
+    def _ensure_log_directory(self) -> None:
+        """Log dizinini oluştur."""
+        self.log_dir.mkdir(parents=True, exist_ok=True)
+    
+    def _get_log_file(self, character_id: str) -> Path:
+        """Karakter için log dosya yolunu döndür."""
+        return self.log_dir / f"{character_id}_events.jsonl"
+    
+    def _create_event_data(self, 
+                          character_id: str, 
+                          event_type: str, 
+                          metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """Event verisi oluştur."""
+        return {
+            "character_id": character_id,
+            "event_type": event_type,
+            "timestamp": datetime.now().isoformat(),
+            "metadata": metadata or {}
+        }
 
-def _get_today_file():
-    today = datetime.now().strftime("%Y-%m-%d")
-    return ANALYTICS_DIR / f"{today}.json"
+    def log_character_event(self, 
+                          character_id: str, 
+                          event_type: str, 
+                          metadata: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Karakter olayını senkron olarak logla.
+        
+        Args:
+            character_id: Karakter ID'si
+            event_type: Olay tipi (örn: "vip_sale", "message_sent")
+            metadata: Olayla ilgili ek veriler
+        """
+        event_data = self._create_event_data(character_id, event_type, metadata)
+        log_file = self._get_log_file(character_id)
+        
+        with open(log_file, "a", encoding="utf-8") as f:
+            json.dump(event_data, f, ensure_ascii=False)
+            f.write("\n")
 
-def _load_data(path):
-    if not path.exists():
-        return []
-    try:
-        with portalocker.Lock(str(path), timeout=2):
-            with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
-    except Exception as e:
-        print(f"[analytics_logger] load error: {e}")
-        return []
+    async def alog_character_event(self, 
+                                 character_id: str, 
+                                 event_type: str, 
+                                 metadata: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Karakter olayını asenkron olarak logla.
+        
+        Args:
+            character_id: Karakter ID'si
+            event_type: Olay tipi (örn: "vip_sale", "message_sent") 
+            metadata: Olayla ilgili ek veriler
+        """
+        event_data = self._create_event_data(character_id, event_type, metadata)
+        log_file = self._get_log_file(character_id)
+        
+        async def _write():
+            with open(log_file, "a", encoding="utf-8") as f:
+                json.dump(event_data, f, ensure_ascii=False)
+                f.write("\n")
+        
+        await asyncio.get_event_loop().run_in_executor(None, _write)
 
-def _save_data(path, data):
-    # Rotate if needed
-    if path.exists() and path.stat().st_size > MAX_ANALYTICS_SIZE:
-        rotated = path.with_suffix(f".{int(datetime.now().timestamp())}.bak")
-        path.rename(rotated)
-    try:
-        with portalocker.Lock(str(path), timeout=2):
-            with open(path, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-    except Exception as e:
-        print(f"[analytics_logger] Save error: {e}")
+# Global logger instance
+_logger: Optional[CharacterAnalyticsLogger] = None
 
-def log_analytics(user_id_or_username: str, action: str, details: dict = None):
-    entry = {
-        "timestamp": datetime.now().isoformat(),
-        "user": user_id_or_username,
-        "action": action,
-        "details": details or {}
-    }
-    file = _get_today_file()
-    data = _load_data(file)
-    data.append(entry)
-    _save_data(file, data)
-    # print(f"[analytics_logger] {entry}")
+def get_logger(log_dir: str = "logs/characters") -> CharacterAnalyticsLogger:
+    """Global logger instance'ı döndür."""
+    global _logger
+    if _logger is None:
+        _logger = CharacterAnalyticsLogger(log_dir)
+    return _logger
 
-# 🔎 Gelişmiş sorgu: filtreli okuma
-def search_analytics(action=None, user=None, since=None, until=None, limit=50):
-    """
-    Son X analytics eventini getir, filtrele.
-    """
-    results = []
-    files = sorted(ANALYTICS_DIR.glob("*.json"), reverse=True)
-    for file in files:
-        day_data = _load_data(file)
-        for entry in reversed(day_data):
-            if action and entry.get("action") != action:
-                continue
-            if user and entry.get("user") != user:
-                continue
-            if since and entry.get("timestamp") < since:
-                continue
-            if until and entry.get("timestamp") > until:
-                continue
-            results.append(entry)
-            if len(results) >= limit:
-                return list(reversed(results))
-    return list(reversed(results))
+# Kolay kullanım için yardımcı fonksiyonlar
+def log_character_event(character_id: str, 
+                       event_type: str, 
+                       metadata: Optional[Dict[str, Any]] = None) -> None:
+    """Karakter olayını senkron olarak logla."""
+    get_logger().log_character_event(character_id, event_type, metadata)
 
-# 🎯 Analiz fonksiyonu: basit istatistik döndürür
-def action_stats(days=7):
-    """
-    Son N günde action sayımını döndürür.
-    """
-    from collections import Counter
-    stats = Counter()
-    files = sorted(ANALYTICS_DIR.glob("*.json"), reverse=True)[:days]
-    for file in files:
-        for entry in _load_data(file):
-            stats[entry.get("action")] += 1
-    return dict(stats)
-
-# Dışa aktarma örneği (CSV)
-def export_to_csv(filename="analytics_export.csv", limit=1000):
-    import csv
-    results = search_analytics(limit=limit)
-    with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=["timestamp", "user", "action", "details"])
-        writer.writeheader()
-        for entry in results:
-            entry["details"] = json.dumps(entry["details"], ensure_ascii=False)
-            writer.writerow(entry)
-    print(f"✅ Analytics exported: {filename}")
-
-# Kullanım:
-# log_analytics("gavatbaba", "group_gpt_reply_sent", {"msg": "test"})
-# print(search_analytics(action="group_gpt_reply_sent", user="gavatbaba"))
-# print(action_stats())
-# export_to_csv()
+async def alog_character_event(character_id: str, 
+                             event_type: str, 
+                             metadata: Optional[Dict[str, Any]] = None) -> None:
+    """Karakter olayını asenkron olarak logla."""
+    await get_logger().alog_character_event(character_id, event_type, metadata)
 

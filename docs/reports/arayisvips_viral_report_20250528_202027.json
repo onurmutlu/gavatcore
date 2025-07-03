@@ -1,0 +1,41 @@
+{
+  "total_invites_sent": 0,
+  "successful_joins": 0,
+  "spam_messages_sent": 40,
+  "dm_conversations": 0,
+  "conversion_rate": 0.0,
+  "daily_growth": [
+    {
+      "day": 1,
+      "invites_sent": 0,
+      "spam_messages": 0,
+      "timestamp": "2025-05-28T19:20:27.582678"
+    },
+    {
+      "day": 1,
+      "invites_sent": 0,
+      "spam_messages": 40,
+      "timestamp": "2025-05-28T20:20:27.777343"
+    }
+  ],
+  "bot_performance": {
+    "ॱᴬᴰᴹॱ 𝐦𝐨𝐝Geisha™ | VIP⛓️ (@xxxgeisha)": {
+      "spam_sent": 9,
+      "invites_sent": 0,
+      "dm_conversations": 0,
+      "start_time": 1748449228.026356
+    },
+    "ॱᴬᴰᴹॱ YayınCı-Lara (@yayincilara)": {
+      "spam_sent": 18,
+      "invites_sent": 0,
+      "dm_conversations": 0,
+      "start_time": 1748449228.2204201
+    },
+    "ॱᴬᴰᴹॱ BabaGAVAT™ | VIP⛓️ (@babagavat)": {
+      "spam_sent": 13,
+      "invites_sent": 0,
+      "dm_conversations": 0,
+      "start_time": 1748449228.3207822
+    }
+  }
+}

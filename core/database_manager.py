@@ -85,6 +85,10 @@ class DatabaseManager:
             logger.error(f"❌ Database başlatma hatası: {e}")
             raise
     
+    def _get_connection(self):
+        """Database bağlantısı al"""
+        return aiosqlite.connect(self.db_path)
+    
     async def _create_tables(self, db: aiosqlite.Connection) -> None:
         """Tabloları oluştur"""
         

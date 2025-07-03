@@ -1,0 +1,340 @@
+{
+  "demo_report": {
+    "timestamp": "2025-05-29T08:35:27.497594",
+    "duration_seconds": 6.007041,
+    "demo_users_count": 7,
+    "demo_performers_count": 5,
+    "onur_metodu_status": "successfully_demonstrated"
+  },
+  "user_reports": [
+    {
+      "user_data": {
+        "user_id": 100001,
+        "username": "ahmet_whale",
+        "profile_type": "whale_user",
+        "description": "Balina kullanıcı - Çok yüksek harcama",
+        "initial_coins": 10000,
+        "spending_pattern": "high_volume",
+        "expected_segment": "ErkoSegment.WHALE"
+      },
+      "coin_stats": {
+        "balance": 0,
+        "total_earned": 0,
+        "total_spent": 0,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 0
+        },
+        "babagavat_status": "yeni_kullanici"
+      },
+      "erko_profile": {
+        "segment": "cold",
+        "risk_level": "low",
+        "babagavat_score": 0.0,
+        "street_smart_rating": 0.6000000000000001,
+        "spending_pattern": {
+          "total_spending": 0.0,
+          "avg_per_message": 0.0,
+          "spending_tier": "bronze",
+          "pattern_type": "normal",
+          "risk_indicators": []
+        },
+        "red_flags": [],
+        "green_flags": [],
+        "babagavat_notes": "❄️ Soğuk müşteri - canlandırmaya ihtiyacı var. ✅ Düşük risk - güvenli kullanıcı. 🆓 Hiç harcama yapmamış - teşvik gerekli. 🤐 Hiç mesaj yok - sessiz kullanıcı."
+      },
+      "transaction_count": 0
+    },
+    {
+      "user_data": {
+        "user_id": 100002,
+        "username": "mehmet_vip",
+        "profile_type": "vip_user",
+        "description": "VIP kullanıcı - Premium müşteri",
+        "initial_coins": 2000,
+        "spending_pattern": "premium",
+        "expected_segment": "ErkoSegment.VIP"
+      },
+      "coin_stats": {
+        "balance": 0,
+        "total_earned": 0,
+        "total_spent": 0,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 0
+        },
+        "babagavat_status": "yeni_kullanici"
+      },
+      "erko_profile": {
+        "segment": "cold",
+        "risk_level": "low",
+        "babagavat_score": 0.0,
+        "street_smart_rating": 0.6000000000000001,
+        "spending_pattern": {
+          "total_spending": 0.0,
+          "avg_per_message": 0.0,
+          "spending_tier": "bronze",
+          "pattern_type": "normal",
+          "risk_indicators": []
+        },
+        "red_flags": [],
+        "green_flags": [],
+        "babagavat_notes": "❄️ Soğuk müşteri - canlandırmaya ihtiyacı var. ✅ Düşük risk - güvenli kullanıcı. 🆓 Hiç harcama yapmamış - teşvik gerekli. 🤐 Hiç mesaj yok - sessiz kullanıcı."
+      },
+      "transaction_count": 0
+    },
+    {
+      "user_data": {
+        "user_id": 100003,
+        "username": "ali_hot",
+        "profile_type": "hot_user",
+        "description": "Aktif kullanıcı - Yüksek etkileşim",
+        "initial_coins": 500,
+        "spending_pattern": "active",
+        "expected_segment": "ErkoSegment.HOT"
+      },
+      "coin_stats": {
+        "balance": 0,
+        "total_earned": 0,
+        "total_spent": 0,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 0
+        },
+        "babagavat_status": "yeni_kullanici"
+      },
+      "erko_profile": {
+        "segment": "cold",
+        "risk_level": "low",
+        "babagavat_score": 0.0,
+        "street_smart_rating": 0.6000000000000001,
+        "spending_pattern": {
+          "total_spending": 0.0,
+          "avg_per_message": 0.0,
+          "spending_tier": "bronze",
+          "pattern_type": "normal",
+          "risk_indicators": []
+        },
+        "red_flags": [],
+        "green_flags": [],
+        "babagavat_notes": "❄️ Soğuk müşteri - canlandırmaya ihtiyacı var. ✅ Düşük risk - güvenli kullanıcı. 🆓 Hiç harcama yapmamış - teşvik gerekli. 🤐 Hiç mesaj yok - sessiz kullanıcı."
+      },
+      "transaction_count": 0
+    },
+    {
+      "user_data": {
+        "user_id": 100004,
+        "username": "emre_cold",
+        "profile_type": "cold_user",
+        "description": "Soğuk kullanıcı - Düşük aktivite",
+        "initial_coins": 100,
+        "spending_pattern": "passive",
+        "expected_segment": "ErkoSegment.COLD"
+      },
+      "coin_stats": {
+        "balance": 255,
+        "total_earned": 0,
+        "total_spent": 5,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 1,
+          "last_reset": "2025-05-29"
+        },
+        "babagavat_status": "buyuk_musteri"
+      },
+      "erko_profile": {
+        "segment": "newbie",
+        "risk_level": "low",
+        "babagavat_score": 3.6500000000000004,
+        "street_smart_rating": 0.7,
+        "spending_pattern": {
+          "total_spending": 45,
+          "avg_per_message": 3.75,
+          "spending_tier": "bronze",
+          "pattern_type": "normal",
+          "risk_indicators": []
+        },
+        "red_flags": [],
+        "green_flags": [
+          "balanced_interaction",
+          "consistent_activity",
+          "engaged_user"
+        ],
+        "babagavat_notes": "🆕 Yeni kullanıcı - yönlendirme yapılmalı. ✅ Düşük risk - güvenli kullanıcı. 💬 12 mesaj - orta aktivite."
+      },
+      "transaction_count": 10
+    },
+    {
+      "user_data": {
+        "user_id": 100005,
+        "username": "can_ghost",
+        "profile_type": "ghost_user",
+        "description": "Hayalet kullanıcı - Minimal aktivite",
+        "initial_coins": 50,
+        "spending_pattern": "minimal",
+        "expected_segment": "ErkoSegment.GHOST"
+      },
+      "coin_stats": {
+        "balance": 135,
+        "total_earned": 0,
+        "total_spent": 5,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 1,
+          "last_reset": "2025-05-29"
+        },
+        "babagavat_status": "buyuk_musteri"
+      },
+      "erko_profile": {
+        "segment": "regular",
+        "risk_level": "low",
+        "babagavat_score": 0.7500000000000001,
+        "street_smart_rating": 0.30000000000000004,
+        "spending_pattern": {
+          "total_spending": 15,
+          "avg_per_message": 2.5,
+          "spending_tier": "bronze",
+          "pattern_type": "normal",
+          "risk_indicators": []
+        },
+        "red_flags": [],
+        "green_flags": [
+          "balanced_interaction",
+          "engaged_user"
+        ],
+        "babagavat_notes": "👤 Normal kullanıcı - standart yaklaşım. ✅ Düşük risk - güvenli kullanıcı."
+      },
+      "transaction_count": 6
+    },
+    {
+      "user_data": {
+        "user_id": 100006,
+        "username": "burak_risky",
+        "profile_type": "risky_user",
+        "description": "Riskli kullanıcı - Şüpheli pattern",
+        "initial_coins": 1000,
+        "spending_pattern": "suspicious",
+        "expected_segment": "ErkoSegment.REGULAR",
+        "expected_risk": "ErkoRiskLevel.HIGH"
+      },
+      "coin_stats": {
+        "balance": 0,
+        "total_earned": 0,
+        "total_spent": 0,
+        "user_type": "male",
+        "babagavat_tier": "bronze",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 0
+        },
+        "babagavat_status": "yeni_kullanici"
+      },
+      "erko_profile": {
+        "segment": "cold",
+        "risk_level": "low",
+        "babagavat_score": 0.0,
+        "street_smart_rating": 0.6000000000000001,
+        "spending_pattern": {
+          "total_spending": 0.0,
+          "avg_per_message": 0.0,
+          "spending_tier": "bronze",
+          "pattern_type": "normal",
+          "risk_indicators": []
+        },
+        "red_flags": [],
+        "green_flags": [],
+        "babagavat_notes": "❄️ Soğuk müşteri - canlandırmaya ihtiyacı var. ✅ Düşük risk - güvenli kullanıcı. 🆓 Hiç harcama yapmamış - teşvik gerekli. 🤐 Hiç mesaj yok - sessiz kullanıcı."
+      },
+      "transaction_count": 0
+    },
+    {
+      "user_data": {
+        "user_id": 100007,
+        "username": "cem_newbie",
+        "profile_type": "newbie_user",
+        "description": "Yeni kullanıcı - Öğrenme aşaması",
+        "initial_coins": 200,
+        "spending_pattern": "learning",
+        "expected_segment": "ErkoSegment.NEWBIE"
+      },
+      "coin_stats": {
+        "balance": 75,
+        "total_earned": 5,
+        "total_spent": 0,
+        "user_type": "male",
+        "babagavat_tier": "yeni_kullanici",
+        "daily_stats": {
+          "earned": 0,
+          "spent": 0,
+          "last_reset": "2025-05-29"
+        },
+        "babagavat_status": "yeni_kullanici"
+      },
+      "erko_profile": {
+        "segment": "newbie",
+        "risk_level": "low",
+        "babagavat_score": 3.5,
+        "street_smart_rating": 0.8499999999999999,
+        "spending_pattern": {
+          "total_spending": 0.0,
+          "avg_per_message": 0.0,
+          "spending_tier": "bronze",
+          "pattern_type": "freeloader",
+          "risk_indicators": [
+            "no_spending"
+          ]
+        },
+        "red_flags": [],
+        "green_flags": [
+          "balanced_interaction",
+          "consistent_activity"
+        ],
+        "babagavat_notes": "🆕 Yeni kullanıcı - yönlendirme yapılmalı. ✅ Düşük risk - güvenli kullanıcı. 🆓 Hiç harcama yapmamış - teşvik gerekli. 💬 15 mesaj - orta aktivite."
+      },
+      "transaction_count": 10
+    }
+  ],
+  "leaderboard": [
+    {
+      "user_id": 100004,
+      "balance": 255.0,
+      "tier": "yeni_kullanici"
+    },
+    {
+      "user_id": 100005,
+      "balance": 135.0,
+      "tier": "yeni_kullanici"
+    },
+    {
+      "user_id": 100007,
+      "balance": 75.0,
+      "tier": "yeni_kullanici"
+    }
+  ],
+  "segment_statistics": {
+    "segments": {
+      "newbie": 17
+    },
+    "total_users": 17,
+    "analysis_date": "2025-05-29T08:35:04.369596"
+  },
+  "high_risk_users": [],
+  "babagavat_analysis": "comprehensive_coin_system_demo_completed",
+  "system_performance": {
+    "coin_service": "operational",
+    "erko_analyzer": "operational",
+    "segmentation": "accurate",
+    "risk_assessment": "functional",
+    "sokak_zekasi": "maksimum"
+  }
+}

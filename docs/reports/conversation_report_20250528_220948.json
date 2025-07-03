@@ -1,0 +1,23 @@
+{
+  "total_conversations": 5,
+  "successful_replies": 0,
+  "dm_conversations": 3,
+  "group_engagements": 0,
+  "ban_incidents": 2,
+  "daily_growth": [
+    {
+      "day": 1,
+      "conversations_sent": 5,
+      "dm_conversations": 3,
+      "timestamp": "2025-05-28T22:09:48.277163"
+    }
+  ],
+  "bot_performance": {
+    "ॱᴬᴰᴹॱ 𝐦𝐨𝐝Geisha™ | VIP⛓️": {
+      "conversations_sent": 5,
+      "dm_conversations": 3,
+      "engagement_score": 0,
+      "start_time": 1748459388.247401
+    }
+  }
+}

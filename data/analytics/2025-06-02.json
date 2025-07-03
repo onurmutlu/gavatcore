@@ -1,0 +1,594 @@
+[
+  {
+    "timestamp": "2025-06-02T00:16:33.020945",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "vip gruba katılmak istiyorum",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T00:16:48.920386",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "vip gruba katılmak istiyorum",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T00:16:48.944727",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "fiyat listesi göster",
+      "mode": "manualplus",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T00:16:48.970177",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "merhaba nasılsın",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T00:16:48.978406",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "Merhaba! Nasılsın?"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:52:38.165954",
+    "user": "test_user",
+    "action": "dm_blocked_demo_timeout",
+    "details": {
+      "message": "test message"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:52:38.172539",
+    "user": "test_bot",
+    "action": "dm_blocked_by_manager",
+    "details": {
+      "user_id": 123,
+      "reason": "Not allowed"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:52:38.184428",
+    "user": "test_bot",
+    "action": "dm_blocked_cooldown",
+    "details": {
+      "user_id": 123,
+      "reason": "Cooldown active"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:52:38.518797",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "template",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:52:38.626855",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:52:41.636939",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "GPT Response"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:52:41.646891",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:52:41.652540",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "GPT Response"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:54:21.956980",
+    "user": "test_user",
+    "action": "dm_blocked_demo_timeout",
+    "details": {
+      "message": "test message"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:54:21.963744",
+    "user": "test_bot",
+    "action": "dm_blocked_by_manager",
+    "details": {
+      "user_id": 123,
+      "reason": "Not allowed"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:54:21.975839",
+    "user": "test_bot",
+    "action": "dm_blocked_cooldown",
+    "details": {
+      "user_id": 123,
+      "reason": "Cooldown active"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:54:21.986783",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "ai",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:54:22.285678",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "template",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:54:22.420000",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:54:25.533506",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "GPT Response"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:54:25.543592",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:54:25.549387",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "GPT Response"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:54:25.663132",
+    "user": "test_user",
+    "action": "inline_bank_choice_success",
+    "details": {
+      "bank": "InvalidBank"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:55:11.913265",
+    "user": "test_user",
+    "action": "dm_blocked_demo_timeout",
+    "details": {
+      "message": "test message"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:55:11.923572",
+    "user": "test_bot",
+    "action": "dm_blocked_by_manager",
+    "details": {
+      "user_id": 123,
+      "reason": "Not allowed"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:55:11.965947",
+    "user": "test_bot",
+    "action": "dm_blocked_cooldown",
+    "details": {
+      "user_id": 123,
+      "reason": "Cooldown active"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:55:11.985566",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "ai",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:55:12.024715",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "template",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:55:12.043293",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:55:15.051458",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "GPT Response"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:55:15.068174",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:55:15.074944",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "GPT Response"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:55:15.424172",
+    "user": "test_user",
+    "action": "inline_bank_choice_success",
+    "details": {
+      "bank": "InvalidBank"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:55:47.458657",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:55:47.502966",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "GPT Response"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:56:04.450919",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "vip gruba katılmak istiyorum",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:56:04.470441",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "fiyat listesi göster",
+      "mode": "manualplus",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:56:04.493822",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "merhaba nasılsın",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T03:56:04.502741",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "Merhaba! Nasılsın?"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T05:30:01.047889",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "vip gruba katılmak istiyorum",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T05:30:01.171435",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "fiyat listesi göster",
+      "mode": "manualplus",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T05:30:01.585918",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "merhaba nasılsın",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T05:30:01.610664",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "Merhaba! Nasılsın?"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T06:11:44.324675",
+    "user": "test_user",
+    "action": "dm_blocked_demo_timeout",
+    "details": {
+      "message": "test message"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T06:11:44.420990",
+    "user": "test_bot",
+    "action": "dm_blocked_by_manager",
+    "details": {
+      "user_id": 123,
+      "reason": "Not allowed"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T06:11:44.500031",
+    "user": "test_bot",
+    "action": "dm_blocked_cooldown",
+    "details": {
+      "user_id": 123,
+      "reason": "Cooldown active"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T06:11:44.542714",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "ai",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T06:11:45.184615",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "template",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T06:11:45.255873",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T06:11:48.279963",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "GPT Response"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T06:11:48.305475",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "test message",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T06:11:48.324833",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "GPT Response"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T06:11:48.403438",
+    "user": "test_user",
+    "action": "inline_bank_choice_success",
+    "details": {
+      "bank": "InvalidBank"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T09:41:13.923317",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "vip gruba katılmak istiyorum",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T09:41:14.015545",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "fiyat listesi göster",
+      "mode": "manualplus",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T09:41:14.157792",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "merhaba nasılsın",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T09:41:14.170807",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "Merhaba! Nasılsın?"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T09:44:00.836290",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "vip gruba katılmak istiyorum",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T09:44:00.909862",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "fiyat listesi göster",
+      "mode": "manualplus",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T09:44:01.113451",
+    "user": "test_bot",
+    "action": "dm_received",
+    "details": {
+      "from_user": "test_user",
+      "message": "merhaba nasılsın",
+      "mode": "gpt",
+      "bot_profile": "test_bot"
+    }
+  },
+  {
+    "timestamp": "2025-06-02T09:44:01.130314",
+    "user": "test_bot",
+    "action": "dm_gpt_reply_sent",
+    "details": {
+      "response": "Merhaba! Nasılsın?"
+    }
+  }
+]

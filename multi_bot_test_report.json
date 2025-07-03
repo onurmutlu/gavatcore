@@ -1,0 +1,41 @@
+{
+  "timestamp": "2025-05-30T05:52:00",
+  "test_type": "multi_bot_connection_test",
+  "results": [
+    {
+      "bot": {
+        "name": "xxxgeisha",
+        "display": "Geisha",
+        "phone": "+905486306226"
+      },
+      "status": "✅ CONNECTED",
+      "details": "@xxxgeisha (ID: 7750779141)",
+      "user_info": "User(id=7750779141, is_self=True, contact=True, mutual_contact=True, deleted=False, bot=False, bot_chat_history=False, bot_nochats=False, verified=False, restricted=False, min=False, bot_inline_geo=False, support=False, scam=False, apply_min_photo=True, fake=False, bot_attach_menu=False, premium=False, attach_menu_enabled=False, bot_can_edit=False, close_friend=False, stories_hidden=False, stories_unavailable=True, contact_require_premium=False, access_hash=5453826329993233833, first_name='ॱᴬᴰᴹॱ 𝐦𝐨𝐝Geisha™ | VIP⛓️', last_name='🐲 ⛩️🖤🍒', username='xxxgeisha', phone='905486306226', photo=UserProfilePhoto(photo_id=5883990958436107789, dc_id=4, has_video=True, personal=False, stripped_thumb=b'\\x01\\x08\\x08\\x89\\x06\\xe1\\x98\\xd5\\x89n\\x17\\x9f\\xeb\\xf9\\xd1E\\x14\\x0e\\xe7'), status=UserStatusOnline(expires=datetime.datetime(2025, 5, 30, 2, 59, 36, tzinfo=datetime.timezone.utc)), bot_info_version=None, restriction_reason=[], bot_inline_placeholder=None, lang_code=None, emoji_status=None, usernames=[], stories_max_id=None, color=None, profile_color=None)"
+    },
+    {
+      "bot": {
+        "name": "yayincilara",
+        "display": "Lara",
+        "phone": "+905382617727"
+      },
+      "status": "✅ CONNECTED",
+      "details": "@geishaniz (ID: 8073867808)",
+      "user_info": "User(id=8073867808, is_self=True, contact=False, mutual_contact=False, deleted=False, bot=False, bot_chat_history=False, bot_nochats=False, verified=False, restricted=False, min=False, bot_inline_geo=False, support=False, scam=False, apply_min_photo=True, fake=False, bot_attach_menu=False, premium=True, attach_menu_enabled=False, bot_can_edit=False, close_friend=False, stories_hidden=False, stories_unavailable=True, contact_require_premium=False, access_hash=-5293541543421507435, first_name='ॱᴬᴰᴹॱ 𝐦𝐨𝐝Geisha™ | VIP⛓️', last_name='🐲 ⛩️🖤🍒', username='geishaniz', phone='905358606506', photo=UserProfilePhoto(photo_id=6037529858810168153, dc_id=4, has_video=False, personal=False, stripped_thumb=b'\\x01\\x08\\x08\\x89N\\xc9\\n\\xe5\\xb6\\xed\\xc8\\xf6\\xa2\\x8a*\\xaeKG'), status=UserStatusOffline(was_online=datetime.datetime(2025, 5, 29, 13, 22, 22, tzinfo=datetime.timezone.utc)), bot_info_version=None, restriction_reason=[], bot_inline_placeholder=None, lang_code=None, emoji_status=None, usernames=[], stories_max_id=None, color=None, profile_color=None)"
+    },
+    {
+      "bot": {
+        "name": "babagavat",
+        "display": "Gavat Baba",
+        "phone": "+905513272355"
+      },
+      "status": "✅ CONNECTED",
+      "details": "@babagavat (ID: 7682251078)",
+      "user_info": "User(id=7682251078, is_self=True, contact=False, mutual_contact=False, deleted=False, bot=False, bot_chat_history=False, bot_nochats=False, verified=False, restricted=False, min=False, bot_inline_geo=False, support=False, scam=False, apply_min_photo=True, fake=False, bot_attach_menu=False, premium=False, attach_menu_enabled=False, bot_can_edit=False, close_friend=False, stories_hidden=False, stories_unavailable=True, contact_require_premium=False, access_hash=562792411495371354, first_name='ॱᴬᴰᴹॱ BabaGAVAT™ | VIP⛓️', last_name=None, username='babagavat', phone='905513272355', photo=UserProfilePhoto(photo_id=5879610894953071764, dc_id=4, has_video=False, personal=False, stripped_thumb=b'\\x01\\x08\\x08\\xcd\\x016\\xec$u\\xfb\\xd8\\xa2\\x8a*J?'), status=UserStatusOffline(was_online=datetime.datetime(2025, 5, 30, 2, 40, 7, tzinfo=datetime.timezone.utc)), bot_info_version=None, restriction_reason=[], bot_inline_placeholder=None, lang_code=None, emoji_status=None, usernames=[], stories_max_id=None, color=None, profile_color=None)"
+    }
+  ],
+  "summary": {
+    "total_bots": 3,
+    "connected": 3,
+    "failed": 0
+  }
+}

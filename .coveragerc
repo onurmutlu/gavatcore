@@ -1,0 +1,155 @@
+# GAVATCore Coverage Configuration
+# Configuration for coverage.py and pytest-cov
+
+[run]
+# Source paths to measure coverage for
+source = .
+
+# Files to include in coverage measurement
+include = 
+    *.py
+    config.py
+    main.py
+    production_bot_api.py
+    contact_utils.py
+    run.py
+    adminbot/*.py
+    core/*.py
+    handlers/*.py
+    utils/*.py
+    gpt/*.py
+    api/*.py
+
+# Files and directories to exclude from coverage
+omit = 
+    # Test files
+    tests/*
+    test_*.py
+    *_test.py
+    conftest.py
+    
+    # Virtual environments
+    .venv/*
+    venv/*
+    env/*
+    
+    # Build and distribution
+    build/*
+    dist/*
+    *.egg-info/*
+    
+    # Cache directories
+    .pytest_cache/*
+    .mypy_cache/*
+    __pycache__/*
+    
+    # Documentation
+    docs/*
+    
+    # Flutter mobile app
+    gavatcore_mobile/*
+    flutter/*
+    
+    # Deployment packages
+    deploy_package/*
+    
+    # Backups
+    backups/*
+    
+    # Logs and reports
+    logs/*
+    reports/*
+    htmlcov/*
+    
+    # Migration scripts
+    migrations/*
+    
+    # Setup and configuration
+    setup.py
+    setup_tests.py
+    
+    # Third-party integrations
+    **/site-packages/*
+
+# Branch coverage
+branch = true
+
+# Parallel processing
+parallel = true
+
+# Coverage data file
+data_file = .coverage
+
+[report]
+# Output options
+show_missing = true
+skip_covered = false
+skip_empty = true
+sort = Cover
+
+# Precision for percentages
+precision = 1
+
+# Exclude patterns in reports
+exclude_lines =
+    # Standard pragma
+    pragma: no cover
+    
+    # Don't complain about missing debug-only code
+    def __repr__
+    if self\.debug
+    
+    # Don't complain if tests don't hit defensive assertion code
+    raise AssertionError
+    raise NotImplementedError
+    
+    # Don't complain if non-runnable code isn't run
+    if 0:
+    if False:
+    if __name__ == .__main__.:
+    
+    # Don't complain about abstract methods
+    @(abc\.)?abstractmethod
+    
+    # Don't complain about TYPE_CHECKING imports
+    if TYPE_CHECKING:
+    
+    # Don't complain about platform-specific code
+    if sys.platform
+    
+    # Don't complain about version-specific code
+    if sys.version_info
+
+# Minimum coverage percentage
+fail_under = 80
+
+[html]
+# HTML report directory
+directory = htmlcov
+
+# HTML report title
+title = GAVATCore Coverage Report
+
+# Show contexts in HTML report
+show_contexts = true
+
+# Skip files with 100% coverage in HTML report
+skip_covered = false
+
+[xml]
+# XML report output file
+output = coverage.xml
+
+[json]
+# JSON report output file
+output = coverage.json
+# Show contexts in JSON report
+show_contexts = true
+
+[paths]
+# Path mapping for different environments
+source = 
+    .
+    /app
+    C:\gavatcore
+    /home/runner/work/gavatcore/gavatcore 

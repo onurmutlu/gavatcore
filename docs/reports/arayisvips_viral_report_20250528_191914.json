@@ -1,0 +1,16 @@
+{
+  "total_invites_sent": 0,
+  "successful_joins": 0,
+  "spam_messages_sent": 0,
+  "dm_conversations": 0,
+  "conversion_rate": 0.0,
+  "daily_growth": [
+    {
+      "day": 1,
+      "invites_sent": 0,
+      "spam_messages": 0,
+      "timestamp": "2025-05-28T19:19:14.760544"
+    }
+  ],
+  "bot_performance": {}
+}

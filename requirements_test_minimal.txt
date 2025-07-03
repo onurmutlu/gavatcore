@@ -1,0 +1,53 @@
+# 🧪 GAVATCore Minimal Test Dependencies 🧪
+# Essential testing infrastructure without conflicts
+
+# ====================
+# CORE TESTING FRAMEWORK
+# ====================
+pytest>=7.4.0,<9.0.0        # Main testing framework
+pytest-asyncio>=0.21.0      # Async testing support
+pytest-cov>=4.0.0           # Coverage reporting
+pytest-mock>=3.11.0         # Enhanced mocking capabilities
+pytest-timeout>=2.1.0       # Test timeout handling
+pytest-html>=3.2.0          # HTML test reports
+
+# ====================
+# CODE QUALITY & ANALYSIS
+# ====================
+mypy>=1.5.0                 # Static type checking
+black>=23.0.0               # Code formatting
+isort>=5.12.0               # Import sorting
+
+# ====================
+# MOCKING & SIMULATION
+# ====================
+responses>=0.23.0           # HTTP request mocking
+aioresponses>=0.7.4         # Async HTTP request mocking
+freezegun>=1.2.0            # Time/date mocking
+
+# ====================
+# FIXTURES & TEST DATA
+# ====================
+Faker>=19.0.0               # Fake data generation
+hypothesis>=6.80.0          # Property-based testing
+
+# ====================
+# ASYNC & CONCURRENCY TESTING
+# ====================
+asynctest>=0.13.0           # Async testing utilities
+
+# ====================
+# CONFIGURATION TESTING
+# ====================
+python-dotenv>=1.0.0        # Environment variable testing
+
+# ====================
+# LOGGING & DEBUGGING
+# ====================
+structlog>=23.1.0           # Structured logging (same as production)
+
+# ====================
+# ADDITIONAL TESTING UTILITIES
+# ====================
+deepdiff>=6.5.0             # Deep comparison for complex objects
+jsonschema>=4.19.0          # JSON schema validation 
