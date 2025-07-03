@@ -43,6 +43,9 @@ dependencies:
   # Local Storage
   shared_preferences: ^2.2.2
   
+  # URL Launcher
+  url_launcher: ^6.2.1
+  
   # URL Strategy (Web)
   flutter_web_plugins:
     sdk: flutter

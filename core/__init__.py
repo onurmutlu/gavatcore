@@ -167,7 +167,7 @@ ai_voice_engine = _safe_import(
 )
 
 social_gaming_engine = _safe_import(
-    "social_gaming_engine", "social_gaming_engine", 
+    "social_gaming_engine", "social_gaming", 
     "Gamification and engagement system"
 )
 

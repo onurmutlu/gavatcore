@@ -1,44 +1,73 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../repositories/auth_repository.dart';
 import '../services/api_service.dart';
-import '../models/user.dart';
 
+// 🚀 SaaS API Providers
 final apiServiceProvider = Provider((ref) => ApiService());
 
-final authRepositoryProvider = Provider((ref) => AuthRepository(ApiService()));
+final saasApiServiceProvider = Provider((ref) {
+  final apiService = ref.watch(apiServiceProvider);
+  return SaasApiService(apiService);
+});
 
-final authProvider = AsyncNotifierProvider<AuthNotifier, User?>(() {
+final authProvider = AsyncNotifierProvider<AuthNotifier, UserData?>(() {
   return AuthNotifier();
 });
 
-class AuthNotifier extends AsyncNotifier<User?> {
-  late AuthRepository _repository;
+class AuthNotifier extends AsyncNotifier<UserData?> {
+  late SaasApiService _saasService;
 
   @override
-  Future<User?> build() async {
-    _repository = ref.watch(authRepositoryProvider);
+  Future<UserData?> build() async {
+    _saasService = ref.watch(saasApiServiceProvider);
     
-    // Check if user is already logged in
-    final isLoggedIn = await AuthRepository.isLoggedIn();
+    // Check if user is already authenticated
+    final isLoggedIn = await isAuthenticated();
     if (isLoggedIn) {
-      return await _repository.getCurrentUser();
+      try {
+        final apiService = ref.watch(apiServiceProvider);
+        final user = await apiService.getCurrentUser();
+        return user;
+      } catch (e) {
+        // Token might be expired, clear auth state
+        await _clearAuthState();
+        return null;
+      }
     }
     return null;
   }
 
-  Future<bool> login(String email, String password) async {
+  Future<bool> login(String username, String password) async {
     state = const AsyncValue.loading();
     
     try {
-      final success = await _repository.login(email, password);
-      if (success) {
-        final user = await _repository.getCurrentUser();
-        state = AsyncValue.data(user);
-        return true;
-      } else {
-        state = const AsyncValue.data(null);
-        return false;
-      }
+      final authResponse = await _saasService.login(username, password);
+      state = AsyncValue.data(authResponse.user);
+      return true;
+    } catch (e, stackTrace) {
+      state = AsyncValue.error(e, stackTrace);
+      return false;
+    }
+  }
+
+  Future<bool> register({
+    required String username,
+    String? email,
+    String? password,
+    String? firstName,
+    String? lastName,
+  }) async {
+    state = const AsyncValue.loading();
+    
+    try {
+      final authResponse = await _saasService.register(
+        username: username,
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+      );
+      state = AsyncValue.data(authResponse.user);
+      return true;
     } catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);
       return false;
@@ -49,7 +78,7 @@ class AuthNotifier extends AsyncNotifier<User?> {
     state = const AsyncValue.loading();
     
     try {
-      await _repository.logout();
+      await _saasService.logout();
       state = const AsyncValue.data(null);
     } catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);
@@ -58,56 +87,89 @@ class AuthNotifier extends AsyncNotifier<User?> {
 
   Future<void> refreshUser() async {
     try {
-      final isLoggedIn = await AuthRepository.isLoggedIn();
+      final isLoggedIn = await isAuthenticated();
       if (isLoggedIn) {
-        final user = await _repository.getCurrentUser();
+        final apiService = ref.watch(apiServiceProvider);
+        final user = await apiService.getCurrentUser();
         state = AsyncValue.data(user);
       } else {
         state = const AsyncValue.data(null);
       }
     } catch (e, stackTrace) {
-      state = AsyncValue.error(e, stackTrace);
+      await _clearAuthState();
+      state = const AsyncValue.data(null);
     }
   }
 
   Future<bool> validateToken() async {
     try {
-      return await _repository.validateToken();
+      final apiService = ref.watch(apiServiceProvider);
+      await apiService.verifyToken();
+      return true;
     } catch (e) {
       return false;
     }
   }
+
+  Future<void> _clearAuthState() async {
+    // This will be handled by the SaasApiService logout method
+    await _saasService.logout();
+  }
 }
 
-class AuthState {
-  final AuthStatus status;
-  final Map<String, dynamic>? userData;
-  final String? error;
+// 🎯 Subscription Provider
+final subscriptionProvider = FutureProvider<SubscriptionStatus?>((ref) async {
+  final saasService = ref.watch(saasApiServiceProvider);
+  final authState = ref.watch(authProvider);
+  
+  // Only fetch subscription if user is authenticated
+  return authState.when(
+    data: (user) async {
+      if (user != null) {
+        try {
+          return await saasService.getSubscriptionStatus();
+        } catch (e) {
+          return null;
+        }
+      }
+      return null;
+    },
+    loading: () => null,
+    error: (_, __) => null,
+  );
+});
 
-  const AuthState._({
-    required this.status,
-    this.userData,
-    this.error,
-  });
+// 💳 Pricing Plans Provider
+final pricingPlansProvider = FutureProvider<Map<String, dynamic>?>((ref) async {
+  final saasService = ref.watch(saasApiServiceProvider);
+  
+  try {
+    return await saasService.getPricingPlans();
+  } catch (e) {
+    return null;
+  }
+});
 
-  const AuthState.initial() : this._(status: AuthStatus.initial);
+// Helper providers for UI state
+final isAuthenticatedProvider = Provider<bool>((ref) {
+  final authState = ref.watch(authProvider);
+  return authState.when(
+    data: (user) => user != null,
+    loading: () => false,
+    error: (_, __) => false,
+  );
+});
 
-  const AuthState.loading() : this._(status: AuthStatus.loading);
+final currentUserProvider = Provider<UserData?>((ref) {
+  final authState = ref.watch(authProvider);
+  return authState.when(
+    data: (user) => user,
+    loading: () => null,
+    error: (_, __) => null,
+  );
+});
 
-  const AuthState.authenticated(Map<String, dynamic> userData)
-      : this._(status: AuthStatus.authenticated, userData: userData);
-
-  const AuthState.unauthenticated() : this._(status: AuthStatus.unauthenticated);
-
-  const AuthState.error(String error)
-      : this._(status: AuthStatus.error, error: error);
-
-  bool get isLoading => status == AuthStatus.loading;
-  bool get isAuthenticated => status == AuthStatus.authenticated;
-  bool get isUnauthenticated => status == AuthStatus.unauthenticated;
-  bool get hasError => status == AuthStatus.error;
-}
-
+// Auth state enum for compatibility
 enum AuthStatus {
   initial,
   loading,

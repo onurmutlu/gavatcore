@@ -27,20 +27,27 @@ class CatirCuturLauncher:
                 "priority": 1
             },
             
-            # KARAKTER BOTLARI - BABAGAVAT BANLI OLDUĞU İÇİN KALDIRILDI
+            # KARAKTER BOTLARI - GAWATBABA YENİ HESAPLA AKTİF!
+            "gawatbaba": {
+                "name": "🔥 GawatBaba (Sokak Abisi)",
+                "command": "python multi_bot_launcher.py",
+                "character": "gawatbaba",
+                "description": "Yeni hesap ile aktif! Tecrübeli abi, grup lideri",
+                "priority": 2
+            },
             "yayincilara": {
                 "name": "🎮 Yayıncı Lara (Streamer)",
                 "command": "python multi_bot_launcher.py",
                 "character": "yayincilara",
                 "description": "Streaming ve gaming odaklı enerjik bot",
-                "priority": 2
+                "priority": 3
             },
             "xxxgeisha": {
                 "name": "🌸 XXXGeisha (Mysterious)",
                 "command": "python multi_bot_launcher.py", 
                 "character": "xxxgeisha",
                 "description": "Gizemli, zarif, sofistike karakter bot",
-                "priority": 3
+                "priority": 4
             }
         }
         self.running = False
@@ -50,12 +57,13 @@ class CatirCuturLauncher:
         banner = """
 🔥═══════════════════════════════════════════════════════════════🔥
         🚀 ÇATIR ÇUTUR BOT LAUNCHER v3.0 🚀
-        💥 2 ANA BOT + FULL SİSTEM! 💥
+        💥 3 ANA BOT + FULL SİSTEM! 💥
 🔥═══════════════════════════════════════════════════════════════🔥
+        🔥 GawatBaba - Yeni hesap ile aktif!
         🎮 Yayıncı Lara - Streamer Energy  
         🌸 XXXGeisha - Mysterious Elegant
 🔥═══════════════════════════════════════════════════════════════🔥
-        ⚠️  BabaGavat hesabı Telegram tarafından banlandı
+        ✅ Tüm Telethon Userbot sistemi entegre edildi!
 🔥═══════════════════════════════════════════════════════════════🔥
         """
         print(banner)
@@ -303,26 +311,30 @@ class CatirCuturLauncher:
         print("="*60)
         
         characters = {
-            "babagavat": {
-                "name": "🎯 BabaGavat (❌ BANLI)",
-                "personality": "Bilge, tecrübeli, komik. Gruplarda lider, herkesi yönlendirir.",
-                "style": "Abi tavrı, öğüt verici, bazen ironik. 'Evlat', 'oğlum' gibi hitaplar.",
-                "triggers": "baba, gavat, abi, hocam, tavsiye, yardım",
-                "status": "🚫 Telegram tarafından spam nedeniyle banlandı"
+            "gawatbaba": {
+                "name": "🔥 GawatBaba (✅ AKTİF - YENİ HESAP)",
+                "personality": "Tecrübeli abi, sokak akıllısı, koruyucu lider. Gruplarda otorite.",
+                "style": "Sokak dili, dominant ama koruyucu. 'Lan', 'moruk', 'evlat' hitapları.",
+                "triggers": "abi, baba, hocam, tavsiye, yardım, para, gavat",
+                "status": "✅ Yeni telefon (+447832134241) ile aktif",
+                "phone": "+447832134241",
+                "features": "Admin komutları, coin kontrol, manuel mod"
             },
             "yayincilara": {
                 "name": "🎮 Yayıncı Lara (✅ AKTİF)",
                 "personality": "Enerjik, eğlenceli, yayın odaklı. Streaming kültürüne hakim.",
-                "style": "Genç, dinamik dil. Gaming ve streaming terimleri kullanır.",
-                "triggers": "yayın, stream, game, chat, live, twitch",
-                "status": "✅ Çalışır durumda"
+                "style": "Genç, dinamik dil. Gaming ve streaming terimleri kullanır. Türkçe-Rusça karışımı.",
+                "triggers": "yayın, stream, game, chat, live, twitch, игра",
+                "status": "✅ Çalışır durumda",
+                "features": "GPT yanıtları, hybrid mod, scheduled mesajlar"
             },
             "xxxgeisha": {
                 "name": "🌸 XXXGeisha (✅ AKTİF)",
                 "personality": "Gizemli, çekici, sofistike. Derin konuşmalar yapar.",
                 "style": "Zarif, akıllı dil. Metaforlar ve felsefi yaklaşımlar.",
                 "triggers": "sanat, güzellik, felsefe, geisha, zen, estetik",
-                "status": "✅ Çalışır durumda"
+                "status": "✅ Çalışır durumda",
+                "features": "GPT responses, manualplus mod, seductive AI"
             }
         }
         
@@ -331,10 +343,15 @@ class CatirCuturLauncher:
             print(f"   💭 Kişilik: {char['personality']}")
             print(f"   🗣️ Tarz: {char['style']}")
             print(f"   🔑 Trigger Words: {char['triggers']}")
-            print(f"   📁 Session: sessions/{key}_conversation.session")
+            print(f"   📁 Session: sessions/{key}.session")
             print(f"   🔄 Durum: {char['status']}")
+            if 'phone' in char:
+                print(f"   📱 Telefon: {char['phone']}")
+            if 'features' in char:
+                print(f"   ⚙️ Özellikler: {char['features']}")
         
-        print(f"\n📊 Özet: 2/3 karakter aktif kullanılabilir")
+        print(f"\n📊 Özet: 3/3 karakter aktif kullanılabilir")
+        print(f"🎉 Telethon Userbot sistemi entegre edildi!")
     
     def interactive_menu(self):
         while True:
@@ -350,7 +367,26 @@ class CatirCuturLauncher:
             print("7. 🎭 Karakter Bilgilerini Göster")
             print("8. ❌ Çıkış")
             
-            choice = input("\n🎯 Seçiminiz (1-8): ").strip()
+            try:
+                raw_input = input("\n🎯 Seçiminiz (1-8): ")
+                choice = raw_input.strip()
+                
+                # Debug info
+                if choice not in ["1", "2", "3", "4", "5", "6", "7", "8"]:
+                    print(f"[DEBUG] Raw input: '{raw_input}'")
+                    print(f"[DEBUG] After strip: '{choice}'") 
+                    print(f"[DEBUG] Byte representation: {choice.encode()}")
+                
+                # Super robust cleaning - sadece rakamları al
+                clean_choice = ''.join(c for c in choice if c.isdigit())
+                if clean_choice and clean_choice in ["1", "2", "3", "4", "5", "6", "7", "8"]:
+                    choice = clean_choice
+                elif choice == "":
+                    continue  # Boş input, tekrar sor
+                
+            except (KeyboardInterrupt, EOFError):
+                print("\n👋 Çıkış...")
+                break
             
             if choice == "1":
                 successful = self.start_all_bots()
