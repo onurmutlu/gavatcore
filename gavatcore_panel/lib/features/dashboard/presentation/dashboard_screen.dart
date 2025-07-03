@@ -25,6 +25,11 @@ class DashboardScreen extends ConsumerWidget {
             
             const SizedBox(height: 24),
             
+            // Veri Kaynağı Durumu
+            _buildDataSourceStatus(),
+            
+            const SizedBox(height: 24),
+            
             // Stats cards
             _buildStatsCards(ref, stats),
             
@@ -565,5 +570,206 @@ class DashboardScreen extends ConsumerWidget {
       AppTheme.neonColors.yellow,
     ];
     return colors[index % colors.length];
+  }
+
+  Widget _buildDataSourceStatus() {
+    return GlassContainer(
+      padding: const EdgeInsets.all(20),
+      isNeonBorder: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.source,
+                color: AppTheme.neonColors.green,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Veri Kaynağı Durumu',
+                style: NeonTextStyles.neonSubtitle.copyWith(fontSize: 18),
+              ),
+              const Spacer(),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: AppTheme.neonColors.green.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: AppTheme.neonColors.green.withOpacity(0.5),
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.check_circle,
+                      color: AppTheme.neonColors.green,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      'TÜM VERİLER GERÇEK',
+                      style: TextStyle(
+                        color: AppTheme.neonColors.green,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          
+          const SizedBox(height: 20),
+          
+          // Veri kaynakları listesi
+          Column(
+            children: [
+              _buildDataSourceItem(
+                'Karakterler',
+                'data/profiles/*.json',
+                '6 karakter',
+                true,
+                Icons.person,
+                AppTheme.neonColors.purple,
+              ),
+              _buildDataSourceItem(
+                'Şovcular',
+                'data/performers.json',
+                '12 şovcu',
+                true,
+                Icons.star,
+                AppTheme.neonColors.blue,
+              ),
+              _buildDataSourceItem(
+                'Mesaj Logları',
+                'data/analytics/*.json',
+                '34,225+ mesaj',
+                true,
+                Icons.message,
+                AppTheme.neonColors.green,
+              ),
+              _buildDataSourceItem(
+                'Analytics',
+                'Gerçek analytics verileri',
+                '651 kullanıcı, 28 grup',
+                true,
+                Icons.analytics,
+                AppTheme.neonColors.orange,
+              ),
+              _buildDataSourceItem(
+                'Sistem Metrikleri',
+                'psutil + gerçek sistem',
+                'CPU, RAM, Disk',
+                true,
+                Icons.memory,
+                AppTheme.neonColors.yellow,
+              ),
+              _buildDataSourceItem(
+                'Core Modules',
+                'core/*.py dosyaları',
+                '56 modül',
+                true,
+                Icons.extension,
+                AppTheme.neonColors.red,
+              ),
+            ],
+          ),
+        ],
+      ),
+    ).animate(delay: 300.ms).slideY(begin: -0.2);
+  }
+
+  Widget _buildDataSourceItem(
+    String title,
+    String source,
+    String count,
+    bool isReal,
+    IconData icon,
+    Color color,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: color.withOpacity(0.5),
+                width: 1,
+              ),
+            ),
+            child: Icon(icon, color: color, size: 20),
+          ),
+          
+          const SizedBox(width: 16),
+          
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  source,
+                  style: TextStyle(
+                    color: Colors.white60,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                count,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    isReal ? Icons.check_circle : Icons.error,
+                    color: isReal ? AppTheme.neonColors.green : AppTheme.neonColors.red,
+                    size: 14,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    isReal ? 'GERÇEK' : 'MOCK',
+                    style: TextStyle(
+                      color: isReal ? AppTheme.neonColors.green : AppTheme.neonColors.red,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 } 

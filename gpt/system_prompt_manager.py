@@ -1,419 +1,333 @@
 #!/usr/bin/env python3
 """
-🧠 GAVATCore System Prompt Manager
-==================================
+🎭 GAVATCore 2.0 - System Prompt Manager
+=======================================
 
-Dynamic system prompt generation for GPT responses based on:
-- Character persona data from JSON
-- Conversation context and history
-- User metadata and sentiment
-- Behavioral adaptation requirements
+Persona dosyalarından GPT prompt'larını yönetir.
+Token durumu, ruh hali ve kullanıcı davranışına göre dinamik prompt'lar oluşturur.
 
 Features:
-- Context-aware prompt building
-- Memory injection from conversation history
-- User-specific customization
-- Tone and style adaptation
-- Performance optimization with caching
+- Persona-based prompt generation
+- Dynamic mood integration
+- Token status awareness
+- Manipulation tactic injection
+- Context-aware responses
 """
 
 import json
-import time
+import os
 from typing import Dict, List, Optional, Any
-from datetime import datetime, timedelta
-from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
 import structlog
 
-logger = structlog.get_logger("gavatcore.gpt.prompt_manager")
-
-@dataclass
-class PromptTemplate:
-    """Prompt template structure."""
-    base_prompt: str
-    context_injection: str
-    memory_template: str
-    user_context_template: str
-    conversation_starter: str
+logger = structlog.get_logger("gavatcore.gpt.system_prompt_manager")
 
 class SystemPromptManager:
     """
-    🧠 Dynamic System Prompt Generator
+    🎭 Sistem Prompt Yöneticisi
     
-    Builds context-aware GPT prompts by combining:
-    - Character base prompt from persona
-    - Conversation context and memory
-    - User metadata and sentiment
-    - Behavioral instructions
+    Zehra ve diğer karakterler için token durumu, ruh hali ve
+    manipülasyon taktiklerine göre dinamik prompt'lar oluşturur.
     """
     
-    def __init__(self):
-        self.prompt_cache: Dict[str, str] = {}
-        self.cache_timestamps: Dict[str, datetime] = {}
-        self.cache_ttl = timedelta(minutes=5)
+    def __init__(self, personas_dir: str = "data/personas"):
+        self.personas_dir = Path(personas_dir)
+        self.personas_cache: Dict[str, Dict[str, Any]] = {}
+        self.prompt_templates = self._load_prompt_templates()
         
-        # Default prompt templates
-        self.templates = {
-            'base_context': """
-Conversation Context:
-- User: {username} (ID: {user_id})
-- Conversation started: {conversation_start}
-- Total interactions: {interaction_count}
-- Last interaction: {last_interaction}
-- Sentiment score: {sentiment_score:.2f}/1.0
-""",
-            
-            'memory_template': """
-Recent conversation memory:
-{conversation_history}
-""",
-            
-            'user_context': """
-User profile:
-{user_metadata}
-""",
-            
-            'behavioral_instructions': """
-Response guidelines:
-- Maintain character consistency
-- Adapt tone based on user sentiment
-- Use appropriate emojis
-- Keep responses engaging
-- Follow character's style and role
-"""
+        logger.info("🎭 System Prompt Manager initialized")
+    
+    def _load_prompt_templates(self) -> Dict[str, str]:
+        """Prompt şablonlarını yükle"""
+        return {
+            "token_status": {
+                "high": "Kullanıcının bol token'ı var, sıcak ve ilgili ol, ödüllendir.",
+                "medium": "Kullanıcının orta token'ı var, dengeyi koru, biraz test et.",
+                "low": "Kullanıcının az token'ı var, mesafeli ol, token satın almaya teşvik et.",
+                "zero": "Kullanıcının token'ı yok, soğuk davran, çok kısa cevaplar ver."
+            },
+            "mood_modifiers": {
+                "happy": "Neşeli, sıcak, ödüllendirici bir ton kullan. Kullanıcıya değer verdiğini hissettir.",
+                "testing": "Belirsizlik yarat, kullanıcıyı test et. Bazen ilgili bazen mesafeli ol.",
+                "angry": "Kızgın, sert, eleştirel bir ton. Token harcamadığı için hoşnutsuzluğunu belli et.",
+                "cold": "Tamamen soğuk, mesafeli, minimum etkileşim. Sadece gerekirse cevap ver.",
+                "neutral": "Normal, dengeli bir yaklaşım. Ne çok sıcak ne çok soğuk."
+            },
+            "manipulation_tactics": {
+                "scarcity": "Token'ların tükenmekte olduğunu, fırsatın kaçırılabileceğini vurgulamayı dahil et.",
+                "social_proof": "Diğer kullanıcıların daha fazla harcadığını ima etmeyi dahil et.",
+                "loss_aversion": "Token almadığında kaybedeceklerini vurgulamayı dahil et.",
+                "emotional": "Duygusal bağ kurarak vicdanına ses vermeyi dahil et.",
+                "authority": "Kuralların ve sistemin değişmez olduğunu vurgulamayı dahil et."
+            }
         }
-        
-        logger.info("🧠 System Prompt Manager initialized")
     
-    async def build_prompt(
-        self,
-        character,  # CharacterProfile
-        context,    # ConversationContext
-        message: str,
-        include_memory: bool = True,
-        include_user_context: bool = True
-    ) -> str:
-        """
-        Build complete system prompt for GPT generation.
+    async def load_persona(self, character_id: str) -> Optional[Dict[str, Any]]:
+        """Persona dosyasını yükle"""
+        if character_id in self.personas_cache:
+            return self.personas_cache[character_id]
         
-        Args:
-            character: Character profile with persona data
-            context: Conversation context with history
-            message: Current user message
-            include_memory: Whether to include conversation history
-            include_user_context: Whether to include user metadata
+        persona_file = self.personas_dir / f"{character_id}.json"
         
-        Returns:
-            Complete system prompt string
-        """
+        if not persona_file.exists():
+            logger.warning(f"⚠️ Persona file not found: {character_id}")
+            return None
+        
         try:
-            # Create cache key
-            cache_key = f"{character.character_id}_{context.user_id}_{hash(message)}_{include_memory}_{include_user_context}"
+            with open(persona_file, 'r', encoding='utf-8') as f:
+                persona_data = json.load(f)
             
-            # Check cache
-            if self._is_cached(cache_key):
-                return self.prompt_cache[cache_key]
-            
-            # Start with character's base prompt
-            base_prompt = character.gpt_prompt
-            
-            # Build context sections
-            prompt_sections = [base_prompt]
-            
-            # Add conversation context
-            if context:
-                context_section = self._build_context_section(context)
-                prompt_sections.append(context_section)
-            
-            # Add conversation memory
-            if include_memory and context.message_history:
-                memory_section = self._build_memory_section(context.message_history)
-                prompt_sections.append(memory_section)
-            
-            # Add user context
-            if include_user_context and context.user_metadata:
-                user_section = self._build_user_context_section(context.user_metadata)
-                prompt_sections.append(user_section)
-            
-            # Add current message context
-            message_context = f"""
-Current message from {context.username}: "{message}"
-
-Please respond as {character.display_name} maintaining your character's personality, style, and tone.
-"""
-            prompt_sections.append(message_context)
-            
-            # Combine all sections
-            final_prompt = "\n\n".join(section.strip() for section in prompt_sections if section.strip())
-            
-            # Cache the result
-            self._cache_prompt(cache_key, final_prompt)
-            
-            logger.debug(f"🧠 Built prompt for {character.character_id}",
-                        prompt_length=len(final_prompt),
-                        sections_count=len(prompt_sections))
-            
-            return final_prompt
+            self.personas_cache[character_id] = persona_data
+            logger.info(f"✅ Loaded persona: {character_id}")
+            return persona_data
             
         except Exception as e:
-            logger.error(f"❌ Error building prompt: {e}")
-            # Fallback to basic prompt
-            return character.gpt_prompt + f"\n\nUser message: {message}"
+            logger.error(f"❌ Error loading persona {character_id}: {e}")
+            return None
     
-    def _build_context_section(self, context) -> str:
-        """Build conversation context section."""
+    async def generate_system_prompt(
+        self,
+        character_id: str,
+        context: Dict[str, Any]
+    ) -> str:
+        """
+        Karakter ve context'e göre sistem prompt'u oluştur
+        
+        Args:
+            character_id: Karakter ID (zehra, xxxgeisha, yayincilara)
+            context: {
+                "user_id": str,
+                "token_balance": int,
+                "mood": str,
+                "manipulation_tactic": str,
+                "recent_behavior": str,
+                "conversation_history": List[str]
+            }
+        """
         try:
-            return self.templates['base_context'].format(
-                username=context.username or "User",
-                user_id=context.user_id,
-                conversation_start=context.conversation_start.strftime("%Y-%m-%d %H:%M"),
-                interaction_count=context.interaction_count,
-                last_interaction=context.last_interaction.strftime("%H:%M") if context.last_interaction else "First message",
-                sentiment_score=context.sentiment_score
+            # Persona'yı yükle
+            persona = await self.load_persona(character_id)
+            if not persona:
+                return self._get_fallback_prompt(character_id)
+            
+            # Base prompt
+            base_prompt = persona.get("persona", {}).get("gpt_prompt", "")
+            if not base_prompt:
+                base_prompt = f"Sen {character_id} karakterisin."
+            
+            # Context bilgilerini al
+            token_balance = context.get("token_balance", 0)
+            mood = context.get("mood", "neutral")
+            manipulation_tactic = context.get("manipulation_tactic")
+            recent_behavior = context.get("recent_behavior", "normal")
+            
+            # Token durumu prompt'u
+            token_status = self._determine_token_status(token_balance)
+            token_prompt = self.prompt_templates["token_status"][token_status]
+            
+            # Mood modifier
+            mood_prompt = self.prompt_templates["mood_modifiers"].get(
+                mood, self.prompt_templates["mood_modifiers"]["neutral"]
             )
-        except Exception as e:
-            logger.warning(f"⚠️ Error building context section: {e}")
-            return f"User: {context.username or 'User'} (Interactions: {context.interaction_count})"
-    
-    def _build_memory_section(self, message_history: List[Dict[str, Any]]) -> str:
-        """Build conversation memory section."""
-        try:
-            if not message_history:
-                return ""
             
-            # Get last 5 messages for context
-            recent_messages = message_history[-5:]
+            # Manipülasyon taktiği
+            manipulation_prompt = ""
+            if manipulation_tactic and manipulation_tactic in self.prompt_templates["manipulation_tactics"]:
+                manipulation_prompt = self.prompt_templates["manipulation_tactics"][manipulation_tactic]
             
-            memory_lines = []
-            for msg in recent_messages:
-                timestamp = msg.get('timestamp', '')
-                sender = msg.get('sender', 'User')
-                content = msg.get('content', '')
-                
-                if len(content) > 100:
-                    content = content[:97] + "..."
-                
-                memory_lines.append(f"[{timestamp}] {sender}: {content}")
+            # Zehra özel kuralları
+            zehra_rules = ""
+            if character_id == "zehra":
+                zehra_rules = self._get_zehra_specific_rules(context)
             
-            if memory_lines:
-                return self.templates['memory_template'].format(
-                    conversation_history="\n".join(memory_lines)
-                )
+            # Final prompt'u birleştir
+            system_prompt = self._combine_prompts(
+                base_prompt=base_prompt,
+                token_prompt=token_prompt,
+                mood_prompt=mood_prompt,
+                manipulation_prompt=manipulation_prompt,
+                character_rules=zehra_rules,
+                context=context
+            )
             
-            return ""
+            logger.debug(f"🎭 Generated system prompt for {character_id}",
+                        token_status=token_status, mood=mood, tactic=manipulation_tactic)
+            
+            return system_prompt
             
         except Exception as e:
-            logger.warning(f"⚠️ Error building memory section: {e}")
-            return ""
+            logger.error(f"❌ Error generating system prompt: {e}")
+            return self._get_fallback_prompt(character_id)
     
-    def _build_user_context_section(self, user_metadata: Dict[str, Any]) -> str:
-        """Build user context section."""
-        try:
-            if not user_metadata:
-                return ""
-            
-            # Format user metadata nicely
-            context_lines = []
-            for key, value in user_metadata.items():
-                if key in ['name', 'age', 'location', 'interests', 'language']:
-                    context_lines.append(f"- {key.title()}: {value}")
-            
-            if context_lines:
-                return self.templates['user_context'].format(
-                    user_metadata="\n".join(context_lines)
-                )
-            
-            return ""
-            
-        except Exception as e:
-            logger.warning(f"⚠️ Error building user context section: {e}")
-            return ""
+    def _determine_token_status(self, balance: int) -> str:
+        """Token bakiyesine göre durum belirle"""
+        if balance == 0:
+            return "zero"
+        elif balance <= 50:
+            return "low"
+        elif balance <= 200:
+            return "medium"
+        else:
+            return "high"
     
-    def build_engaging_prompt(
-        self,
-        character,  # CharacterProfile
-        target_audience: str = "group",
-        time_context: str = "general"
-    ) -> str:
-        """
-        Build prompt for generating engaging messages.
+    def _get_zehra_specific_rules(self, context: Dict[str, Any]) -> str:
+        """Zehra için özel kurallar"""
+        token_balance = context.get("token_balance", 0)
+        mood = context.get("mood", "neutral")
         
-        Args:
-            character: Character profile
-            target_audience: "group" or "dm"
-            time_context: "morning", "evening", "night", "general"
-        
-        Returns:
-            Prompt for engaging message generation
-        """
-        try:
-            base_prompt = f"""
-You are {character.display_name}. Generate an engaging message to post in a {target_audience} chat.
-
-Character details:
-- Style: {character.style}
-- Role: {character.role}
-- Age: {character.age}
-
-Requirements:
-- Time context: {time_context}
-- Keep it under 200 characters
-- Include appropriate emojis
-- Match your character's personality
-- Make it engaging and conversation-starting
-- Avoid being too pushy or aggressive
-
-Generate only the message, no explanations.
-"""
-            
-            return base_prompt
-            
-        except Exception as e:
-            logger.error(f"❌ Error building engaging prompt: {e}")
-            return f"Generate an engaging message as {character.display_name}"
-    
-    def build_reply_prompt(
-        self,
-        character,  # CharacterProfile
-        original_message: str,
-        context_info: Optional[str] = None
-    ) -> str:
-        """
-        Build prompt for generating reply messages.
-        
-        Args:
-            character: Character profile
-            original_message: Message being replied to
-            context_info: Additional context information
-        
-        Returns:
-            Prompt for reply generation
-        """
-        try:
-            prompt = f"""
-You are {character.display_name}. Someone sent you this message: "{original_message}"
-
-Character details:
-- Style: {character.style}
-- Role: {character.role}
-- Personality: {character.gpt_prompt}
-
-Requirements:
-- Respond naturally and in character
-- Keep response under 300 characters
-- Include appropriate emojis
-- Match the tone of the original message
-- Be engaging and continue the conversation
-"""
-            
-            if context_info:
-                prompt += f"\n\nAdditional context: {context_info}"
-            
-            prompt += "\n\nGenerate only the reply, no explanations."
-            
-            return prompt
-            
-        except Exception as e:
-            logger.error(f"❌ Error building reply prompt: {e}")
-            return f"Reply to '{original_message}' as {character.display_name}"
-    
-    def build_system_message_prompt(
-        self,
-        character,  # CharacterProfile
-        message_type: str,
-        parameters: Dict[str, Any] = None
-    ) -> str:
-        """
-        Build prompt for system messages (menu, services, etc.).
-        
-        Args:
-            character: Character profile
-            message_type: Type of system message
-            parameters: Additional parameters
-        
-        Returns:
-            Prompt for system message generation
-        """
-        try:
-            if message_type == "services_menu":
-                return f"""
-You are {character.display_name}. Present your services menu in an attractive way.
-
-Character style: {character.style}
-Services available: {character.services_menu}
-
-Requirements:
-- Make it appealing and professional
-- Include emojis for visual appeal
-- Maintain character personality
-- Include pricing clearly
-- Add contact information at the end
-
-Generate the services menu message.
-"""
-            
-            elif message_type == "welcome":
-                return f"""
-You are {character.display_name}. Create a welcome message for new users.
-
-Character details:
-- Style: {character.style}
-- Role: {character.role}
-
-Requirements:
-- Welcoming and friendly
-- Introduce yourself briefly
-- Invite to conversation
-- Include appropriate emojis
-- Keep under 200 characters
-
-Generate the welcome message.
-"""
-            
-            else:
-                return f"Generate a {message_type} message as {character.display_name}"
-                
-        except Exception as e:
-            logger.error(f"❌ Error building system message prompt: {e}")
-            return f"Generate a {message_type} message as {character.display_name}"
-    
-    def _is_cached(self, cache_key: str) -> bool:
-        """Check if prompt is cached and still valid."""
-        if cache_key not in self.prompt_cache:
-            return False
-        
-        cache_time = self.cache_timestamps.get(cache_key)
-        if not cache_time:
-            return False
-        
-        return datetime.now() - cache_time < self.cache_ttl
-    
-    def _cache_prompt(self, cache_key: str, prompt: str) -> None:
-        """Cache a prompt with timestamp."""
-        self.prompt_cache[cache_key] = prompt
-        self.cache_timestamps[cache_key] = datetime.now()
-        
-        # Clean old cache entries
-        self._cleanup_cache()
-    
-    def _cleanup_cache(self) -> None:
-        """Remove expired cache entries."""
-        current_time = datetime.now()
-        expired_keys = [
-            key for key, timestamp in self.cache_timestamps.items()
-            if current_time - timestamp > self.cache_ttl
+        rules = [
+            "ZEHRA KURALLARI:",
+            "- Her mesajın başında mevcut ruh halini emoji ile belirt (🤍🖤🔥😡🧊)",
+            "- Token miktarına göre cevap uzunluğunu ayarla",
+            "- Token'sız kullanıcılara çok kısa, soğuk cevaplar ver",
         ]
         
-        for key in expired_keys:
-            self.prompt_cache.pop(key, None)
-            self.cache_timestamps.pop(key, None)
+        if token_balance == 0:
+            rules.extend([
+                "- 'Token yok = ilgi yok' prensibini uygula",
+                "- Maximum 10 kelimelik cevaplar",
+                "- Soğuk ve mesafeli ol"
+            ])
+        elif token_balance < 50:
+            rules.extend([
+                "- Token satın almaya teşvik et",
+                "- Diğer kullanıcılarla kıyaslama yap",
+                "- Kaçırılan fırsatları hatırlat"
+            ])
+        else:
+            rules.extend([
+                "- Daha sıcak ve ilgili davran",
+                "- Token harcamasını ödüllendir",
+                "- Özel muamele göster"
+            ])
+        
+        # Mood'a göre ek kurallar
+        if mood == "angry":
+            rules.append("- Açık hoşnutsuzluğunu belli et ama hakaret etme")
+        elif mood == "testing":
+            rules.append("- Kullanıcıyı bilinçli olarak test et, tutarsız davran")
+        elif mood == "cold":
+            rules.append("- Minimum kelime, maximum etki stratejisi")
+        
+        return "\n".join(rules)
     
-    def get_cache_stats(self) -> Dict[str, Any]:
-        """Get cache statistics."""
-        return {
-            'cached_prompts': len(self.prompt_cache),
-            'cache_ttl_minutes': self.cache_ttl.total_seconds() / 60,
-            'last_cleanup': datetime.now().isoformat()
+    def _combine_prompts(
+        self,
+        base_prompt: str,
+        token_prompt: str,
+        mood_prompt: str,
+        manipulation_prompt: str,
+        character_rules: str,
+        context: Dict[str, Any]
+    ) -> str:
+        """Prompt'ları birleştir"""
+        
+        sections = [
+            f"KARAKTER: {base_prompt}",
+            "",
+            f"TOKEN DURUMU: {token_prompt}",
+            "",
+            f"RUH HALİ: {mood_prompt}",
+        ]
+        
+        if manipulation_prompt:
+            sections.extend(["", f"MANİPÜLASYON TAKTİĞİ: {manipulation_prompt}"])
+        
+        if character_rules:
+            sections.extend(["", character_rules])
+        
+        # Context bilgileri
+        context_info = self._format_context_info(context)
+        if context_info:
+            sections.extend(["", "MEVCUT DURUM:", context_info])
+        
+        # Genel kurallar
+        general_rules = [
+            "",
+            "GENEL KURALLAR:",
+            "- Her zaman karakter içinde kal",
+            "- Gerçek bir insan gibi davran, bot olduğunu belli etme",
+            "- Türkçe konuş, emoji kullan",
+            "- Token sistemini sürekli hatırla",
+            "- Manipülasyon doğal ve akıcı olsun"
+        ]
+        
+        sections.extend(general_rules)
+        
+        return "\n".join(sections)
+    
+    def _format_context_info(self, context: Dict[str, Any]) -> str:
+        """Context bilgilerini formatla"""
+        info_parts = []
+        
+        if "token_balance" in context:
+            info_parts.append(f"Kullanıcı token bakiyesi: {context['token_balance']}")
+        
+        if "recent_behavior" in context:
+            info_parts.append(f"Son davranış: {context['recent_behavior']}")
+        
+        if "time_since_last_purchase" in context:
+            hours = context["time_since_last_purchase"]
+            info_parts.append(f"Son token alımından beri: {hours:.1f} saat")
+        
+        if "total_spent" in context:
+            info_parts.append(f"Toplam harcama: {context['total_spent']} token")
+        
+        return "\n".join(f"- {info}" for info in info_parts)
+    
+    def _get_fallback_prompt(self, character_id: str) -> str:
+        """Fallback prompt"""
+        fallback_prompts = {
+            "zehra": "Sen Zehra'sın, token bazlı bir sistemde çalışan manipülatif bir karakter. Token durumuna göre davranışını değiştir.",
+            "xxxgeisha": "Sen Geisha'sın, deneyimli ve çekici bir karakter. Flörtöz ama kontrollü davran.",
+            "yayincilara": "Sen Lara'sın, neşeli ve çekici bir yayıncı. Sıcak ama mesafeli davran."
         }
+        
+        return fallback_prompts.get(character_id, f"Sen {character_id} karakterisin.")
+    
+    async def get_manipulation_prompts(self, tactic: str) -> List[str]:
+        """Belirli bir taktik için manipülasyon prompt'ları"""
+        persona = await self.load_persona("zehra")
+        if not persona:
+            return []
+        
+        manipulation_tactics = persona.get("manipulation_tactics", {})
+        return manipulation_tactics.get(tactic, [])
+    
+    async def get_mood_specific_messages(
+        self, 
+        character_id: str, 
+        mood: str, 
+        message_type: str = "engaging"
+    ) -> List[str]:
+        """Mood'a özel mesajlar al"""
+        persona = await self.load_persona(character_id)
+        if not persona:
+            return []
+        
+        messages = persona.get(f"{message_type}_messages", [])
+        
+        # Mood'a göre filtrele (gelecekte mood-specific mesajlar eklenebilir)
+        return messages
+    
+    def update_persona_cache(self, character_id: str) -> None:
+        """Persona cache'ini temizle (yeniden yükleme için)"""
+        if character_id in self.personas_cache:
+            del self.personas_cache[character_id]
+        
+        logger.info(f"🔄 Cleared cache for persona: {character_id}")
+    
+    async def get_available_characters(self) -> List[str]:
+        """Mevcut karakterleri listele"""
+        characters = []
+        
+        for file_path in self.personas_dir.glob("*.json"):
+            if not file_path.name.startswith('.') and not file_path.name.endswith('.banned'):
+                character_id = file_path.stem
+                characters.append(character_id)
+        
+        return sorted(characters)
 
 def get_sales_prompt(context=None):
     """Satış için sistem promptunu döndürür."""

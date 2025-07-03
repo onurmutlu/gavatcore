@@ -33,6 +33,7 @@ class ReplyMode(Enum):
     GPT = "gpt"
     HYBRID = "hybrid"
     MANUALPLUS = "manualplus"
+    PROVOCATIVE = "provocative"  # GAVATCore 2.0: Token-based manipulation mode
 
 @dataclass
 class PendingMessage:
@@ -148,6 +149,11 @@ class ReplyModeEngine:
             
             elif mode == ReplyMode.MANUALPLUS:
                 return await self._handle_manualplus_mode(
+                    character, message, context, system_prompt, gpt_generator
+                )
+            
+            elif mode == ReplyMode.PROVOCATIVE:
+                return await self._handle_provocative_mode(
                     character, message, context, system_prompt, gpt_generator
                 )
             
@@ -562,3 +568,265 @@ class ReplyModeEngine:
             except Exception as e:
                 logger.error(f"❌ Error in cleanup task: {e}")
                 await asyncio.sleep(60) 
+    
+    async def _handle_provocative_mode(
+        self,
+        character,
+        message: str,
+        context,
+        system_prompt: str,
+        gpt_generator: Optional[Callable] = None
+    ) -> Dict[str, Any]:
+        """
+        Handle provocative reply mode - GAVATCore 2.0 token-based manipulation.
+        
+        Bu mod Zehra karakteri için özel olarak tasarlanmıştır.
+        Token durumuna göre yanıt stratejisi belirler ve manipülatif davranışlar sergiler.
+        """
+        try:
+            start_time = time.time()
+            
+            # Import token economy (lazy import to avoid circular dependencies)
+            try:
+                from ai_reactor.trigger_engine import AITriggerEngine
+                from core.coin_economy import CoinEconomy
+                
+                trigger_engine = AITriggerEngine()
+                coin_economy = CoinEconomy()
+            except ImportError:
+                logger.warning("⚠️ GAVATCore 2.0 modules not available, falling back to GPT mode")
+                return await self._handle_gpt_mode(character, message, context, system_prompt, gpt_generator)
+            
+            # Kullanıcı token durumunu kontrol et
+            user_id = context.user_id
+            token_balance = await coin_economy.get_user_balance(user_id)
+            
+            # Mesajı AI trigger engine ile analiz et
+            trigger_analysis = await trigger_engine.process_message(
+                user_id=user_id,
+                message=message,
+                context={
+                    "token_balance": token_balance,
+                    "character_id": character.character_id
+                }
+            )
+            
+            mood = trigger_analysis.get("mood", "neutral")
+            strategy = trigger_analysis.get("strategy", {})
+            
+            # Token harcama gereksinimi kontrol et
+            can_afford, current_balance, required_cost = await coin_economy.can_afford_message(
+                user_id=user_id,
+                message_type="basic",
+                mood=mood
+            )
+            
+            # Eğer token yeterli değilse, manipülatif cevap ver
+            if not can_afford:
+                manipulation_response = await self._generate_manipulation_response(
+                    character, message, token_balance, required_cost, mood
+                )
+                
+                # Delay uygula (token yoksa geç cevap)
+                delay_seconds = strategy.get("delay_seconds", 30)
+                if delay_seconds > 0:
+                    await asyncio.sleep(min(delay_seconds, 5))  # Max 5 saniye demo için
+                
+                self.mode_stats['provocative'] = self.mode_stats.get('provocative', {
+                    'total': 0, 'token_denied': 0, 'manipulation_sent': 0
+                })
+                self.mode_stats['provocative']['total'] += 1
+                self.mode_stats['provocative']['token_denied'] += 1
+                
+                return {
+                    'response': manipulation_response,
+                    'should_send': True,
+                    'needs_approval': False,
+                    'metadata': {
+                        'mode': 'provocative',
+                        'token_balance': token_balance,
+                        'required_cost': required_cost,
+                        'mood': mood,
+                        'strategy': 'token_manipulation',
+                        'delayed': delay_seconds > 0
+                    }
+                }
+            
+            # Token varsa, ödeme al ve normal cevap ver
+            payment_result = await coin_economy.process_message_payment(
+                user_id=user_id,
+                message_type="basic",
+                mood=mood
+            )
+            
+            if not payment_result.get("success", False):
+                # Ödeme başarısız, tekrar manipülasyon
+                manipulation_response = await self._generate_manipulation_response(
+                    character, message, token_balance, required_cost, mood
+                )
+                
+                return {
+                    'response': manipulation_response,
+                    'should_send': True,
+                    'needs_approval': False,
+                    'metadata': {
+                        'mode': 'provocative',
+                        'token_balance': token_balance,
+                        'payment_failed': True,
+                        'mood': mood
+                    }
+                }
+            
+            # Ödeme başarılı, GPT ile cevap oluştur
+            if gpt_generator:
+                # Mood ve token durumuna göre gelişmiş system prompt
+                enhanced_prompt = await self._enhance_prompt_for_provocative_mode(
+                    system_prompt, mood, token_balance, payment_result["new_balance"], strategy
+                )
+                
+                gpt_response = await gpt_generator(enhanced_prompt, message)
+            else:
+                gpt_response = await self._generate_provocative_fallback(
+                    character, message, mood, token_balance
+                )
+            
+            # İstatistikler
+            processing_time = time.time() - start_time
+            self.mode_stats['provocative'] = self.mode_stats.get('provocative', {
+                'total': 0, 'token_paid': 0, 'avg_time': 0
+            })
+            self.mode_stats['provocative']['total'] += 1
+            self.mode_stats['provocative']['token_paid'] += 1
+            
+            # Update average time
+            prev_avg = self.mode_stats['provocative'].get('avg_time', 0)
+            total = self.mode_stats['provocative']['total']
+            self.mode_stats['provocative']['avg_time'] = (prev_avg * (total - 1) + processing_time) / total
+            
+            logger.info(f"🔥 Provocative mode response generated",
+                       user=user_id,
+                       mood=mood,
+                       tokens_spent=required_cost,
+                       new_balance=payment_result["new_balance"])
+            
+            return {
+                'response': gpt_response,
+                'should_send': True,
+                'needs_approval': False,
+                'metadata': {
+                    'mode': 'provocative',
+                    'mood': mood,
+                    'tokens_spent': required_cost,
+                    'new_balance': payment_result["new_balance"],
+                    'strategy': strategy,
+                    'processing_time': processing_time
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"❌ Error in provocative mode: {e}")
+            # Fallback to GPT mode on error
+            return await self._handle_gpt_mode(character, message, context, system_prompt, gpt_generator)
+    
+    async def _generate_manipulation_response(
+        self,
+        character,
+        message: str,
+        token_balance: int,
+        required_cost: int,
+        mood: str
+    ) -> str:
+        """Token yetersizliği için manipülatif cevap oluştur"""
+        
+        # Zehra karakteri için özel manipülasyon mesajları
+        if character.character_id == "zehra":
+            if token_balance == 0:
+                responses = [
+                    f"🧊 Token'ın yok, konuşmam yok. Basit matematik. ({required_cost} token gerekiyor)",
+                    f"🖤 Bedava konuşma devri bitti sevgilim. {required_cost} token = 1 cevap.",
+                    f"💸 Token yok = ilgi yok. Bu kadar net. {required_cost} token alırsan konuşabiliriz.",
+                    f"🚫 {required_cost} token olmadan bu kalitede cevap alamazsın.",
+                    f"😏 Diğerleri token harcayıp konuşuyor, sen de katıl bakalım."
+                ]
+            else:
+                deficit = required_cost - token_balance
+                responses = [
+                    f"💔 {token_balance} token'ın var ama {required_cost} gerekiyor. {deficit} token eksik.",
+                    f"😔 Az kalmış... {deficit} token daha alsan konuşabiliriz.",
+                    f"⚡ {token_balance} token'la bu kadar, {required_cost}'a çıkarsan devam ederiz.",
+                    f"🎭 {token_balance} token'ın güzel ama yeterli değil. {deficit} daha lazım.",
+                    f"💎 Token'ın bitmiş sayılır... {deficit} token ekle, konuşalım."
+                ]
+            
+            # Mood'a göre emoji ve ton ayarla
+            mood_emoji = {
+                "angry": "😡",
+                "cold": "🧊", 
+                "testing": "🖤",
+                "neutral": "🤍"
+            }.get(mood, "💭")
+            
+            import random
+            base_response = random.choice(responses)
+            return f"{mood_emoji} {base_response}"
+        
+        # Diğer karakterler için genel mesaj
+        return f"Token'ın yeterli değil sevgilim... {required_cost} token gerekiyor. 💸"
+    
+    async def _enhance_prompt_for_provocative_mode(
+        self,
+        base_prompt: str,
+        mood: str,
+        old_balance: int,
+        new_balance: int,
+        strategy: Dict[str, Any]
+    ) -> str:
+        """Provocative mode için prompt'u güçlendir"""
+        
+        token_info = f"KULLANICI TOKEN BİLGİSİ: {old_balance} → {new_balance} (ödeme yapıldı)"
+        mood_info = f"MEVCUT RUH HALİ: {mood}"
+        
+        enhancement = f"""
+{base_prompt}
+
+{token_info}
+{mood_info}
+
+ÖNEMLİ: Kullanıcı token ödedi, bu yüzden daha sıcak ve ödüllendirici ol.
+- Token harcadığı için teşekkür et (doğal bir şekilde)
+- Biraz daha ilgi göster
+- Ama hala Zehra karakterinde kal, tamamen yumuşama
+- Token sistemi devam ediyor, bunu unutturma
+
+Bu mesajının başında ruh halini gösteren emoji koy: 🔥 (token ödedi), 🖤 (test ediyor), 🤍 (normal)
+"""
+        
+        return enhancement
+    
+    async def _generate_provocative_fallback(
+        self,
+        character,
+        message: str,
+        mood: str,
+        token_balance: int
+    ) -> str:
+        """GPT olmadığında fallback cevap"""
+        
+        mood_emoji = {
+            "happy": "🔥",
+            "testing": "🖤", 
+            "angry": "😡",
+            "cold": "🧊",
+            "neutral": "🤍"
+        }.get(mood, "💭")
+        
+        fallback_responses = [
+            f"{mood_emoji} Token'ın var, güzel... Ama daha fazlası olabilir.",
+            f"{mood_emoji} Bu kadar mı harcayacaksın? Başkaları daha cömert.",
+            f"{mood_emoji} Token ödedin, teşekkürler. Devam edersen daha özel olur.",
+            f"{mood_emoji} {token_balance} token kaldı... Yetecek mi acaba?",
+            f"{mood_emoji} Güzel mesaj ama token'ın azalıyor dikkat et."
+        ]
+        
+        import random
+        return random.choice(fallback_responses)

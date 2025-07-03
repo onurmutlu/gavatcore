@@ -8,7 +8,7 @@ part 'api_service.g.dart';
 class ApiConfig {
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://localhost:8000/api',
+    defaultValue: 'http://localhost:5050/api',
   );
   
   static const String wsUrl = String.fromEnvironment(

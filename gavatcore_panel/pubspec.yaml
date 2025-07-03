@@ -37,6 +37,8 @@ dependencies:
   # Utils
   intl: ^0.18.1
   uuid: ^4.2.1
+  google_fonts: ^6.1.0
+  http: ^1.1.0
   
   # Local Storage
   shared_preferences: ^2.2.2
@@ -73,12 +75,8 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: Inter
+    - family: OnlyVips
       fonts:
-        - asset: assets/fonts/Inter-Regular.ttf
-        - asset: assets/fonts/Inter-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Inter-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/Inter-Bold.ttf
+        - asset: assets/fonts/OnlyVips-Regular.ttf
+        - asset: assets/fonts/OnlyVips-Bold.ttf
           weight: 700
