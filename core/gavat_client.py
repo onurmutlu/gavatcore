@@ -1,63 +1,149 @@
 # core/gavat_client.py
+
 import os
 import asyncio
-import random
-import json
-import datetime
-from telethon import TelegramClient, events, Button
-from handlers.dm_handler import handle_message, handle_inline_bank_choice
-from core.license_checker import LicenseChecker
-from core.profile_loader import load_profile
+import time
+import logging
+from telethon import TelegramClient, events
+from telethon.sessions import SQLiteSession
+from pathlib import Path
+import sqlite3
+from core.db_session import create_database_session
+
+logger = logging.getLogger("gavatcore.gavat_client")
+
+class SafeSQLiteSession(SQLiteSession):
+    """WAL mode'u devre dışı bırakılmış güvenli SQLite session"""
+    
+    def __init__(self, session_id=None):
+        super().__init__(session_id)
+        self._wal_disabled = False
+    
+    def _execute(self, *args, **kwargs):
+        """Override _execute to disable WAL mode and handle disk I/O errors"""
+        try:
+            # İlk bağlantıda WAL mode'u devre dışı bırak
+            if not self._wal_disabled:
+                try:
+                    # WAL mode'u DELETE mode'a çevir
+                    super()._execute("PRAGMA journal_mode=DELETE")
+                    # Synchronous mode'u NORMAL yap
+                    super()._execute("PRAGMA synchronous=NORMAL")
+                    # Temp store'u memory'de tut
+                    super()._execute("PRAGMA temp_store=MEMORY")
+                    # Busy timeout ayarla
+                    super()._execute("PRAGMA busy_timeout=30000")
+                    # Cache size'ı artır
+                    super()._execute("PRAGMA cache_size=10000")
+                    self._wal_disabled = True
+                    logger.debug("SQLite WAL mode devre dışı bırakıldı")
+                except Exception as e:
+                    logger.warning(f"SQLite PRAGMA ayarları uygulanamadı: {e}")
+                    self._wal_disabled = True
+            
+            return super()._execute(*args, **kwargs)
+            
+        except sqlite3.OperationalError as e:
+            if "disk I/O error" in str(e):
+                logger.error(f"Disk I/O hatası yakalandı: {e}")
+                # Session'ı yeniden başlatmaya çalış
+                try:
+                    if hasattr(self, '_conn') and self._conn:
+                        self._conn.close()
+                        self._conn = None
+                    # Yeniden bağlan
+                    return super()._execute(*args, **kwargs)
+                except Exception as e2:
+                    logger.error(f"Session yeniden başlatılamadı: {e2}")
+                    raise e
+            else:
+                raise e
+        except Exception as e:
+            logger.error(f"SQLite execute hatası: {e}")
+            raise e
 
 class GavatClient:
-    def __init__(self, session_path: str):
-        self.session_path = session_path
-        self.api_id = int(os.getenv("TELEGRAM_API_ID"))
-        self.api_hash = os.getenv("TELEGRAM_API_HASH")
-        self.client = TelegramClient(self.session_path, self.api_id, self.api_hash)
-        self.license_checker = LicenseChecker()
+    def __init__(self, session_identifier: str):
+        # Session identifier artık username olacak (path değil)
+        self.session_identifier = session_identifier
+        self.username = session_identifier
+        self.client = None
+        self._setup_client()
 
-    def get_random_engaging_message(self, username=None):
-        """Kullanıcının profilinden ya da template’ten rastgele bir mesaj döndürür."""
+    def _setup_client(self):
+        """Client'ı database session ile kurar."""
         try:
-            if username:
-                profile = load_profile(username)
-                if profile.get("engaging_messages"):
-                    return random.choice(profile["engaging_messages"])
-            # fallback template
-            with open('data/group_spam_messages.json', 'r', encoding='utf-8') as f:
-                data = json.load(f)
-                return random.choice(data["_template"]["engaging_messages"])
+            # API bilgilerini config'den al
+            from config import TELEGRAM_API_ID, TELEGRAM_API_HASH
+            
+            # Database session kullan (Redis)
+            db_session = create_database_session(self.session_identifier, "redis")
+            
+            self.client = TelegramClient(
+                db_session,
+                TELEGRAM_API_ID,
+                TELEGRAM_API_HASH,
+                connection_retries=3,
+                retry_delay=10,
+                timeout=30,
+                request_retries=2,
+                flood_sleep_threshold=60*60,  # 1 saat flood wait
+                auto_reconnect=True,
+                sequential_updates=True  # Update'leri sıralı işle
+            )
+            
+            logger.info(f"Client oluşturuldu: {self.session_identifier}")
+            
         except Exception as e:
-            print(f"[⚠️] Mesajlar yüklenirken hata: {e}")
-            return "Merhaba! Nasılsınız?"
+            logger.error(f"Client setup hatası: {e}")
+            raise
 
-    def get_session_created_at(self):
-        """
-        Gerçek session oluşturulma zamanını belirlemek için lisans dosyasına bakar.
-        """
-        session_file = os.path.basename(self.session_path)
-        user_id = int(session_file.split('.')[0].replace("user_", ""))
-        return self.license_checker.get_session_creation_time(user_id)
+    async def start(self):
+        """Client'ı başlatır."""
+        try:
+            await self.client.connect()
+            
+            if not await self.client.is_user_authorized():
+                logger.error(f"Client yetkilendirilmemiş: {self.session_identifier}")
+                return False
+            
+            # Username'i al
+            me = await self.client.get_me()
+            self.username = me.username or f"user_{me.id}"
+            
+            logger.info(f"[{self.username}] başarıyla başlatıldı - User: {me.first_name}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Client başlatma hatası: {e}")
+            return False
 
     async def run(self):
-        await self.client.start()
-        me = await self.client.get_me()
-        username = me.username or f"user_{me.id}"
-        print(f"\U0001F9E0 [{username}] olarak çalışıyor...")
+        """Client'ı çalıştırır."""
+        try:
+            if not await self.start():
+                return
+            
+            logger.info(f"[{self.username}] çalışıyor...")
+            await self.client.run_until_disconnected()
+            
+        except Exception as e:
+            logger.error(f"Client çalışma hatası: {e}")
+        finally:
+            if self.client and self.client.is_connected():
+                await self.client.disconnect()
 
-        session_created_at = self.get_session_created_at()
+    async def disconnect(self):
+        """Client'ı güvenli şekilde kapatır."""
+        try:
+            if self.client and self.client.is_connected():
+                await self.client.disconnect()
+                logger.info(f"[{self.username}] bağlantı kapatıldı")
+        except Exception as e:
+            logger.warning(f"Disconnect hatası: {e}")
 
-        @self.client.on(events.NewMessage(incoming=True))
-        async def handler(event):
-            if event.is_private:
-                sender = await event.get_sender()
-                message_text = event.raw_text
-                print(f"\U0001F4E9 DM geldi: {sender.username or sender.id} - {message_text}")
-                await handle_message(self.client, sender, message_text, session_created_at)
-
-        @self.client.on(events.CallbackQuery)
-        async def inline_handler(event):
-            await handle_inline_bank_choice(event)
-
-        await self.client.run_until_disconnected()
+# Utility fonksiyonlar
+def is_session_available(username):
+    """Session dosyasının mevcut olup olmadığını kontrol eder."""
+    session_path = f"sessions/{username}.session"
+    return os.path.exists(session_path)

@@ -30,10 +30,13 @@ logs/*
 !logs/.gitkeep
 sessions/*
 !sessions/.gitkeep
-data/*
-!data/.gitkeep
-!data/personas/.gitkeep
-!data/templates/.gitkeep
+
+# Hassas Veriler
+*.key
+*.token
+*.secret
+*.credentials
+*.password
 
 # Veritabanı ve Cache
 *.sqlite3
@@ -83,4 +86,6 @@ site/
 metrics_*.csv
 metrics_*.jsonl
 backup_*.zip
-backup_*.tar.gz 
+backup_*.tar.gz
+backups/
+backup_*/ 

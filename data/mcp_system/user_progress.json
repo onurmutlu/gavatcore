@@ -1,0 +1,190 @@
+[
+  {
+    "user_id": "test_user_123",
+    "username": "user_test_user_123",
+    "level": 1,
+    "total_xp": 350,
+    "tokens": 10,
+    "badges": [],
+    "completed_quests": [
+      "daily_chat"
+    ],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:42:59.559561"
+  },
+  {
+    "user_id": "test_user_voice",
+    "username": "user_test_user_voice",
+    "level": 1,
+    "total_xp": 3,
+    "tokens": 0,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [
+      "voice_interaction"
+    ],
+    "character_relationships": {
+      "geisha": 3
+    },
+    "last_activity": "2025-05-28T15:43:08.113975"
+  },
+  {
+    "user_id": "test_user_social",
+    "username": "user_test_user_social",
+    "level": 1,
+    "total_xp": 390,
+    "tokens": 150,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:43:08.939241"
+  },
+  {
+    "user_id": "integration_test_user",
+    "username": "user_integration_test_user",
+    "level": 1,
+    "total_xp": 140,
+    "tokens": 10,
+    "badges": [],
+    "completed_quests": [
+      "daily_chat"
+    ],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:43:08.949881"
+  },
+  {
+    "user_id": "perf_test_user_0",
+    "username": "user_perf_test_user_0",
+    "level": 1,
+    "total_xp": 300,
+    "tokens": 0,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:43:08.956279"
+  },
+  {
+    "user_id": "perf_test_user_1",
+    "username": "user_perf_test_user_1",
+    "level": 1,
+    "total_xp": 300,
+    "tokens": 0,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:43:08.958608"
+  },
+  {
+    "user_id": "perf_test_user_2",
+    "username": "user_perf_test_user_2",
+    "level": 1,
+    "total_xp": 300,
+    "tokens": 0,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:43:08.959971"
+  },
+  {
+    "user_id": "perf_test_user_3",
+    "username": "user_perf_test_user_3",
+    "level": 1,
+    "total_xp": 300,
+    "tokens": 0,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:43:08.961135"
+  },
+  {
+    "user_id": "perf_test_user_4",
+    "username": "user_perf_test_user_4",
+    "level": 1,
+    "total_xp": 300,
+    "tokens": 0,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:43:08.962365"
+  },
+  {
+    "user_id": "perf_test_user_5",
+    "username": "user_perf_test_user_5",
+    "level": 1,
+    "total_xp": 300,
+    "tokens": 0,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:43:08.964536"
+  },
+  {
+    "user_id": "perf_test_user_6",
+    "username": "user_perf_test_user_6",
+    "level": 1,
+    "total_xp": 300,
+    "tokens": 0,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:43:08.966360"
+  },
+  {
+    "user_id": "perf_test_user_7",
+    "username": "user_perf_test_user_7",
+    "level": 1,
+    "total_xp": 300,
+    "tokens": 0,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:43:08.967679"
+  },
+  {
+    "user_id": "perf_test_user_8",
+    "username": "user_perf_test_user_8",
+    "level": 1,
+    "total_xp": 300,
+    "tokens": 0,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:43:08.969034"
+  },
+  {
+    "user_id": "perf_test_user_9",
+    "username": "user_perf_test_user_9",
+    "level": 1,
+    "total_xp": 300,
+    "tokens": 0,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:43:08.972324"
+  },
+  {
+    "user_id": "broadcast_test_user",
+    "username": "user_broadcast_test_user",
+    "level": 1,
+    "total_xp": 50,
+    "tokens": 0,
+    "badges": [],
+    "completed_quests": [],
+    "active_quests": [],
+    "character_relationships": {},
+    "last_activity": "2025-05-28T15:44:12.406805"
+  }
+]

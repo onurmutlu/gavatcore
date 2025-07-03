@@ -1,0 +1,58 @@
+{
+  "_template": {
+    "engaging_messages": [
+      "Selam yakışıklılar! Bugün kimle tanışacağım acaba? 😍",
+      "VIP grubumda çok daha özel şeyler var... Merak eden DM atsın 🔥",
+      "Bugün çok şımarık hissediyorum... Kim benimle oynayacak? 😈",
+      "Yayın öncesi biraz sohbet etmek istiyorum... Kimse yok mu? 💕",
+      "Gece geç saatlerde en güzel sohbetler oluyor... Sen de katıl 🌙",
+      "Özel show'larım için VIP grubuma katılabilirsiniz 💎",
+      "Bugün hangi fantezinizi gerçekleştirmek istersiniz? 😘",
+      "Canlı yayında görüşmek üzere... Hazır mısınız? 🎭",
+      "Sesli sohbet yapmak isteyen var mı? Çok keyifli oluyor 📞",
+      "Premium içeriklerim için özel kanalıma beklerim 👑",
+      "Birebir sohbet etmek isteyenler DM'den yazabilir 💌",
+      "Bugün çok enerjik hissediyorum... Kim benimle eğlenecek? ⚡",
+      "VIP üyelerime özel sürprizlerim var... Kaçırmayın! 🎁",
+      "Özel videolarım sadece VIP grubumda... İlgilenenlere DM 📹",
+      "Canlı show saatim yaklaşıyor... Kimler gelecek? 🔴",
+      "Bugün çok tatlı hissediyorum... Sebebi siz misiniz? 😊",
+      "Kameramı açsam gözlerime dalar mıydınız? 💫",
+      "Göz göze gelirsek ne yaparsınız? 😘",
+      "Kulağınıza ne fısıldasam yüzünüz kızarırdı? 🙊",
+      "Seninle sabaha kadar sohbet ederim... Vaktin varsa tabii 🌙",
+      "Yayın başlamadan önce biraz ısınalım mı? 🔥",
+      "Uyanamadım... Sesinizle uyanmak isterdim 😴",
+      "Bugün bana özel bir şeyler söylemek ister misiniz? 💋",
+      "VIP kanalımda sadece seçkin üyelerim var... Sen de katıl 👑",
+      "Özel mesajlaşma için DM kutum açık... Bekliyorum 💌",
+      "🌟 @arayisvips grubumuzda güzel sohbetler dönüyor! Katılmak ister misin? 💬",
+      "💫 @arayisvips'te harika bir topluluk var! Sen de aramıza katıl 🤗",
+      "🎉 @arayisvips grubumuzda eğlenceli anlar yaşıyoruz! Gel sen de 😊",
+      "✨ @arayisvips'te yeni arkadaşlar edinebilirsin! Bekliyoruz 💕",
+      "🌈 @arayisvips grubunda her türden güzel insan var! Katıl bize 🌸"
+    ]
+  },
+  "yayincilara": {
+    "engaging_messages": [
+      "Selam yakışıklılar! Bugün kimle tanışacağım acaba? 😍",
+      "VIP grubumda çok daha özel şeyler var... Merak eden DM atsın 🔥",
+      "Bugün çok şımarık hissediyorum... Kim benimle oynayacak? 😈",
+      "Yayın öncesi biraz sohbet etmek istiyorum... Kimse yok mu? 💕",
+      "Gece geç saatlerde en güzel sohbetler oluyor... Sen de katıl 🌙",
+      "Özel show'larım için VIP grubuma katılabilirsiniz 💎",
+      "Bugün hangi fantezinizi gerçekleştirmek istersiniz? 😘",
+      "Canlı yayında görüşmek üzere... Hazır mısınız? 🎭",
+      "Sesli sohbet yapmak isteyen var mı? Çok keyifli oluyor 📞",
+      "Premium içeriklerim için özel kanalıma beklerim 👑",
+      "Birebir sohbet etmek isteyenler DM'den yazabilir 💌",
+      "Bugün çok enerjik hissediyorum... Kim benimle eğlenecek? ⚡",
+      "VIP üyelerime özel sürprizlerim var... Kaçırmayın! 🎁",
+      "Özel videolarım sadece VIP grubumda... İlgilenenlere DM 📹",
+      "Canlı show saatim yaklaşıyor... Kimler gelecek? 🔴"
+    ],
+    "frequency": "high",
+    "interval_min": 180,
+    "interval_max": 300
+  }
+} 

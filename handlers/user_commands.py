@@ -1,5 +1,4 @@
 # // handlers/user_commands.py
-
 import os
 from datetime import datetime
 from telethon import events
@@ -8,6 +7,7 @@ from utils.log_utils import log_event
 from utils.payment_utils import generate_payment_message, load_banks
 from core.license_checker import LicenseChecker
 from core.analytics_logger import log_analytics
+from handlers.customer_onboarding import customer_onboarding
 
 SESSION_DIR = "sessions"
 
@@ -20,7 +20,10 @@ async def handle_user_command(event):
     username = sender.username or f"user_{user_id}"
     message = event.raw_text.strip()
     lowered = message.lower()
-    profile = load_profile(username)
+    try:
+        profile = load_profile(username)
+    except:
+        profile = {}
     license_checker = LicenseChecker()
 
     log_analytics(username, "user_command_received", {"command": lowered})
@@ -28,13 +31,46 @@ async def handle_user_command(event):
     # 📋 /menü [metin]
     if lowered.startswith("/menü") or lowered.startswith("/menu"):
         content = message.split(" ", 1)[-1].strip()
-        if not content:
+        if not content or content.startswith("/menü") or content.startswith("/menu"):
             await event.respond("⚠️ Menü içeriği boş olamaz.")
             return
         update_profile(username, {"services_menu": content})
         await event.respond("✅ Hizmet menüsü güncellendi.")
         log_event(username, "📝 Hizmet menüsü güncellendi.")
         log_analytics(username, "menu_updated", {"text": content})
+
+    # 🎭 /show_menu [metin] - Yeni show menü sistemi
+    elif lowered.startswith("/show_menu") or lowered.startswith("/show_menü"):
+        content = message.split(" ", 1)[-1].strip()
+        if not content or content.startswith("/show_menu") or content.startswith("/show_menü"):
+            # Mevcut show menüsünü göster
+            from utils.menu_manager import show_menu_manager
+            current_menu = show_menu_manager.get_show_menu(username, compact=False)
+            if current_menu:
+                await event.respond(f"📋 Mevcut show menün:\n\n{current_menu}")
+            else:
+                await event.respond("❌ Henüz show menün yok. Kullanım:\n/show_menu [menü metni]")
+            return
+        
+        # Show menüsünü güncelle
+        from utils.menu_manager import show_menu_manager
+        success = show_menu_manager.update_show_menu(username, content)
+        if success:
+            await event.respond("✅ Show menüsü güncellendi!")
+            log_event(username, "🎭 Show menüsü güncellendi.")
+            log_analytics(username, "show_menu_updated", {"text": content})
+        else:
+            await event.respond("❌ Show menüsü güncellenirken hata oluştu.")
+
+    # 🎭 /show_compact - Kısa show menüsünü göster
+    elif lowered.startswith("/show_compact"):
+        from utils.menu_manager import show_menu_manager
+        compact_menu = show_menu_manager.get_show_menu(username, compact=True)
+        if compact_menu:
+            await event.respond(f"📋 Kısa show menün:\n\n{compact_menu}")
+        else:
+            await event.respond("❌ Kısa show menün bulunamadı.")
+        log_analytics(username, "show_compact_viewed")
 
     # 🏦 /iban_kaydet TRxx... | Ad Soyad | Banka Adı
     elif lowered.startswith("/iban_kaydet"):
@@ -48,7 +84,7 @@ async def handle_user_command(event):
                     "bank_name": bank
                 }
             })
-            await event.respond(f"✅ IBAN bilgisi güncellendi:\n🏦 {bank}\n💳 {iban}\n👤 {name}")
+            await event.respond(f"✅ IBAN bilgisi kaydedildi:\n🏦 {bank}\n💳 {iban}\n👤 {name}")
             log_event(username, f"🏦 IBAN güncellendi: {bank} | {iban} | {name}")
             log_analytics(username, "iban_saved", {"bank": bank})
         except:
@@ -71,7 +107,7 @@ async def handle_user_command(event):
             await event.respond("⚠️ Format hatası. Şöyle yaz:\n/papara IBAN | Ad Soyad | Papara ID")
 
     # 📨 /iban Garanti (veya başka banka)
-    elif lowered.startswith("/iban"):
+    elif lowered.startswith("/iban "):
         try:
             _, bank_name = message.split(" ", 1)
             banks_data = load_banks()
@@ -81,19 +117,19 @@ async def handle_user_command(event):
         except:
             await event.respond("⚠️ Kullanım: `/iban Garanti`\nBanka adı girilmedi veya tanımlı değil.")
 
-    # 💌 /flört
+    # 💌 /flört satır satır (multi-line) veya tek satır
     elif lowered.startswith("/flört"):
-        templates = message[len("/flört"):].strip().splitlines()
-        templates = [x.strip() for x in templates if x.strip()]
-        if not templates:
-            await event.respond("⚠️ En az 1 mesaj şablonu girmelisin.")
+        content = message[len("/flört"):].strip()
+        if not content:
+            await event.respond("⚠️ En az 1 mesaj şablonu girmelisin. Her satıra 1 mesaj!")
             return
+        templates = [x.strip() for x in content.splitlines() if x.strip()]
         update_profile(username, {"flirt_templates": templates})
         await event.respond(f"✅ {len(templates)} flört mesajı kaydedildi.")
         log_event(username, "💌 Flört şablonları güncellendi.")
         log_analytics(username, "flirt_templates_updated", {"count": len(templates)})
 
-    # 🧠 /mod
+    # 🧠 /mod [manual/gpt/hybrid/manualplus]
     elif lowered.startswith("/mod"):
         try:
             _, mode = message.split(" ", 1)
@@ -109,11 +145,13 @@ async def handle_user_command(event):
 
     # 🧾 /bilgilerim
     elif lowered.startswith("/bilgilerim"):
+        flirt_count = len(profile.get("flirt_templates", []))
+        menu_preview = profile.get("services_menu", "")[:60] + ("..." if len(profile.get("services_menu", "")) > 60 else "")
         text = f"""🧾 *Profil Bilgilerin*:
 
-👤 Yanıt Modu: `{profile.get("reply_mode")}`
-💌 Flört Şablonu Sayısı: {len(profile.get("flirt_templates", []))}
-📋 Hizmet Menüsü: `{profile.get("services_menu", "")[:50]}...`
+👤 Yanıt Modu: `{profile.get("reply_mode", "-")}`
+💌 Flört Şablonu Sayısı: {flirt_count}
+📋 Hizmet Menüsü: `{menu_preview}`
 🏦 IBAN: `{profile.get('personal_iban', {}).get('iban', 'Yok')}`
 💳 Papara IBAN: `{profile.get('papara_iban', 'Yok')}`
 📝 Papara ID: `{profile.get('papara_note', 'Yok')}`
@@ -165,11 +203,81 @@ async def handle_user_command(event):
         log_event(username, "▶️ Otomatik spam başlatıldı")
         log_analytics(username, "autospam_started")
 
+    # 🚀 /onboarding_yenile
+    elif lowered.startswith("/onboarding_yenile"):
+        # Onboarding baştan başlat (geliştiriciye referans)
+        update_profile(username, {"onboarding_step": 0})
+        await event.respond("🚀 Onboarding sıfırlandı! Yeniden başlayabilirsin.")
+        log_event(username, "onboarding_reset")
+        log_analytics(username, "onboarding_reset")
+    
+    # 💰 /musteri_panel - Müşteri self-service paneli
+    elif lowered.startswith("/musteri_panel") or lowered.startswith("/customer"):
+        await customer_onboarding.start_customer_onboarding(event)
+        log_analytics(username, "customer_panel_accessed")
+    
+    # 📊 /dashboard - Müşteri dashboard'u
+    elif lowered.startswith("/dashboard"):
+        try:
+            profile = load_profile(username)
+            if profile.get("type") == "customer_bot":
+                await customer_onboarding.show_customer_dashboard(event, profile)
+            else:
+                await event.respond("❌ Bu komut sadece müşteri hesapları için kullanılabilir.")
+        except:
+            await event.respond("❌ Profil bulunamadı. Önce /musteri_panel ile kayıt olun.")
+        log_analytics(username, "dashboard_accessed")
+    
+    # 🤖 /bot_durum - Bot durumu kontrolü
+    elif lowered.startswith("/bot_durum"):
+        try:
+            profile = load_profile(username)
+            if profile.get("type") == "customer_bot":
+                customer_info = profile.get("customer_info", {})
+                bot_status = "🟢 Aktif" if profile.get("customer_status") == "active" else "🔴 Pasif"
+                
+                await event.respond(
+                    f"🤖 **Bot Durum Raporu**\n\n"
+                    f"**Bot:** @{profile.get('username', 'Bilinmiyor')}\n"
+                    f"**Durum:** {bot_status}\n"
+                    f"**Paket:** {customer_info.get('package_name', 'Bilinmiyor')}\n"
+                    f"**Bitiş:** {customer_info.get('expires_at', 'Bilinmiyor')[:10]}\n\n"
+                    f"**Ayarlar:**\n"
+                    f"• DM Yanıtlama: {'✅' if profile.get('bot_config', {}).get('dm_invite_enabled') else '❌'}\n"
+                    f"• Grup Daveti: {'✅' if profile.get('bot_config', {}).get('group_invite_aggressive') else '❌'}\n"
+                    f"• Yanıt Modu: {profile.get('reply_mode', 'manual')}"
+                )
+            else:
+                await event.respond("❌ Bu komut sadece müşteri hesapları için kullanılabilir.")
+        except:
+            await event.respond("❌ Bot durumu alınamadı.")
+        log_analytics(username, "bot_status_checked")
+    
+    # 📞 /destek - Teknik destek
+    elif lowered.startswith("/destek"):
+        await event.respond(
+            "📞 **Teknik Destek**\n\n"
+            "Destek için aşağıdaki kanalları kullanabilirsiniz:\n\n"
+            "• **Telegram:** @gavatbaba\n"
+            "• **WhatsApp:** +90 XXX XXX XX XX\n"
+            "• **E-mail:** destek@gavatcore.com\n\n"
+            "Sorunuzda bot username'inizi belirtmeyi unutmayın!"
+        )
+        log_analytics(username, "support_requested")
+
+    # 👁‍🗨 /state
+    elif lowered.startswith("/state"):
+        # Geliştiricinin debug için state dump’ı
+        await event.respond(f"```{profile}```", parse_mode="markdown")
+        log_event(username, "profile_state_dumped")
+
     # 🆘 /yardım
     elif lowered.startswith("/yardım") or lowered.startswith("/help"):
         await event.respond("""ℹ️ *Komutlar Listesi:*
 
 📋 /menü [metin] — Hizmet menüsünü günceller  
+🎭 /show_menu [metin] — Show menüsünü günceller  
+🎭 /show_compact — Kısa show menüsünü göster  
 💌 /flört [...] — Her satır bir flört mesajı  
 🏦 /iban [Banka Adı] — Ödeme bilgisini göster  
 📝 /iban_kaydet TRxx | İsim | Banka — IBAN kaydet  
@@ -180,8 +288,15 @@ async def handle_user_command(event):
 ♻️ /session_yenile — Oturum yenileme (manuel)  
 ⏳ /lisans_süre — Lisans durumu  
 ⛔ /dur — Otomatik mesaj durdur  
-▶️ /devam — Otomatik mesaj başlat
+▶️ /devam — Otomatik mesaj başlat  
+🚀 /onboarding_yenile — Onboarding sıfırla (deneme)
+👁‍🗨 /state — Profil state'i dump (debug)
 
 Hepsi sadece özel mesajda çalışır 💌
 """, parse_mode="markdown")
         log_analytics(username, "help_command_shown")
+
+    # 🚫 Bilinmeyen komut
+    else:
+        await event.respond("❓ Komut anlaşılamadı. /yardım ile tüm komutları görebilirsin.")
+        log_analytics(username, "unknown_command", {"command": lowered})

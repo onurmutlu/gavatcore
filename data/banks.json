@@ -1,0 +1,102 @@
+{
+  "Akbank": {
+    "iban": "TR83 0082 9000 0949 1060 9367 40",
+    "requires_name": true
+  },
+  "Garanti": {
+    "iban": "TR17 0006 2000 3410 0006 2942 04",
+    "requires_name": false
+  },
+  "QNB": {
+    "iban": "TR77 0011 1000 0000 0064 0811 05",
+    "requires_name": false
+  },
+  "Yapı Kredi": {
+    "iban": "TR12 0006 7010 0000 0047 8493 03",
+    "requires_name": false
+  },
+  "İş Bankası": {
+    "iban": "TR77 0006 4000 0011 3900 0994 48",
+    "requires_name": false
+  },
+  "Vakıflar Bankası": {
+    "iban": "TR37 0001 5001 5800 7304 6924 31",
+    "requires_name": false
+  },
+  "Ziraat Bankası": {
+    "iban": "TR45 0001 0025 4674 7374 7150 01",
+    "requires_name": false
+  },
+  "Halk Bank": {
+    "iban": "TR83 0001 2009 6260 0010 2607 99",
+    "requires_name": false
+  },
+  "ING Bank": {
+    "iban": "TR83 0082 9000 0949 1060 9367 40",
+    "requires_name": true
+  },
+  "TEB": {
+    "iban": "TR83 0082 9000 0949 1060 9367 40",
+    "requires_name": true
+  },
+  "Denizbank": {
+    "iban": "TR83 0082 9000 0949 1060 9367 40",
+    "requires_name": true
+  },
+  "Burgan Bank": {
+    "iban": "TR83 0082 9000 0949 1060 9367 40",
+    "requires_name": true
+  },
+  "Fibabanka": {
+    "iban": "TR83 0082 9000 0949 1060 9367 40",
+    "requires_name": true
+  },
+  "Ziraat Katılım Bankası": {
+    "iban": "TR83 0082 9000 0949 1060 9367 40",
+    "requires_name": true
+  },
+  "Türkiye Finans Katılım": {
+    "iban": "TR58 0020 6002 4702 9352 1900 03",
+    "requires_name": false
+  },
+  "Kuveyt Türk": {
+    "iban": "TR44 0020 5000 0942 0219 8000 01",
+    "requires_name": false
+  },
+  "Albaraka Türk Bankası": {
+    "iban": "TR22 0020 3000 0349 8194 0000 01",
+    "requires_name": false
+  },
+  "Odea Bank": {
+    "iban": "TR59 0014 6000 0000 0893 0000 01",
+    "requires_name": false
+  },
+  "Alternatif Bank": {
+    "iban": "TR09 0012 4000 0056 2178 1000 01",
+    "requires_name": false
+  },
+  "Vakıf Katılım Bankası": {
+    "iban": "TR34 0021 0000 0002 9935 4000 01",
+    "requires_name": false
+  },
+  "Emlak Katılım Bankası": {
+    "iban": "TR64 0021 1000 0005 3093 4000 01",
+    "requires_name": false
+  },
+  "Şeker Bank": {
+    "iban": "TR63 0005 9024 2013 0242 0122 77",
+    "requires_name": false
+  },
+  "Anadolubank": {
+    "iban": "TR37 0013 5051 8901 0317 5800 10",
+    "requires_name": false
+  },
+  "Aktifbank": {
+    "iban": "TR83 0082 9000 0949 1060 9367 40",
+    "requires_name": true
+  },
+  "PTT": {
+    "iban": "1362 7705",
+    "requires_name": false
+  }
+}

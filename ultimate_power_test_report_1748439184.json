@@ -1,0 +1,74 @@
+{
+  "timestamp": "2025-05-28T16:33:04.215751",
+  "total_time": 7.841174125671387,
+  "test_count": 3,
+  "successful_tests": 3,
+  "results": {
+    "💭 Sentiment Analysis": {
+      "sentiment": "positive",
+      "confidence": 0.95,
+      "keywords": [
+        "mutluyum",
+        "mükemmel çalışıyor"
+      ],
+      "emotions": [
+        "happiness",
+        "satisfaction"
+      ]
+    },
+    "🧠 Personality Analysis": {
+      "personality_traits": {
+        "activity_level": "high",
+        "social": true,
+        "technology_enthusiasm": true,
+        "leadership": true
+      },
+      "description": "The user is highly active and enjoys engaging in social activities. They have a strong interest in technology and often explore new technological trends. Their leadership qualities are evident, as they tend to take charge in group settings and are comfortable leading teams or projects."
+    },
+    "📝 Content Generation": {
+      "message": "GavatCore V2'nin gücüyle sınırları zorla! Her zorluğun üstesinden gelmek için gereken enerji ve tutkuyla, hedeflerine ulaşmak için cesur adımlar at. Unutma, başarı senin azminle şekillenecek!"
+    }
+  },
+  "analytics": {
+    "queue_status": {
+      "pending_tasks": 0,
+      "active_tasks": 0,
+      "completed_tasks": 3
+    },
+    "task_breakdown": {
+      "character_interaction": 0,
+      "crm_analysis": 0,
+      "social_gaming": 0,
+      "voice_processing": 0,
+      "sentiment_analysis": 0,
+      "personality_analysis": 0,
+      "predictive_analytics": 0,
+      "real_time_analysis": 0,
+      "content_generation": 0,
+      "vision_analysis": 0,
+      "heavy_analysis": 0
+    },
+    "priority_breakdown": {
+      "LOW": 0,
+      "NORMAL": 0,
+      "HIGH": 0,
+      "CRITICAL": 0,
+      "REAL_TIME": 0
+    },
+    "rate_limiting": {
+      "requests_this_minute": 3,
+      "limit": 100,
+      "utilization": "3.0%"
+    },
+    "ai_features": {
+      "voice_ai": true,
+      "crm_ai": true,
+      "social_ai": true,
+      "advanced_analytics": true,
+      "real_time_analysis": true,
+      "predictive_analytics": true,
+      "sentiment_analysis": true,
+      "personality_analysis": true
+    }
+  }
+}

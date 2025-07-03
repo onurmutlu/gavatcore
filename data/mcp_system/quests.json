@@ -1,0 +1,142 @@
+[
+  {
+    "id": "daily_chat",
+    "title": "Günlük Sohbet",
+    "description": "Herhangi bir karakterle 5 dakika sohbet et",
+    "quest_type": "daily",
+    "character_id": null,
+    "requirements": {
+      "chat_duration_minutes": 5
+    },
+    "rewards": [
+      {
+        "type": "xp",
+        "amount": 50
+      },
+      {
+        "type": "token",
+        "amount": 10
+      }
+    ],
+    "duration_hours": 24,
+    "max_participants": 1,
+    "is_active": true,
+    "created_at": "2025-05-28T15:23:27.230765"
+  },
+  {
+    "id": "voice_interaction",
+    "title": "Sesli Tanışma",
+    "description": "Bir karakterle sesli sohbet yap",
+    "quest_type": "voice",
+    "character_id": null,
+    "requirements": {
+      "voice_duration_seconds": 60
+    },
+    "rewards": [
+      {
+        "type": "xp",
+        "amount": 100
+      },
+      {
+        "type": "token",
+        "amount": 25
+      },
+      {
+        "type": "badge",
+        "badge_id": "voice_pioneer",
+        "badge_name": "Ses Öncüsü"
+      }
+    ],
+    "duration_hours": 24,
+    "max_participants": 1,
+    "is_active": true,
+    "created_at": "2025-05-28T15:23:27.230772"
+  },
+  {
+    "id": "challenge_1748435016",
+    "title": "Test Challenge",
+    "description": "Test grup challenge'ı",
+    "quest_type": "community",
+    "character_id": "babagavat",
+    "requirements": {
+      "min_participants": 5
+    },
+    "rewards": [
+      {
+        "type": "xp",
+        "amount": 100
+      },
+      {
+        "type": "token",
+        "amount": 50
+      },
+      {
+        "type": "badge",
+        "badge_id": "challenge_challenge_1748435016",
+        "badge_name": "Challenge Kahramanı"
+      }
+    ],
+    "duration_hours": 1,
+    "max_participants": 50,
+    "is_active": true,
+    "created_at": "2025-05-28T15:23:36.968586"
+  },
+  {
+    "id": "challenge_1748435910",
+    "title": "Test Challenge",
+    "description": "Test grup challenge'ı",
+    "quest_type": "community",
+    "character_id": "babagavat",
+    "requirements": {
+      "min_participants": 5
+    },
+    "rewards": [
+      {
+        "type": "xp",
+        "amount": 100
+      },
+      {
+        "type": "token",
+        "amount": 50
+      },
+      {
+        "type": "badge",
+        "badge_id": "challenge_challenge_1748435910",
+        "badge_name": "Challenge Kahramanı"
+      }
+    ],
+    "duration_hours": 1,
+    "max_participants": 50,
+    "is_active": true,
+    "created_at": "2025-05-28T15:38:30.076363"
+  },
+  {
+    "id": "challenge_1748436188",
+    "title": "Test Challenge",
+    "description": "Test grup challenge'ı",
+    "quest_type": "community",
+    "character_id": "babagavat",
+    "requirements": {
+      "min_participants": 5
+    },
+    "rewards": [
+      {
+        "type": "xp",
+        "amount": 100
+      },
+      {
+        "type": "token",
+        "amount": 50
+      },
+      {
+        "type": "badge",
+        "badge_id": "challenge_challenge_1748436188",
+        "badge_name": "Challenge Kahramanı"
+      }
+    ],
+    "duration_hours": 1,
+    "max_participants": 50,
+    "is_active": true,
+    "created_at": "2025-05-28T15:43:08.941370"
+  }
+]
