@@ -1,6 +1,12 @@
 # core/profile_generator.py
 
 import datetime
+from core.profile_manager import profile_manager
+from core.user_analyzer import babagavat_user_analyzer
+from core.analytics_logger import log_analytics
+from core.metrics_collector import MetricsCollector
+import asyncio
+from typing import Dict, Any
 
 DEFAULT_USER_TEMPLATE = {
     "engaging_messages": [],
@@ -54,6 +60,92 @@ DEFAULT_BOT_PROFILE = {
     },
     "_template": DEFAULT_BOT_TEMPLATE
 }
+
+class ProfileGenerator:
+    def __init__(self):
+        self.metrics = MetricsCollector()
+        
+    async def generate_profile(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
+        try:
+            # Kullanıcı analizi yap
+            user_analytics = await babagavat_user_analyzer.analyze_user(user_data)
+            
+            # Profil verilerini oluştur
+            profile_data = {
+                "id": user_data.get("id"),
+                "username": user_data.get("username"),
+                "created_at": datetime.datetime.now().isoformat(),
+                "analytics": user_analytics,
+                "preferences": self._generate_preferences(user_data, user_analytics),
+                "settings": self._generate_settings(user_data),
+                "stats": self._generate_stats(user_data, user_analytics)
+            }
+            
+            # Profili kaydet
+            await profile_manager.create_profile(profile_data)
+            
+            # Metrikleri topla
+            metrics = await self.metrics.collect_metrics()
+            
+            # Analitik logla
+            await log_analytics(
+                event_type="profile_generation",
+                data={
+                    "user_id": user_data.get("id"),
+                    "analytics": user_analytics,
+                    "metrics": metrics
+                }
+            )
+            
+            return profile_data
+            
+        except Exception as e:
+            await log_analytics(
+                event_type="profile_generation_error",
+                data={"error": str(e)}
+            )
+            raise
+            
+    def _generate_preferences(self, user_data: Dict, analytics: Dict) -> Dict:
+        return {
+            "language": user_data.get("language", "tr"),
+            "notifications": {
+                "enabled": True,
+                "channels": ["telegram", "email"],
+                "frequency": "daily"
+            },
+            "privacy": {
+                "profile_visibility": "public",
+                "data_sharing": "limited"
+            },
+            "content_preferences": {
+                "categories": analytics.get("preferred_categories", []),
+                "format": "mixed"
+            }
+        }
+        
+    def _generate_settings(self, user_data: Dict) -> Dict:
+        return {
+            "theme": "light",
+            "timezone": user_data.get("timezone", "Europe/Istanbul"),
+            "currency": "TRY",
+            "display_name": user_data.get("display_name", user_data.get("username")),
+            "bio": user_data.get("bio", ""),
+            "avatar": user_data.get("avatar_url", "")
+        }
+        
+    def _generate_stats(self, user_data: Dict, analytics: Dict) -> Dict:
+        return {
+            "engagement_score": analytics.get("engagement_score", 0),
+            "total_interactions": analytics.get("total_interactions", 0),
+            "last_active": analytics.get("last_active", datetime.datetime.now().isoformat()),
+            "preferred_time": analytics.get("preferred_time", "evening"),
+            "content_consumption": analytics.get("content_consumption", {}),
+            "interaction_history": analytics.get("interaction_history", [])
+        }
+
+# Singleton instance
+profile_generator = ProfileGenerator()
 
 def generate_showcu_persona(username: str, phone: str = "") -> dict:
     """

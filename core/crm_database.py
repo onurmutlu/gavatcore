@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 import json
 from dataclasses import dataclass, asdict
-from utils.redis_client import redis_client
-from utils.log_utils import log_event
+from utilities.redis_client import redis_client
+from utilities.log_utils import log_event
 from core.analytics_logger import log_analytics
 
 @dataclass

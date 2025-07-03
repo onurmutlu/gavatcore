@@ -7,7 +7,7 @@ Bu script grup davet sisteminin çalışıp çalışmadığını test eder.
 import asyncio
 import json
 from pathlib import Path
-from utils.group_invite_strategy import GroupInviteStrategy, group_invite_strategy
+from utilities.group_invite_strategy import GroupInviteStrategy, group_invite_strategy
 
 def test_message_categorization():
     """Mesaj kategorileme sistemini test et"""

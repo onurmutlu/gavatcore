@@ -4,7 +4,7 @@
 import random
 import re
 from typing import List, Dict, Optional
-from utils.log_utils import log_event
+from utilities.log_utils import log_event
 
 class TemplateShuffler:
     def __init__(self):

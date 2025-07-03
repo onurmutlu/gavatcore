@@ -69,7 +69,7 @@ def start_simple_server():
     """Basit server başlat"""
     try:
         import uvicorn
-        from api.coin_endpoints import app
+        from apis.coin_endpoints import app
         
         print("🌐 Basit API server başlatılıyor...")
         

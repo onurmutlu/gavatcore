@@ -43,7 +43,7 @@ def build_system_prompt(profile: dict, agent_name: str) -> str:
     style_tags = profile.get("style_tags", "")
     intro = profile.get("intro_message", "")
     # Karışık mesaj sistemi ile template'leri hazırla
-    from utils.smart_reply import smart_reply
+    from utilities.smart_reply import smart_reply
     
     bot_engaging_messages = profile.get("flirt_templates", []) or profile.get("engaging_messages", [])
     bot_reply_messages = profile.get("reply_messages", [])

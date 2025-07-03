@@ -7,7 +7,7 @@ from core.package_manager import package_manager, PackageType
 from core.crm_database import crm_db
 from core.user_segmentation import user_segmentation
 from core.dynamic_delivery_optimizer import delivery_optimizer
-from utils.log_utils import log_event
+from utilities.log_utils import log_event
 
 async def test_package_features():
     """Paket özelliklerini test et"""

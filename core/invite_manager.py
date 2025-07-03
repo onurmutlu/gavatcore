@@ -9,8 +9,8 @@ import asyncio
 import time
 from datetime import datetime, timedelta
 from typing import Optional, Dict, List, Set
-from utils.redis_client import get_state, set_state, check_cooldown, set_cooldown
-from utils.log_utils import log_event
+from utilities.redis_client import get_state, set_state, check_cooldown, set_cooldown
+from utilities.log_utils import log_event
 from core.analytics_logger import log_analytics
 
 class InviteManager:

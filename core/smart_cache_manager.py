@@ -16,8 +16,8 @@ import weakref
 import threading
 
 # Database imports
-from utils.redis_client import redis_client
-from utils.log_utils import log_event
+from utilities.redis_client import redis_client
+from utilities.log_utils import log_event
 
 # Performance monitoring
 import structlog

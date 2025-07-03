@@ -11,7 +11,7 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from telethon import TelegramClient
-from utils.scheduler_utils import spam_loop
+from utilities.scheduler_utils import spam_loop
 
 # API bilgileri
 API_ID = 29830823

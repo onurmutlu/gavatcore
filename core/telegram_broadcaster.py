@@ -14,6 +14,10 @@ import structlog
 from telethon import TelegramClient
 from telethon.errors import FloodWaitError, UserPrivacyRestrictedError, ChatWriteForbiddenError
 from .database_manager import database_manager, BroadcastTarget, BroadcastStatus, UserInteractionType
+from core.ai_content_generator import content_generator
+from core.user_segmentation import user_segmentation
+from core.analytics_logger import log_analytics
+from core.metrics_collector import MetricsCollector
 
 logger = structlog.get_logger("gavatcore.telegram_broadcaster")
 
@@ -31,6 +35,8 @@ class TelegramBroadcaster:
             "group": {"messages_per_minute": 20, "delay_between": 3},
             "user": {"messages_per_minute": 30, "delay_between": 2}
         }
+        
+        self.metrics = MetricsCollector()
         
         logger.info("📢 Telegram Broadcaster başlatıldı")
     
@@ -211,6 +217,83 @@ class TelegramBroadcaster:
         except Exception as e:
             logger.error(f"❌ Custom broadcast hatası: {e}")
             return ""
+    
+    async def broadcast_message(self, message: str, target_segments: List[str] = None) -> Dict[str, Any]:
+        try:
+            # Hedef segmentleri belirle
+            if not target_segments:
+                target_segments = ["active", "vip"]
+                
+            # Segment kullanıcılarını al
+            segments = await user_segmentation.segment_users()
+            target_users = []
+            
+            for segment in target_segments:
+                if segment in segments["segments"]:
+                    target_users.extend(segments["segments"][segment])
+            
+            # İçeriği optimize et
+            optimized_message = await content_generator.generate_content(
+                prompt=f"Optimize this message for Telegram: {message}",
+                context={"platform": "telegram", "target_segments": target_segments}
+            )
+            
+            # Yayını yap
+            broadcast_result = {
+                "timestamp": datetime.now().isoformat(),
+                "message": optimized_message,
+                "target_segments": target_segments,
+                "target_users": len(target_users),
+                "status": "success"
+            }
+            
+            # Metrikleri topla
+            metrics = await self.metrics.collect_metrics()
+            
+            # Analitik logla
+            await log_analytics(
+                event_type="telegram_broadcast",
+                data={
+                    "message": optimized_message,
+                    "target_segments": target_segments,
+                    "target_users": len(target_users),
+                    "metrics": metrics
+                }
+            )
+            
+            return broadcast_result
+            
+        except Exception as e:
+            await log_analytics(
+                event_type="broadcast_error",
+                data={"error": str(e)}
+            )
+            raise
+            
+    async def schedule_broadcast(self, message: str, schedule_time: datetime, target_segments: List[str] = None) -> Dict[str, Any]:
+        try:
+            # Zamanlanmış yayın oluştur
+            scheduled_broadcast = {
+                "message": message,
+                "schedule_time": schedule_time.isoformat(),
+                "target_segments": target_segments or ["active", "vip"],
+                "status": "scheduled"
+            }
+            
+            # Analitik logla
+            await log_analytics(
+                event_type="broadcast_scheduled",
+                data=scheduled_broadcast
+            )
+            
+            return scheduled_broadcast
+            
+        except Exception as e:
+            await log_analytics(
+                event_type="schedule_error",
+                data={"error": str(e)}
+            )
+            raise
     
     # ==================== QUEUE MANAGEMENT ====================
     

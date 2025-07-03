@@ -11,6 +11,9 @@ import asyncio
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, Optional, Union
+import structlog
+
+logger = structlog.get_logger("analytics")
 
 class CharacterAnalyticsLogger:
     def __init__(self, log_dir: str = "logs/characters") -> None:
@@ -106,4 +109,22 @@ async def alog_character_event(character_id: str,
                              metadata: Optional[Dict[str, Any]] = None) -> None:
     """Karakter olayını asenkron olarak logla."""
     await get_logger().alog_character_event(character_id, event_type, metadata)
+
+async def log_analytics(event_type: str, data: Dict[str, Any]) -> None:
+    """Analitik olayları logla"""
+    try:
+        log_data = {
+            "timestamp": datetime.now().isoformat(),
+            "event_type": event_type,
+            "data": data
+        }
+        
+        logger.info("analytics_event", **log_data)
+        
+    except Exception as e:
+        logger.error("analytics_log_error", error=str(e))
+        raise
+
+# Singleton instance
+analytics_logger = logger
 

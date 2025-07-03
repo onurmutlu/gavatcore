@@ -1,0 +1,219 @@
+# 🚀 GAVATCore Engine Configuration
+# ================================
+# 
+# Bu dosya sistemin davranışını kontrol eder.
+# Power mode ayarları ile performans seviyesi belirlenir.
+
+# 🔥 POWER MODE CONFIGURATION
+power_mode:
+  enabled: true
+  level: "turbo"  # normal, performance, turbo, extreme
+  auto_scaling: true
+  adaptive_optimization: true
+  
+  # Seviye bazlı ayarlar
+  levels:
+    normal:
+      cache_ttl: 300
+      max_workers: 4
+      response_timeout: 10
+      optimization_interval: 600
+      aggressive_cache: false
+      
+    performance:
+      cache_ttl: 600
+      max_workers: 8
+      response_timeout: 5
+      optimization_interval: 300
+      aggressive_cache: true
+      
+    turbo:
+      cache_ttl: 1200
+      max_workers: 16
+      response_timeout: 3
+      optimization_interval: 180
+      aggressive_cache: true
+      preload_cache: true
+      
+    extreme:
+      cache_ttl: 1800
+      max_workers: 32
+      response_timeout: 1
+      optimization_interval: 60
+      aggressive_cache: true
+      preload_cache: true
+      memory_optimization: true
+
+# 🧠 BEHAVIORAL ADAPTATION
+behavioral_adaptation:
+  enabled: true
+  real_time_analysis: true
+  personality_caching: true
+  
+  # Kişilik eşikleri
+  traits_thresholds:
+    extraversion: 0.6
+    neuroticism: 0.7
+    openness: 0.5
+    agreeableness: 0.6
+    conscientiousness: 0.6
+    
+  # Adaptasyon seviyeleri
+  adaptation_levels:
+    low: 0.3
+    medium: 0.6
+    high: 0.8
+    
+  # Risk yönetimi
+  risk_management:
+    high_risk_threshold: 0.7
+    safety_responses: true
+    content_filtering: true
+
+# 📊 PERFORMANCE MONITORING
+performance:
+  monitoring_enabled: true
+  metrics_collection: true
+  auto_optimization: true
+  
+  # Thresholds
+  thresholds:
+    cpu_warning: 70
+    cpu_critical: 85
+    memory_warning: 80
+    memory_critical: 90
+    response_time_warning: 1000
+    response_time_critical: 3000
+    
+  # Optimization triggers
+  optimization_triggers:
+    cpu_spike: true
+    memory_leak: true
+    slow_response: true
+    cache_miss_rate: 0.3
+
+# 🚀 CACHE CONFIGURATION  
+cache:
+  enabled: true
+  default_ttl: 600
+  max_entries: 10000
+  compression_enabled: true
+  
+  # Cache layers
+  layers:
+    l1_memory:
+      enabled: true
+      size_mb: 256
+      ttl: 300
+      
+    l2_redis:
+      enabled: false  # Redis devre dışı (aioredis sorunu)
+      ttl: 1800
+      
+    l3_disk:
+      enabled: true
+      path: "cache/disk"
+      ttl: 3600
+
+# 🎭 LARA BOT CONFIGURATION
+lara_bot:
+  personality_adaptation: true
+  response_personalization: true
+  sentiment_awareness: true
+  risk_consideration: true
+  
+  # Response styles
+  response_styles:
+    flirty_level: 0.7
+    humor_level: 0.8
+    empathy_level: 0.9
+    creativity_level: 0.6
+    
+  # Personality templates
+  personality_templates:
+    extraverted: "energetic, social, outgoing"
+    introverted: "calm, thoughtful, intimate"
+    neurotic: "supportive, reassuring, gentle"
+    stable: "confident, direct, bold"
+    open: "creative, curious, experimental"
+    conventional: "practical, familiar, traditional"
+
+# 📡 MONITORING & ALERTS
+monitoring:
+  telegram_alerts: true
+  email_alerts: false
+  webhook_alerts: false
+  
+  # Alert thresholds
+  alert_thresholds:
+    system_health: 50
+    error_rate: 0.05
+    response_time: 2000
+    
+  # Alert channels
+  channels:
+    telegram:
+      enabled: true
+      chat_id: null  # Admin chat ID
+      bot_token: null  # Alert bot token
+      
+# 🔄 AUTO-OPTIMIZATION
+auto_optimization:
+  enabled: true
+  learning_enabled: true
+  pattern_recognition: true
+  
+  # Optimization strategies
+  strategies:
+    - "cache_optimization"
+    - "memory_management" 
+    - "response_time_tuning"
+    - "personality_adaptation"
+    - "load_balancing"
+    
+  # Learning parameters
+  learning:
+    sample_size: 1000
+    confidence_threshold: 0.8
+    adaptation_rate: 0.1
+
+# 🎯 FEATURE FLAGS
+features:
+  flutter_api: true
+  behavioral_insights: true
+  ai_self_optimizer: true
+  personality_adapter: true
+  smart_caching: true
+  real_time_monitoring: true
+  adaptive_responses: true
+
+# 📝 LOGGING
+logging:
+  level: "INFO"
+  structured: true
+  file_logging: true
+  console_logging: true
+  
+  # Log rotation
+  rotation:
+    enabled: true
+    max_size_mb: 100
+    backup_count: 5
+
+# 🔧 SYSTEM METADATA
+metadata:
+  version: "6.0.0"
+  last_updated: "2025-01-30T18:24:00Z"
+  config_source: "ai_self_optimizer"
+  optimization_count: 0
+  
+# 🎮 GAMING & REWARDS
+gaming_engine:
+  enabled: true
+  xp_system: true
+  token_economy: true
+  
+  rewards:
+    daily_bonus: 100
+    message_xp: 5
+    engagement_multiplier: 2.0 

@@ -6,7 +6,7 @@ import re
 from typing import List, Optional, Dict, Any
 from collections import Counter
 from gpt.gpt_call import gpt_call
-from utils.log_utils import log_event
+from utilities.log_utils import log_event
 
 class ShadowPersonaGenerator:
     def __init__(self):

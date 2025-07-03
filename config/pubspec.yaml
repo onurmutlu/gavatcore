@@ -1,0 +1,44 @@
+name: gavatcore_mobile
+description: GavatCore Mobile Application
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State Management
+  flutter_riverpod: ^2.4.9
+  
+  # HTTP & API
+  dio: ^5.3.3
+  
+  # Storage
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  
+  # UI Components
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  
+  # Testing
+  mockito: ^5.4.2
+
+flutter:
+  uses-material-design: true
+  
+  # Assets - sadece mevcut olanları dahil et
+  # assets:
+  #   - gavatcore_mobile/assets/animations/
+  #   - gavatcore_mobile/assets/images/
+  #   - gavatcore_mobile/assets/icons/
+  #   - gavatcore_mobile/assets/fonts/ 

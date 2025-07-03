@@ -6,7 +6,7 @@ import random
 import json
 from typing import Optional, Dict, Any
 from pathlib import Path
-from utils.log_utils import log_event
+from utilities.log_utils import log_event
 from config import OPENAI_API_KEY
 
 try:

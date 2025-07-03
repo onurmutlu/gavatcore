@@ -4,10 +4,11 @@
 import json
 import asyncio
 from typing import Optional, Dict, Any
+from datetime import datetime
 from telethon.sessions import Session
 from telethon.tl.types import PeerUser, PeerChat, PeerChannel
 from telethon.tl.types import InputPeerUser, InputPeerChat, InputPeerChannel
-from utils.log_utils import log_event
+from utilities.log_utils import log_event
 
 class DatabaseSession(Session):
     """
@@ -48,12 +49,12 @@ class DatabaseSession(Session):
     async def _get_storage_client(self):
         """Storage client'ını al"""
         if self.storage_type == "redis":
-            from utils.redis_client import redis_client
+            from utilities.redis_client import redis_client
             # Redis client'ı başlat
             if redis_client is None:
-                from utils.redis_client import init_redis
+                from utilities.redis_client import init_redis
                 await init_redis()
-                from utils.redis_client import redis_client
+                from utilities.redis_client import redis_client
             return redis_client
         elif self.storage_type == "postgres":
             from core.db.connection import get_async_session

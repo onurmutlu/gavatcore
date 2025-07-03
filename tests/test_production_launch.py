@@ -92,7 +92,7 @@ async def test_api_endpoints():
     try:
         print("🌐 API Endpoints test ediliyor...")
         
-        from api.coin_endpoints import app
+        from apis.coin_endpoints import app
         from fastapi.testclient import TestClient
         
         # Test client oluştur
@@ -211,7 +211,7 @@ async def start_simple_api_server():
         """)
         
         import uvicorn
-        from api.coin_endpoints import app
+        from apis.coin_endpoints import app
         
         # Uvicorn ile API server'ı başlat
         uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")

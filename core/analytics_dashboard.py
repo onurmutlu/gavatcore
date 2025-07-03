@@ -1,15 +1,19 @@
 """
 Character Analytics Dashboard Module
 
-Bu modül, karakter loglarını analiz ederek istatistiksel özet çıkarır.
+Bu modül, karakter loglarını analiz ederek istatistel özet çıkarır.
 Her karakter için mesaj, satış ve etkileşim metrikleri üretir.
 """
 
 import json
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
 from collections import Counter, defaultdict
+from core.metrics_collector import MetricsCollector
+from core.error_tracker import ErrorTracker
+from core.analytics_logger import log_analytics
+import asyncio
 
 class CharacterAnalyticsDashboard:
     def __init__(self, log_dir: str = "logs/characters") -> None:
@@ -20,6 +24,8 @@ class CharacterAnalyticsDashboard:
             log_dir: Karakter log dosyalarının bulunduğu dizin
         """
         self.log_dir = Path(log_dir)
+        self.metrics = MetricsCollector()
+        self.error_tracker = ErrorTracker()
     
     def _read_character_logs(self, character_id: str) -> List[Dict[str, Any]]:
         """Karakter log dosyasını oku ve parse et."""
@@ -160,15 +166,64 @@ class CharacterAnalyticsDashboard:
         except Exception as e:
             print(f"❌ JSON export hatası: {str(e)}")
 
-# Kolay kullanım için yardımcı fonksiyonlar
-_dashboard: Optional[CharacterAnalyticsDashboard] = None
+    async def get_dashboard_data(self, time_range: str = "24h") -> dict:
+        try:
+            # Zaman aralığını hesapla
+            end_time = datetime.now()
+            if time_range == "24h":
+                start_time = end_time - timedelta(hours=24)
+            elif time_range == "7d":
+                start_time = end_time - timedelta(days=7)
+            elif time_range == "30d":
+                start_time = end_time - timedelta(days=30)
+            else:
+                start_time = end_time - timedelta(hours=24)
+            
+            # Metrikleri topla
+            metrics_data = await self.metrics.collect_metrics(start_time, end_time)
+            
+            # Hataları topla
+            error_data = await self.error_tracker.get_errors(start_time, end_time)
+            
+            # Dashboard verisi oluştur
+            dashboard_data = {
+                "timestamp": datetime.now().isoformat(),
+                "time_range": time_range,
+                "metrics": metrics_data,
+                "errors": error_data,
+                "summary": {
+                    "total_requests": metrics_data.get("total_requests", 0),
+                    "error_rate": metrics_data.get("error_rate", 0),
+                    "avg_response_time": metrics_data.get("avg_response_time", 0),
+                    "active_users": metrics_data.get("active_users", 0)
+                }
+            }
+            
+            # Analitik logla
+            await log_analytics(
+                event_type="dashboard_view",
+                data={
+                    "time_range": time_range,
+                    "summary": dashboard_data["summary"]
+                }
+            )
+            
+            return dashboard_data
+            
+        except Exception as e:
+            await log_analytics(
+                event_type="dashboard_error",
+                data={"error": str(e)}
+            )
+            raise
 
+# Singleton instance
+analytics_dashboard = CharacterAnalyticsDashboard()
+
+# Kolay kullanım için yardımcı fonksiyonlar
 def get_dashboard(log_dir: str = "logs/characters") -> CharacterAnalyticsDashboard:
     """Global dashboard instance'ı döndür."""
-    global _dashboard
-    if _dashboard is None:
-        _dashboard = CharacterAnalyticsDashboard(log_dir)
-    return _dashboard
+    return CharacterAnalyticsDashboard(log_dir)
 
 def summarize_character_stats(character_id: str) -> Dict[str, Any]:
     """Karakter istatistiklerini getir."""

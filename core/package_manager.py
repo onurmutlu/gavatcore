@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import structlog
 from core.db.connection import get_db_session
 from sqlalchemy import text
+from enum import Enum
 
 logger = structlog.get_logger("gavatcore.package_manager")
 
@@ -48,6 +49,11 @@ PACKAGES = {
         "features": ["all", "unlimited", "bamgum_mode"]
     }
 }
+
+class PackageType(Enum):
+    BASIC = "basic"
+    PREMIUM = "premium"
+    VIP = "vip"
 
 class PackageManager:
     """Paket yönetim sistemi"""

@@ -7,7 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import asyncio
 import json
-from utils.smart_reply import smart_reply
+from utilities.smart_reply import smart_reply
 
 async def test_hybrid_mode():
     """Hybrid mode'u test et"""

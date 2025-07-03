@@ -1,15 +1,18 @@
 # core/user_segmentation.py
 import asyncio
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
 from enum import Enum
 import json
 import openai
 
 from core.crm_database import crm_db, UserProfile
-from utils.log_utils import log_event
+from utilities.log_utils import log_event
 from core.analytics_logger import log_analytics
+from core.profile_manager import profile_manager
+from core.user_analyzer import babagavat_user_analyzer
+from core.metrics_collector import MetricsCollector
 
 class UserSegment(Enum):
     """Kullanıcı segmentleri"""
@@ -45,6 +48,7 @@ class UserSegmentationEngine:
         self.openai_client = openai.AsyncOpenAI()
         self.segment_cache = {}  # {user_id: SegmentProfile}
         self.segment_rules = self._define_segment_rules()
+        self.metrics = MetricsCollector()
     
     def _define_segment_rules(self) -> Dict:
         """Segment kurallarını tanımla"""
@@ -428,6 +432,95 @@ class UserSegmentationEngine:
         except Exception as e:
             log_event("segmentation", f"❌ Segment performans analizi hatası: {e}")
             return {}
+
+    async def segment_users(self) -> Dict[str, List[Dict[str, Any]]]:
+        try:
+            # Tüm profilleri al
+            profiles = await profile_manager.get_all_profiles()
+            
+            # Kullanıcı analizlerini topla
+            user_analytics = await babagavat_user_analyzer.analyze_users(profiles)
+            
+            # Metrikleri topla
+            metrics = await self.metrics.collect_metrics()
+            
+            # Segmentleri oluştur
+            segments = {
+                "vip": [],
+                "active": [],
+                "passive": [],
+                "new": [],
+                "churn_risk": []
+            }
+            
+            for profile in profiles:
+                # Kullanıcı segmentini belirle
+                segment = self._determine_segment(profile, user_analytics.get(profile["id"], {}))
+                segments[segment].append(profile)
+            
+            # Segment istatistiklerini hesapla
+            segment_stats = self._calculate_segment_stats(segments)
+            
+            # Analitik logla
+            await log_analytics(
+                event_type="user_segmentation",
+                data={
+                    "total_users": len(profiles),
+                    "segment_stats": segment_stats,
+                    "metrics": metrics
+                }
+            )
+            
+            return {
+                "timestamp": datetime.now().isoformat(),
+                "segments": segments,
+                "stats": segment_stats,
+                "metrics": metrics
+            }
+            
+        except Exception as e:
+            await log_analytics(
+                event_type="segmentation_error",
+                data={"error": str(e)}
+            )
+            raise
+            
+    def _determine_segment(self, profile: Dict, analytics: Dict) -> str:
+        # VIP kriterleri
+        if analytics.get("total_spent", 0) > 1000 or analytics.get("engagement_score", 0) > 0.8:
+            return "vip"
+            
+        # Aktif kullanıcı kriterleri
+        if analytics.get("last_active_days", 0) < 7 and analytics.get("message_count", 0) > 10:
+            return "active"
+            
+        # Pasif kullanıcı kriterleri
+        if analytics.get("last_active_days", 0) > 30:
+            return "passive"
+            
+        # Yeni kullanıcı kriterleri
+        if analytics.get("account_age_days", 0) < 7:
+            return "new"
+            
+        # Churn riski kriterleri
+        if analytics.get("engagement_score", 0) < 0.2 and analytics.get("last_active_days", 0) > 14:
+            return "churn_risk"
+            
+        return "active"  # Varsayılan segment
+        
+    def _calculate_segment_stats(self, segments: Dict[str, List]) -> Dict[str, Any]:
+        total_users = sum(len(users) for users in segments.values())
+        
+        return {
+            "total_users": total_users,
+            "segment_distribution": {
+                segment: {
+                    "count": len(users),
+                    "percentage": (len(users) / total_users) * 100 if total_users > 0 else 0
+                }
+                for segment, users in segments.items()
+            }
+        }
 
 # Global instance
 user_segmentation = UserSegmentationEngine() 

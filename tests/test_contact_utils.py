@@ -26,7 +26,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 from typing import Dict, Any
 
 # Import the module under test
-from contact_utils import (
+from utilities.contact_utils import (
     add_contact_with_fallback,
     ContactManager,
     get_top_error_types,

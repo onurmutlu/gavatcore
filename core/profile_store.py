@@ -3,19 +3,25 @@
 
 import os
 import asyncio
-from typing import Optional, Dict, Any, List
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase, AsyncIOMotorCollection
+from typing import Optional, Dict, Any, List, TYPE_CHECKING
 from datetime import datetime
 
+if TYPE_CHECKING:
+    from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase, AsyncIOMotorCollection
+
 # Global MongoDB client ve database
-mongo_client: Optional[AsyncIOMotorClient] = None
-mongo_db: Optional[AsyncIOMotorDatabase] = None
+# Type: Optional[AsyncIOMotorClient]
+mongo_client = None
+# Type: Optional[AsyncIOMotorDatabase] 
+mongo_db = None
 
 async def init_profile_store():
     """MongoDB bağlantısını başlat"""
     global mongo_client, mongo_db
     
     try:
+        from motor.motor_asyncio import AsyncIOMotorClient
+        
         mongodb_uri = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
         db_name = os.getenv("MONGODB_DB", "gavatcore")
         
@@ -52,6 +58,9 @@ async def init_profile_store():
 async def create_indexes():
     """MongoDB index'lerini oluştur"""
     try:
+        if mongo_db is None:
+            return
+            
         profiles_collection = mongo_db.profiles
         
         # Username index (unique)
@@ -117,6 +126,9 @@ async def get_profile_by_user_id(user_id: str) -> Optional[Dict[str, Any]]:
         if mongo_db is None:
             await init_profile_store()
         
+        if mongo_db is None:
+            return None
+            
         collection = mongo_db.profiles
         profile = await collection.find_one({"user_id": str(user_id)})
         
@@ -424,4 +436,26 @@ async def _save_profile_to_file(username: str, data: Dict[str, Any]) -> bool:
         return True
     except Exception as e:
         print(f"❌ File profil kaydetme hatası ({username}): {e}")
-        return False 
+        return False
+
+def init_mongodb():
+    """MongoDB bağlantısını başlatır."""
+    try:
+        # MongoDB bağlantı ayarları
+        from pymongo import MongoClient
+        client = MongoClient("mongodb://localhost:27017/")
+        db = client["gavatcore"]
+        return db
+    except Exception as e:
+        print(f"MongoDB başlatma hatası: {e}")
+        return None
+
+def close_mongodb():
+    """MongoDB bağlantısını kapatır."""
+    try:
+        # MongoDB bağlantısını kapat
+        from pymongo import MongoClient
+        client = MongoClient("mongodb://localhost:27017/")
+        client.close()
+    except Exception as e:
+        print(f"MongoDB kapatma hatası: {e}") 

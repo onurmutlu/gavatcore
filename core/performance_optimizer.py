@@ -19,12 +19,18 @@ import logging
 # Database imports
 from core.db.connection import get_db_session
 from core.profile_store import get_profile_by_username, create_or_update_profile
-from utils.redis_client import redis_client, set_state, get_state
-from utils.log_utils import log_event
+from utilities.redis_client import redis_client, set_state, get_state
+from utilities.log_utils import log_event
 
 # Performance monitoring
 import structlog
 logger = structlog.get_logger("gavatcore.performance")
+
+from core.dynamic_delivery_optimizer import DynamicDeliveryOptimizer
+from core.cache_performance_monitor import CachePerformanceMonitor
+from core.smart_cache_manager import SmartCacheManager
+from core.analytics_logger import log_analytics
+from core.metrics_collector import MetricsCollector
 
 @dataclass
 class PerformanceMetrics:
@@ -552,6 +558,11 @@ class PerformanceOptimizer:
         self._system_metrics = deque(maxlen=1000)
         self._optimization_tasks = []
         self._monitoring_active = False
+        
+        self.delivery_optimizer = DynamicDeliveryOptimizer()
+        self.cache_monitor = CachePerformanceMonitor()
+        self.cache_manager = SmartCacheManager()
+        self.metrics = MetricsCollector()
     
     async def start_monitoring(self) -> None:
         """Performans monitoring'i başlat"""
@@ -676,46 +687,81 @@ class PerformanceOptimizer:
             "config": self.config_optimizer.get_config_stats()
         }
     
-    async def optimize_system(self) -> Dict[str, Any]:
-        """Sistem optimizasyonu çalıştır"""
-        start_time = time.time()
-        optimizations = []
-        
+    async def optimize_system(self) -> dict:
         try:
-            # Memory optimization
-            gc.collect()
-            optimizations.append("memory_gc")
+            # Performans metriklerini topla
+            metrics = await self.metrics.collect_metrics()
             
-            # Cache optimization
-            await self._cache_maintenance()
-            optimizations.append("cache_cleanup")
+            # Önbellek performansını kontrol et
+            cache_metrics = await self.cache_monitor.get_metrics()
             
-            # Log optimization
-            await self.log_optimizer._flush_logs()
-            optimizations.append("log_flush")
+            # Dinamik optimizasyon yap
+            delivery_optimization = await self.delivery_optimizer.optimize()
             
-            # Config optimization
-            await self.config_optimizer.preload_hot_configs()
-            optimizations.append("config_preload")
+            # Önbellek stratejisini güncelle
+            cache_optimization = await self.cache_manager.optimize_strategy(cache_metrics)
             
-            duration = time.time() - start_time
-            
-            return {
-                "success": True,
-                "duration": duration,
-                "optimizations": optimizations,
-                "timestamp": datetime.now().isoformat()
+            # Sonuçları birleştir
+            optimization_result = {
+                "timestamp": datetime.now().isoformat(),
+                "system_metrics": metrics,
+                "cache_metrics": cache_metrics,
+                "delivery_optimization": delivery_optimization,
+                "cache_optimization": cache_optimization,
+                "recommendations": self._generate_recommendations(
+                    metrics, cache_metrics, delivery_optimization, cache_optimization
+                )
             }
+            
+            # Analitik logla
+            await log_analytics(
+                event_type="system_optimization",
+                data={
+                    "metrics": metrics,
+                    "cache_metrics": cache_metrics,
+                    "optimization_result": optimization_result
+                }
+            )
+            
+            return optimization_result
             
         except Exception as e:
-            return {
-                "success": False,
-                "error": str(e),
-                "duration": time.time() - start_time,
-                "optimizations": optimizations
-            }
+            await log_analytics(
+                event_type="optimization_error",
+                data={"error": str(e)}
+            )
+            raise
+            
+    def _generate_recommendations(self, metrics, cache_metrics, delivery_opt, cache_opt) -> list:
+        recommendations = []
+        
+        # Sistem yükü önerileri
+        if metrics.get("cpu_usage", 0) > 80:
+            recommendations.append({
+                "type": "system",
+                "priority": "high",
+                "message": "CPU kullanımı yüksek. Ölçeklendirme gerekebilir."
+            })
+            
+        # Önbellek önerileri
+        if cache_metrics.get("hit_ratio", 0) < 0.7:
+            recommendations.append({
+                "type": "cache",
+                "priority": "medium",
+                "message": "Önbellek hit oranı düşük. Strateji güncellenmeli."
+            })
+            
+        # Dağıtım önerileri
+        if delivery_opt.get("latency", 0) > 1000:
+            recommendations.append({
+                "type": "delivery",
+                "priority": "high",
+                "message": "Yüksek gecikme. CDN optimizasyonu gerekebilir."
+            })
+            
+        return recommendations
 
-# Global optimizer instance
+# Singleton instance
 performance_optimizer = PerformanceOptimizer()
 
 # Convenience functions

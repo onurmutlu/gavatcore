@@ -5,11 +5,12 @@ import sys
 import os
 import asyncio
 import json
+from pathlib import Path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from core.profile_loader import load_profile, update_profile, save_profile
-from utils.state_utils import set_state, get_state, clear_state
-from utils.log_utils import log_event, search_logs, get_log_stats
+from utilities.state_utils import set_state, get_state, clear_state
+from utilities.log_utils import log_event, search_logs, get_log_stats
 from adminbot.commands import get_user_role, get_available_commands, export_botfather_commands_for_role
 from config import GAVATCORE_ADMIN_ID
 
@@ -196,7 +197,7 @@ async def test_complete_system():
     test_result("Log yazma", True, f"{len(test_logs)} log yazıldı")
     
     # Log okuma testi
-    from utils.log_utils import get_logs
+    from utilities.log_utils import get_logs
     logs = get_logs(test_username, limit=10)
     test_result("Log okuma", len(logs) > 50, f"Log uzunluğu: {len(logs)}")
     

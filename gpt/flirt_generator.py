@@ -5,7 +5,7 @@ import random
 from datetime import datetime
 from typing import Optional, List
 from gpt.gpt_call import gpt_call
-from utils.log_utils import log_event
+from utilities.log_utils import log_event
 
 class FlirtGenerator:
     def __init__(self):

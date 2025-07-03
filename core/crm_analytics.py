@@ -6,7 +6,7 @@ from typing import Dict, List, Tuple, Optional
 from dataclasses import asdict
 import openai
 from core.crm_database import crm_db, UserProfile, GroupProfile
-from utils.log_utils import log_event
+from utilities.log_utils import log_event
 from core.analytics_logger import log_analytics
 
 class CRMAnalytics:

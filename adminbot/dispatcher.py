@@ -106,9 +106,9 @@ def setup_admin_bot():
         try:
             if event.is_private:
                 # State kontrolü - VIP mesajı veya Papara bilgisi bekleniyor mu?
-                from utils.state_utils import get_state, clear_state
+                from utilities.state_utils import get_state, clear_state
                 from core.profile_loader import update_profile
-                from utils.log_utils import log_event
+                from utilities.log_utils import log_event
                 
                 sender = await event.get_sender()
                 user_id = sender.id
@@ -249,9 +249,9 @@ async def start_dispatcher_async():
         try:
             if event.is_private:
                 # State kontrolü - VIP mesajı veya Papara bilgisi bekleniyor mu?
-                from utils.state_utils import get_state, clear_state
+                from utilities.state_utils import get_state, clear_state
                 from core.profile_loader import update_profile
-                from utils.log_utils import log_event
+                from utilities.log_utils import log_event
                 
                 sender = await event.get_sender()
                 user_id = sender.id

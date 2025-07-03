@@ -10,7 +10,7 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from utils.scheduler_utils import spam_loop
+from utilities.scheduler_utils import spam_loop
 from telethon import TelegramClient
 
 async def test_spam_loop():

@@ -28,7 +28,7 @@ from typing import List, Dict, Any
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.log_utils import (
+from utilities.log_utils import (
     log_event, get_logs, search_logs, get_log_stats,
     LOGS_DIR, MAX_LOG_SIZE
 )
@@ -869,14 +869,14 @@ class TestModuleConstants:
     @pytest.mark.unit
     def test_logs_dir_constant(self):
         """Test LOGS_DIR constant."""
-        from utils.log_utils import LOGS_DIR
+        from utilities.log_utils import LOGS_DIR
         assert LOGS_DIR == "logs"
         assert isinstance(LOGS_DIR, str)
     
     @pytest.mark.unit
     def test_max_log_size_constant(self):
         """Test MAX_LOG_SIZE constant."""
-        from utils.log_utils import MAX_LOG_SIZE
+        from utilities.log_utils import MAX_LOG_SIZE
         assert MAX_LOG_SIZE == 5 * 1024 * 1024  # 5 MB
         assert isinstance(MAX_LOG_SIZE, int)
         assert MAX_LOG_SIZE > 0

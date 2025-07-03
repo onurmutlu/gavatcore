@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from core.crm_database import crm_db, UserProfile, GroupProfile
 from core.crm_analytics import crm_analytics
 from gpt.flirt_agent import generate_reply
-from utils.log_utils import log_event
+from utilities.log_utils import log_event
 from core.analytics_logger import log_analytics
 
 @dataclass

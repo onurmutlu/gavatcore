@@ -32,8 +32,8 @@ from core.db_pool_manager import (
 
 # Database imports
 from core.db.connection import get_db_session
-from utils.redis_client import redis_client
-from utils.log_utils import log_event
+from utilities.redis_client import redis_client
+from utilities.log_utils import log_event
 
 # Performance monitoring
 import structlog

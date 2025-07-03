@@ -27,6 +27,7 @@ import weakref
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 import atexit
+import os
 
 # Core Telegram Integration
 from telethon import TelegramClient, events
@@ -34,7 +35,7 @@ from telethon.tl.types import User
 from telethon.errors import FloodWaitError, UserPrivacyRestrictedError, RPCError
 
 # GavatCore Modules
-from contact_utils import add_contact_with_fallback, quick_cleanup
+from utilities.contact_utils import add_contact_with_fallback, quick_cleanup
 
 # Database & Cache
 from redis.asyncio import Redis
@@ -143,6 +144,10 @@ class ClientManager:
             # Initialize Telegram client
             self.client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
             
+            # Connect to Telegram
+            await self.client.start()
+            log.info("📱 Telegram client connected successfully")
+            
             # Initialize Redis
             self.redis = Redis.from_url(
                 REDIS_URL, 
@@ -190,7 +195,7 @@ class ClientManager:
         
         # Test MongoDB
         try:
-            if self.mongo_db:
+            if self.mongo_db is not None:
                 await self.mongo_db.command("ping")
                 results["mongodb"] = True
                 log.info("🍃 MongoDB connection ✅")
@@ -237,6 +242,144 @@ class ClientManager:
 # Global client manager
 client_manager = ClientManager()
 
+# Event handler'ları kaydet
+def register_event_handlers():
+    """Event handler'ları client başlatıldıktan sonra kaydeder."""
+    if not client_manager.client:
+        log.error("❌ Client not initialized")
+        return
+        
+    @client_manager.client.on(events.NewMessage)
+    async def handle_reply(event) -> None:
+        """
+        Handle new messages with DM requests.
+        
+        Enhanced with proper type checking, error handling, and metrics.
+        """
+        async with error_context("handle_reply", getattr(event, 'sender_id', None)):
+            stats.messages_processed += 1
+            
+            # Get user info first for filtering
+            user = await event.get_sender()
+            if not isinstance(user, User):
+                return  # Skip non-user entities
+            
+            # Filter out bots and unwanted users
+            if user.bot:
+                log.debug("🤖 Skipping bot message", 
+                         user_id=user.id, 
+                         username=getattr(user, 'username', None))
+                return
+            
+            # Filter out specific problematic users/bots
+            excluded_usernames = ["missrose_bot", "rose", "grouphelp_bot"]
+            excluded_user_ids = [609517172]  # Rose bot ID
+            
+            if (user.id in excluded_user_ids or 
+                (hasattr(user, 'username') and user.username and 
+                 user.username.lower() in excluded_usernames)):
+                log.debug("🚫 Skipping excluded user", 
+                         user_id=user.id, 
+                         username=getattr(user, 'username', None))
+                return
+            
+            # Check for DM request keywords
+            dm_keywords = ["dm", "mesaj", "yaz", "contact", "iletişim", "yazışma"]
+            message_text = (event.raw_text or "").lower()
+            
+            if event.is_reply and any(keyword in message_text for keyword in dm_keywords):
+                log.info("📩 DM request detected", 
+                        user_id=event.sender_id, 
+                        message=event.raw_text[:50] if event.raw_text else "")
+                
+                # User info already validated above
+                if not isinstance(user, User):
+                    await event.respond("❌ Kullanıcı bilgisi alınamadı")
+                    log.warning("⚠️ Invalid user type", 
+                               sender_type=type(user).__name__,
+                               sender_id=event.sender_id)
+                    return
+                
+                # Process contact addition with comprehensive logging
+                try:
+                    message = await add_contact_with_fallback(client_manager.client, user)
+                    
+                    # Try to respond, but handle permission errors
+                    try:
+                        await event.respond(message)
+                    except Exception as respond_error:
+                        log.warning("⚠️ Cannot respond to user", 
+                                   user_id=user.id,
+                                   error=str(respond_error))
+                    
+                    # Update statistics with detailed logging
+                    if "✅" in message:
+                        stats.contacts_added += 1
+                        log.info("✅ Contact added successfully", 
+                                user_id=user.id, 
+                                username=getattr(user, 'username', None),
+                                first_name=getattr(user, 'first_name', None))
+                    else:
+                        log.warning("⚠️ Contact addition failed", 
+                                   user_id=user.id)
+                except Exception as e:
+                    log.error("❌ Contact addition error", 
+                             user_id=user.id,
+                             error=str(e))
+                    # Don't try to respond if we already have permission issues
+
+    @client_manager.client.on(events.NewMessage(pattern='/stats'))
+    async def handle_stats_command(event) -> None:
+        """Handle /stats command."""
+        try:
+            if not await is_authorized_user(event.sender_id):
+                try:
+                    await event.respond("❌ Yetkisiz erişim")
+                except Exception:
+                    log.warning("⚠️ Cannot respond to unauthorized user", user_id=event.sender_id)
+                return
+                
+            stats.update_uptime()
+            stats_dict = stats.to_dict()
+            
+            response = (
+                "📊 Sistem İstatistikleri:\n"
+                f"⏱️ Çalışma Süresi: {stats_dict['uptime_human']}\n"
+                f"📨 İşlenen Mesaj: {stats_dict['messages_processed']}\n"
+                f"👥 Eklenen Kişi: {stats_dict['contacts_added']}\n"
+                f"❌ Hata Sayısı: {stats_dict['errors_encountered']}\n"
+                f"🧹 Temizlik Sayısı: {stats_dict['cleanup_runs']}\n"
+                f"📈 Hata Oranı: {stats_dict['error_rate']:.2%}\n"
+                f"✅ Başarı Oranı: {stats_dict['contact_success_rate']:.2%}"
+            )
+            
+            try:
+                await event.respond(response)
+            except Exception as e:
+                log.warning("⚠️ Cannot send stats response", user_id=event.sender_id, error=str(e))
+        except Exception as e:
+            log.error("❌ Stats command error", user_id=event.sender_id, error=str(e))
+
+    @client_manager.client.on(events.NewMessage(pattern='/cleanup'))
+    async def handle_cleanup_command(event) -> None:
+        """Handle /cleanup command."""
+        try:
+            if not await is_authorized_user(event.sender_id):
+                try:
+                    await event.respond("❌ Yetkisiz erişim")
+                except Exception:
+                    log.warning("⚠️ Cannot respond to unauthorized user", user_id=event.sender_id)
+                return
+                
+            try:
+                await event.respond("🧹 Temizlik başlatılıyor...")
+                await periodic_cleanup()
+                await event.respond("✅ Temizlik tamamlandı!")
+            except Exception as e:
+                log.warning("⚠️ Cannot send cleanup response", user_id=event.sender_id, error=str(e))
+        except Exception as e:
+            log.error("❌ Cleanup command error", user_id=event.sender_id, error=str(e))
+
 # --- Event Handlers ---
 
 @asynccontextmanager
@@ -277,167 +420,6 @@ async def error_context(operation: str, user_id: Optional[int] = None):
 async def is_authorized_user(user_id: int) -> bool:
     """Check if user is authorized for admin commands."""
     return user_id in AUTHORIZED_USERS if AUTHORIZED_USERS else False
-
-@client_manager.client.on(events.NewMessage)
-async def handle_reply(event) -> None:
-    """
-    Handle new messages with DM requests.
-    
-    Enhanced with proper type checking, error handling, and metrics.
-    """
-    if not client_manager.client:
-        log.error("❌ Client not initialized")
-        return
-    
-    async with error_context("handle_reply", getattr(event, 'sender_id', None)):
-        stats.messages_processed += 1
-        
-        # Check for DM request keywords
-        dm_keywords = ["dm", "mesaj", "yaz", "contact", "iletişim", "yazışma"]
-        message_text = (event.raw_text or "").lower()
-        
-        if event.is_reply and any(keyword in message_text for keyword in dm_keywords):
-            
-            log.info("📩 DM request detected", 
-                    user_id=event.sender_id, 
-                    message=event.raw_text[:50] if event.raw_text else "")
-            
-            # Get user info with validation
-            user = await event.get_sender()
-            if not isinstance(user, User):
-                await event.respond("❌ Kullanıcı bilgisi alınamadı")
-                log.warning("⚠️ Invalid user type", 
-                           sender_type=type(user).__name__,
-                           sender_id=event.sender_id)
-                return
-            
-            # Process contact addition with comprehensive logging
-            try:
-                message = await add_contact_with_fallback(client_manager.client, user)
-                await event.respond(message)
-                
-                # Update statistics with detailed logging
-                if "✅" in message:
-                    stats.contacts_added += 1
-                    log.info("✅ Contact added successfully", 
-                            user_id=user.id, 
-                            username=getattr(user, 'username', None),
-                            first_name=getattr(user, 'first_name', None))
-                else:
-                    log.warning("⚠️ Contact addition failed", 
-                               user_id=user.id,
-                               username=getattr(user, 'username', None),
-                               response=message)
-                               
-            except Exception as e:
-                error_msg = "⚠️ Bir hata oluştu, lütfen tekrar deneyin."
-                try:
-                    await event.respond(error_msg)
-                except:
-                    log.error("❌ Failed to send error response", 
-                             user_id=user.id,
-                             original_error=str(e))
-
-@client_manager.client.on(events.NewMessage(pattern='/stats'))
-async def handle_stats_command(event) -> None:
-    """
-    Handle /stats admin command with authorization check.
-    """
-    async with error_context("stats_command", event.sender_id):
-        # Authorization check
-        if not await is_authorized_user(event.sender_id):
-            await event.respond("❌ Bu komut için yetkiniz yok.")
-            log.warning("🚫 Unauthorized stats access attempt", user_id=event.sender_id)
-            return
-        
-        # Get connection status
-        connection_status = await client_manager.test_connections()
-        config_summary = get_config_summary()
-        
-        # Create comprehensive stats message
-        stats_data = stats.to_dict()
-        
-        stats_message = f"""
-🔥 **GavatCore Kernel 1.0 İstatistikleri** 🔥
-
-⏰ **Uptime**: {stats_data['uptime_human']}
-📈 **İşlenen Mesaj**: {stats_data['messages_processed']}
-✅ **Eklenen Contact**: {stats_data['contacts_added']}
-❌ **Hata Sayısı**: {stats_data['errors_encountered']}
-🧹 **Cleanup Çalışma**: {stats_data['cleanup_runs']}
-
-📊 **Performance Metrics**:
-- Contact Success Rate: {stats_data['contact_success_rate']:.2%}
-- Error Rate: {stats_data['error_rate']:.2%}
-
-🔌 **Bağlantı Durumu**:
-- Redis: {'✅' if connection_status.get('redis') else '❌'}
-- MongoDB: {'✅' if connection_status.get('mongodb') else '❌'}
-
-🚀 **Sistem Durumu**: Aktif ✅
-📱 **Session**: {SESSION_NAME}
-🤖 **Environment**: {config_summary['environment'].upper()}
-"""
-        
-        await event.respond(stats_message)
-        log.info("📊 Stats command executed", 
-                user_id=event.sender_id,
-                authorized=True)
-
-@client_manager.client.on(events.NewMessage(pattern='/cleanup'))
-async def handle_cleanup_command(event) -> None:
-    """
-    Handle /cleanup admin command with authorization and progress tracking.
-    """
-    async with error_context("cleanup_command", event.sender_id):
-        # Authorization check
-        if not await is_authorized_user(event.sender_id):
-            await event.respond("❌ Bu komut için yetkiniz yok.")
-            log.warning("🚫 Unauthorized cleanup access attempt", user_id=event.sender_id)
-            return
-        
-        await event.respond("🧹 Session cleanup başlatılıyor...")
-        log.info("🧹 Manual cleanup started", 
-                user_id=event.sender_id,
-                authorized=True)
-        
-        try:
-            # Run cleanup with timeout
-            result = await asyncio.wait_for(quick_cleanup(), timeout=300.0)  # 5 minute timeout
-            
-            if result.get("success", False):
-                cleanup_message = f"""
-✅ **Session Cleanup Tamamlandı!**
-
-📊 **Bulunan Session**: {result.get('sessions_found', 0)}
-🗑️ **Silinen Session**: {result.get('sessions_deleted', 0)}
-💾 **Korunan Session**: {result.get('sessions_preserved', 0)}
-⚡ **İşlem Süresi**: {result.get('processing_time_seconds', 0):.2f}s
-📝 **Log ID**: {str(result.get('log_document_id', 'N/A'))[:12]}...
-"""
-                stats.cleanup_runs += 1
-                stats.last_cleanup = datetime.now()
-                
-                log.info("✅ Manual cleanup completed", 
-                        deleted=result.get("sessions_deleted", 0),
-                        found=result.get("sessions_found", 0),
-                        duration=result.get("processing_time_seconds", 0))
-            else:
-                cleanup_message = f"❌ Cleanup başarısız: {result.get('error', 'Bilinmeyen hata')}"
-                log.error("❌ Manual cleanup failed", 
-                         error=result.get('error', 'Unknown error'))
-            
-            await event.respond(cleanup_message)
-            
-        except asyncio.TimeoutError:
-            await event.respond("⏰ Cleanup işlemi zaman aşımına uğradı")
-            log.error("❌ Cleanup timeout", user_id=event.sender_id)
-        except Exception as e:
-            await event.respond("❌ Cleanup sırasında hata oluştu")
-            log.error("❌ Cleanup unexpected error", 
-                     error=str(e), 
-                     user_id=event.sender_id,
-                     exc_info=True)
 
 # --- Background Tasks ---
 
@@ -501,61 +483,29 @@ def cleanup_on_exit():
 # --- Main Functions ---
 
 async def startup_sequence() -> bool:
-    """
-    Complete startup sequence with comprehensive validation.
-    
-    Returns:
-        bool: True if startup successful, False otherwise
-    """
+    """Initialize and start the bot."""
     try:
-        log.info("🚀 Starting GavatCore Kernel 1.0...")
-        
         # Initialize clients
         if not await client_manager.initialize():
-            log.error("❌ Client initialization failed")
             return False
-        
+            
         # Test connections
         connection_results = await client_manager.test_connections()
-        if not any(connection_results.values()):
-            log.error("❌ All database connections failed")
+        if not all(connection_results.values()):
+            log.error("❌ Some connections failed", results=connection_results)
             return False
+            
+        # Register event handlers
+        register_event_handlers()
         
-        if not connection_results.get("redis", False):
-            log.warning("⚠️ Redis connection failed - some features may be limited")
-        
-        if not connection_results.get("mongodb", False):
-            log.warning("⚠️ MongoDB connection failed - logging features may be limited")
-        
-        # Start Telegram client
-        log.info("📱 Starting Telegram client...")
-        await client_manager.client.start()
-        
-        # Get client info
-        me = await client_manager.client.get_me()
-        log.info("✅ Telegram client started", 
-                username=getattr(me, 'username', None),
-                user_id=me.id,
-                first_name=getattr(me, 'first_name', None))
-        
-        # Start background tasks
-        log.info("🔄 Starting background cleanup task...")
+        # Start cleanup task
         client_manager._cleanup_task = asyncio.create_task(periodic_cleanup())
         
-        # Print startup summary
-        config_summary = get_config_summary()
-        log.info("✅ GavatCore Kernel 1.0 ready!", 
-                environment=config_summary['environment'],
-                debug_mode=config_summary['debug_mode'],
-                features_enabled=sum(config_summary['features'].values()),
-                authorized_users=config_summary['authorized_users_count'])
-        
+        log.info("✅ Startup sequence completed successfully")
         return True
         
     except Exception as e:
-        log.error("❌ Startup sequence failed", 
-                 error=str(e),
-                 exc_info=True)
+        log.error("❌ Startup sequence failed", error=str(e))
         return False
 
 async def main() -> None:
@@ -608,6 +558,9 @@ async def main() -> None:
 
 if __name__ == "__main__":
     try:
+        if os.environ.get('TESTING') == 'true':
+            from unittest.mock import MagicMock
+            client_manager.client = MagicMock()
         asyncio.run(main())
     except KeyboardInterrupt:
         print("\n⌨️ Program kullanıcı tarafından durduruldu.")

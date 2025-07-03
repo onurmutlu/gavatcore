@@ -5,7 +5,7 @@ import re
 import random
 from typing import Optional, Dict, Any
 from gpt.gpt_call import gpt_call
-from utils.log_utils import log_event
+from utilities.log_utils import log_event
 
 class GroupReplyAgent:
     def __init__(self):

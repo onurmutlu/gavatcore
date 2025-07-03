@@ -42,7 +42,7 @@ async def test_system():
         from core.profile_manager import profile_manager
         from core.session_manager import get_active_sessions
         from core.package_manager import package_manager
-        from utils.anti_spam_guard import anti_spam_guard
+        from utilities.anti_spam_guard import anti_spam_guard
         
         logger.info("1️⃣ Modüller başarıyla import edildi")
         

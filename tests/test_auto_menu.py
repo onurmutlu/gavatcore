@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 # test_auto_menu.py
 
-import sys
 import os
+import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 
 from handlers.dm_handler import (
     update_conversation_state, 
     should_send_auto_menu,
-    dm_conversation_state
+    dm_conversation_state,
+    handle_message,
+    handle_inline_bank_choice
 )
 
 def test_auto_menu_system():

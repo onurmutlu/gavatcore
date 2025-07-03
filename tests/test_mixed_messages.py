@@ -7,7 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 import json
-from utils.smart_reply import smart_reply
+from utilities.smart_reply import smart_reply
 
 def test_mixed_message_system():
     print("🧪 Karışık Mesaj Sistemi Test Ediliyor...\n")

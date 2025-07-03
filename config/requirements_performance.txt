@@ -1,0 +1,42 @@
+# Behavioral Engine Performance Optimization Requirements
+# ======================================================
+
+# Core Dependencies
+openai>=1.30.0
+structlog>=23.1.0
+dataclasses-json>=0.6.0
+
+# Redis Caching
+redis>=5.0.0
+redis[hiredis]>=5.0.0
+
+# Performance Monitoring
+psutil>=5.9.0
+memory-profiler>=0.61.0
+
+# FastAPI (for API endpoints)
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+
+# Async Support
+aiofiles>=23.2.0
+aioredis>=2.0.1
+
+# Development & Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-benchmark>=4.0.0
+
+# Data Analysis (optional)
+numpy>=1.24.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+
+# Compression (for cache optimization)
+zlib-ng>=0.3.0
+lz4>=4.3.0
+
+# Monitoring & Logging
+prometheus-client>=0.19.0
+jaeger-client>=4.8.0 

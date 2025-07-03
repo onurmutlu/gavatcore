@@ -1,0 +1,194 @@
+{
+  "test_suite_version": "2.0.0",
+  "start_time": "2025-06-06T06:06:05.205550",
+  "engine_info": {
+    "gpt_available": true,
+    "total_profiles": 0
+  },
+  "big_five_analysis": {
+    "high_achiever_ali": {
+      "user_id": 1001,
+      "big_five_scores": {
+        "openness": 0.8,
+        "conscientiousness": 0.9,
+        "extraversion": 0.7,
+        "agreeableness": 0.6,
+        "neuroticism": 0.2
+      },
+      "dominant_traits": [
+        "openness",
+        "conscientiousness",
+        "extraversion"
+      ],
+      "analysis_success": true
+    },
+    "social_butterfly_selin": {
+      "user_id": 1002,
+      "big_five_scores": {
+        "openness": 0.6,
+        "conscientiousness": 0.5,
+        "extraversion": 0.9,
+        "agreeableness": 0.8,
+        "neuroticism": 0.2
+      },
+      "dominant_traits": [
+        "extraversion",
+        "agreeableness"
+      ],
+      "analysis_success": true
+    },
+    "creative_artist_mehmet": {
+      "user_id": 1003,
+      "big_five_scores": {
+        "openness": 0.9,
+        "conscientiousness": 0.7,
+        "extraversion": 0.6,
+        "agreeableness": 0.6,
+        "neuroticism": 0.3
+      },
+      "dominant_traits": [
+        "openness",
+        "conscientiousness"
+      ],
+      "analysis_success": true
+    },
+    "analytical_engineer_ayse": {
+      "user_id": 1004,
+      "big_five_scores": {
+        "openness": 0.8,
+        "conscientiousness": 0.9,
+        "extraversion": 0.3,
+        "agreeableness": 0.4,
+        "neuroticism": 0.2
+      },
+      "dominant_traits": [
+        "openness",
+        "conscientiousness"
+      ],
+      "analysis_success": true
+    },
+    "emotional_volatile_emre": {
+      "user_id": 1005,
+      "big_five_scores": {
+        "openness": 0.8,
+        "conscientiousness": 0.5,
+        "extraversion": 0.7,
+        "agreeableness": 0.6,
+        "neuroticism": 0.7
+      },
+      "dominant_traits": [
+        "openness",
+        "extraversion",
+        "neuroticism"
+      ],
+      "analysis_success": true
+    }
+  },
+  "comprehensive_analysis": {
+    "high_achiever_ali": {
+      "user_id": 1001,
+      "profile_created": true,
+      "big_five_analyzed": true,
+      "timing_analyzed": true,
+      "sentiment_analyzed": true,
+      "social_analyzed": true,
+      "motivation_analyzed": true,
+      "predictive_analyzed": true,
+      "analysis_success": true
+    },
+    "social_butterfly_selin": {
+      "user_id": 1002,
+      "profile_created": true,
+      "big_five_analyzed": true,
+      "timing_analyzed": true,
+      "sentiment_analyzed": true,
+      "social_analyzed": true,
+      "motivation_analyzed": true,
+      "predictive_analyzed": true,
+      "analysis_success": true
+    },
+    "creative_artist_mehmet": {
+      "user_id": 1003,
+      "profile_created": true,
+      "big_five_analyzed": true,
+      "timing_analyzed": true,
+      "sentiment_analyzed": true,
+      "social_analyzed": true,
+      "motivation_analyzed": true,
+      "predictive_analyzed": true,
+      "analysis_success": true
+    },
+    "analytical_engineer_ayse": {
+      "user_id": 1004,
+      "profile_created": true,
+      "big_five_analyzed": true,
+      "timing_analyzed": true,
+      "sentiment_analyzed": true,
+      "social_analyzed": true,
+      "motivation_analyzed": true,
+      "predictive_analyzed": true,
+      "analysis_success": true
+    },
+    "emotional_volatile_emre": {
+      "user_id": 1005,
+      "profile_created": true,
+      "big_five_analyzed": true,
+      "timing_analyzed": true,
+      "sentiment_analyzed": true,
+      "social_analyzed": true,
+      "motivation_analyzed": true,
+      "predictive_analyzed": true,
+      "analysis_success": true
+    }
+  },
+  "end_time": "2025-06-06T06:06:25.899648",
+  "engine_final_stats": {
+    "total_profiles": 5,
+    "big_five_distribution": {
+      "openness": {
+        "high": 5,
+        "medium": 0,
+        "low": 0
+      },
+      "conscientiousness": {
+        "high": 3,
+        "medium": 2,
+        "low": 0
+      },
+      "extraversion": {
+        "high": 3,
+        "medium": 1,
+        "low": 1
+      },
+      "agreeableness": {
+        "high": 1,
+        "medium": 4,
+        "low": 0
+      },
+      "neuroticism": {
+        "high": 1,
+        "medium": 0,
+        "low": 4
+      }
+    },
+    "social_role_distribution": {
+      "leader": 2,
+      "influencer": 1,
+      "follower": 2
+    },
+    "motivation_distribution": {
+      "achievement": 1,
+      "social": 1,
+      "adventure": 2,
+      "power": 1
+    },
+    "churn_risk_distribution": {
+      "low": 0,
+      "medium": 4,
+      "high": 1
+    },
+    "gpt_available": true,
+    "advanced_analytics": false,
+    "last_updated": "2025-06-06T06:06:25.899745"
+  }
+}

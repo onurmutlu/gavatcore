@@ -9,8 +9,8 @@ import time
 import hashlib
 from datetime import datetime
 from core.invite_manager import invite_manager
-from utils.group_invite_strategy import group_invite_strategy
-from utils.log_utils import log_event
+from utilities.group_invite_strategy import group_invite_strategy
+from utilities.log_utils import log_event
 
 class DuplicatePreventionTester:
     def __init__(self):

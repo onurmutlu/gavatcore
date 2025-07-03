@@ -6,7 +6,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-from utils.menu_manager import show_menu_manager
+from utilities.menu_manager import show_menu_manager
 
 def test_show_menus():
     """Show menü sistemini test et"""

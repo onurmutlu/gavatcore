@@ -1,0 +1,128 @@
+name: 🚀 Deploy GavatCore Panel
+
+on:
+  push:
+    branches: [ main, deploy ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  # Test job
+  test:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📦 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🐦 Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.19.6'
+        channel: 'stable'
+        
+    - name: 📋 Get dependencies
+      run: flutter pub get
+      
+    - name: 🔧 Generate code
+      run: dart run build_runner build --delete-conflicting-outputs
+      
+    - name: ✅ Analyze code
+      run: flutter analyze
+      
+    - name: 🧪 Run tests
+      run: flutter test
+
+  # Build and Deploy job
+  deploy:
+    name: 🌐 Build & Deploy
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/deploy'
+    
+    steps:
+    - name: 📦 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🐦 Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.19.6'
+        channel: 'stable'
+        
+    - name: 📋 Get dependencies
+      run: flutter pub get
+      
+    - name: 🔧 Generate code
+      run: dart run build_runner build --delete-conflicting-outputs
+      
+    - name: 🏗️ Build web app
+      run: |
+        flutter build web \
+          --release \
+          --web-renderer canvaskit \
+          --dart-define=API_BASE_URL=${{ secrets.API_BASE_URL || 'https://api.gavatcore.com' }} \
+          --dart-define=WS_URL=${{ secrets.WS_URL || 'wss://api.gavatcore.com/ws' }} \
+          --dart-define=USE_MOCK_DATA=false \
+          --dart-define=ENVIRONMENT=production
+          
+    - name: 📁 Create deployment package
+      run: |
+        cd build/web
+        echo "panel.gavatcore.com" > CNAME
+        echo "# GavatCore Panel - $(date)" > deployment_info.txt
+        echo "Build: ${{ github.sha }}" >> deployment_info.txt
+        echo "Branch: ${{ github.ref_name }}" >> deployment_info.txt
+        
+    # Deploy to GitHub Pages
+    - name: 🚀 Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/web
+        cname: panel.gavatcore.com
+        
+    # Deploy to Cloudflare Pages (alternative)
+    - name: ☁️ Deploy to Cloudflare Pages
+      if: github.ref == 'refs/heads/deploy'
+      uses: cloudflare/pages-action@v1
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        projectName: gavatcore-panel
+        directory: build/web
+        wranglerVersion: '3'
+        
+    # Slack notification
+    - name: 📱 Notify deployment
+      if: always()
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        fields: repo,message,commit,author,action,eventName,ref,workflow
+        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+  # Performance audit
+  lighthouse:
+    name: 🔍 Lighthouse Audit
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 📦 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🔍 Run Lighthouse
+      uses: treosh/lighthouse-ci-action@v10
+      with:
+        urls: |
+          https://panel.gavatcore.com
+        configPath: ./.lighthouserc.json
+        uploadArtifacts: true
+        temporaryPublicStorage: true 

@@ -7,7 +7,7 @@ Bu script tüm system botlarının adaptif spam ayarlarını test eder.
 import time
 import json
 from pathlib import Path
-from utils.adaptive_spam_scheduler import AdaptiveSpamScheduler
+from utilities.adaptive_spam_scheduler import AdaptiveSpamScheduler
 
 def test_bot_profile_settings(username: str):
     """Bot'un profil ayarlarını test eder"""

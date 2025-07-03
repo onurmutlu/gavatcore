@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import os
 import pytest
-from utils.file_utils import save_json, load_json, backup_file, recover_from_backup
+from utilities.file_utils import save_json, load_json, backup_file, recover_from_backup
 
 def test_basic_save_and_load(tmp_path):
     test_file = tmp_path / "test.json"

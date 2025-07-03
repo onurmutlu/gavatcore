@@ -24,8 +24,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import (
     OPENAI_API_KEY, OPENAI_MODEL, OPENAI_TTS_MODEL, OPENAI_TTS_VOICE, OPENAI_STT_MODEL,
     CHARACTER_AI_MODEL, CHARACTER_AI_TEMPERATURE, CHARACTER_AI_MAX_TOKENS,
-    ENABLE_VOICE_AI, ENABLE_SENTIMENT_ANALYSIS, ENABLE_PERSONALITY_ANALYSIS,
-    get_ai_model_for_task, get_ai_temperature_for_task, get_ai_max_tokens_for_task
+    ENABLE_VOICE_AI, ENABLE_SENTIMENT_ANALYSIS, ENABLE_PERSONALITY_ANALYSIS
 )
 
 logger = structlog.get_logger("gavatcore.voice_engine")
@@ -418,12 +417,11 @@ AI Assistant olarak yardımsever ve bilgilendirici bir yanıt ver:
             logger.error(f"❌ TTS hatası: {e}")
             return ""
 
-# Global instance - config'den API key alınacak
+# Global instance
 voice_engine = None
 
-async def initialize_voice_engine(openai_api_key: str) -> AIVoiceEngine:
-    """Voice engine'i başlat"""
+def get_voice_engine():
     global voice_engine
-    voice_engine = AIVoiceEngine(openai_api_key)
-    await voice_engine.initialize()
+    if voice_engine is None:
+        voice_engine = AIVoiceEngine(OPENAI_API_KEY)
     return voice_engine 

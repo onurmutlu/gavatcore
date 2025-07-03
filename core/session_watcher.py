@@ -77,7 +77,7 @@ def get_performer_user_id(username: str):
 
     # Eski sistem: data/user_profiles.json
     try:
-        from utils.file_utils import load_json
+        from utilities.file_utils import load_json
         profiles = load_json("data/user_profiles.json", default={})
         for user_id, profile in profiles.items():
             if profile.get("username") == username:

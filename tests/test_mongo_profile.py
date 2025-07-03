@@ -9,7 +9,8 @@ from core.profile_store import (
     get_profile_by_username, get_profile_by_user_id,
     create_or_update_profile, update_profile_field, update_profile_fields,
     delete_profile, get_all_profiles, get_bot_profiles,
-    search_profiles, get_profile_stats, migrate_from_json_files
+    search_profiles, get_profile_stats, migrate_from_json_files,
+    init_profile_store, close_profile_store
 )
 
 class TestMongoProfile:
@@ -198,37 +199,35 @@ class TestMongoProfile:
         
         start_time = time.time()
         
-        # 5 profil oluştur ve getir
+        # 10 profil oluştur
         tasks = []
-        for i in range(5):
-            profile_data = {
+        for i in range(10):
+            profile = {
                 "username": f"perf_bot_{i}",
+                "display_name": f"Performance Bot {i}",
                 "type": "bot",
                 "user_id": f"perf_user_{i}",
-                "autospam": False
+                "autospam": True
             }
-            task = create_or_update_profile(f"perf_bot_{i}", profile_data)
+            task = create_or_update_profile(profile["username"], profile)
             tasks.append(task)
         
         await asyncio.gather(*tasks)
         
-        # Profilleri getir
-        for i in range(5):
-            await get_profile_by_username(f"perf_bot_{i}")
+        # Profilleri sil
+        for i in range(10):
+            await delete_profile(f"perf_bot_{i}")
         
         end_time = time.time()
         duration = end_time - start_time
         
-        # Temizlik
-        for i in range(5):
-            await delete_profile(f"perf_bot_{i}")
-        
-        assert duration < 3.0, f"Performance testi çok yavaş: {duration:.2f}s"
+        assert duration < 2.0, f"Performance testi çok yavaş: {duration:.2f}s"
         print(f"✅ Performance testi başarılı: {duration:.2f}s")
     
     @classmethod
-    def teardown_class(cls):
+    async def teardown_class(cls):
         """Test sınıfı sonu"""
+        await close_profile_store()
         print("🧪 MongoDB profil testleri tamamlandı")
 
 # Test runner
@@ -254,7 +253,7 @@ async def run_tests():
         await test_instance.test_performance()
         
         # Teardown
-        test_instance.teardown_class()
+        await test_instance.teardown_class()
         
         print("\n🎉 Tüm MongoDB testleri başarılı!")
         return True
@@ -262,9 +261,6 @@ async def run_tests():
     except Exception as e:
         print(f"\n❌ Test hatası: {e}")
         return False
-    
-    finally:
-        await close_profile_store()
 
 if __name__ == "__main__":
     result = asyncio.run(run_tests())

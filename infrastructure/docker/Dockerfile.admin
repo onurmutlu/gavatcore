@@ -1,0 +1,3 @@
+FROM python:3.13-slim
+WORKDIR /app
+RUN groupadd -r admin && useradd -r -g admin admin

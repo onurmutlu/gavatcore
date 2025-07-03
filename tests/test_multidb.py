@@ -8,7 +8,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import asyncio
 from core.db.connection import init_database, close_database
 from core.profile_store import init_profile_store, close_profile_store
-from utils.redis_client import init_redis, close_redis
+from utilities.redis_client import init_redis, close_redis
 
 async def test_databases():
     print('🗄️ Database sistemleri test ediliyor...')

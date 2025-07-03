@@ -4,7 +4,7 @@
 import asyncio
 import pytest
 import time
-from utils.redis_client import (
+from utilities.redis_client import (
     init_redis, close_redis,
     set_state, get_state, delete_state, clear_state, get_all_user_states,
     set_cooldown, check_cooldown, clear_cooldown,

@@ -7,7 +7,7 @@ Bu script Lara'nın grup mesajlaşma aktivitesini test eder.
 import time
 import json
 from pathlib import Path
-from utils.lara_spam_scheduler import LaraSpamScheduler
+from utilities.lara_spam_scheduler import LaraSpamScheduler
 
 def test_lara_profile_settings():
     """Lara'nın profil ayarlarını test eder"""

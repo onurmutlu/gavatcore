@@ -6,7 +6,7 @@ Bu script dinamik spam scheduler'ın çalışmasını test eder.
 
 import time
 import random
-from utils.dynamic_spam_scheduler import (
+from utilities.dynamic_spam_scheduler import (
     DynamicSpamScheduler,
     SPAM_FREQUENCIES,
     TRAFFIC_THRESHOLDS,

@@ -6,8 +6,8 @@ import time
 from typing import Dict, Optional
 from telethon import TelegramClient
 from telethon.errors import FloodWaitError, UserDeactivatedError, AuthKeyUnregisteredError
-from utils.log_utils import log_event
-from utils.anti_spam_guard import anti_spam_guard
+from utilities.log_utils import log_event
+from utilities.anti_spam_guard import anti_spam_guard
 
 class AccountMonitor:
     def __init__(self):

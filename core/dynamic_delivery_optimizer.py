@@ -10,7 +10,7 @@ import openai
 from core.crm_database import crm_db, UserProfile, GroupProfile
 from core.user_segmentation import user_segmentation, UserSegment, SegmentProfile
 from core.crm_analytics import crm_analytics
-from utils.log_utils import log_event
+from utilities.log_utils import log_event
 from core.analytics_logger import log_analytics
 
 @dataclass

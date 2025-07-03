@@ -931,3 +931,72 @@ else:
     except ConfigValidationError as e:
         logger.warning(f"Configuration validation warnings: {e}")
         print("⚠️ Configuration loaded with warnings - check logs for details")
+
+# OpenAI TTS Model
+OPENAI_TTS_MODEL = "tts-1"
+
+# File Backup Directory
+FILE_BACKUP_DIR = "backups"
+
+# Error Log Path
+ERROR_LOG_PATH = "logs/errors"
+
+# MongoDB URI
+MONGODB_URI = "mongodb://localhost:27017/gavatcore"
+
+# Redis URI
+REDIS_URI = "redis://localhost:6379/0"
+
+# PostgreSQL URI
+POSTGRESQL_URI = "postgresql://localhost:5432/gavatcore"
+
+# Cache Settings
+CACHE_ENABLED = True
+CACHE_TTL = 3600  # 1 hour
+
+# Analytics Settings
+ANALYTICS_ENABLED = True
+ANALYTICS_BATCH_SIZE = 100
+
+# Performance Settings
+PERFORMANCE_MONITORING = True
+PERFORMANCE_LOG_INTERVAL = 300  # 5 minutes
+
+# Security Settings
+SECURITY_ENABLED = True
+API_KEY_REQUIRED = True
+
+# Logging Settings
+LOG_LEVEL = "INFO"
+LOG_FORMAT = "json"
+
+# Feature Flags
+FEATURES = {
+    "ai_content": True,
+    "analytics": True,
+    "caching": True,
+    "performance": True,
+    "security": True,
+    "logging": True,
+    "monitoring": True
+}
+
+# Eksik configler
+MAX_BACKUP_COUNT = 10
+ADMIN_EMAIL = "admin@example.com"
+DEFAULT_ENCODING = "utf-8"
+SMTP_SERVER = "smtp.example.com"
+SMTP_PORT = 587
+SMTP_USER = "noreply@example.com"
+SMTP_PASSWORD = "password"
+
+OPENAI_TTS_VOICE = "alloy"
+OPENAI_STT_MODEL = "whisper-1"
+CHARACTER_AI_MODEL = "gpt-4o"
+CHARACTER_AI_TEMPERATURE = 0.7
+CHARACTER_AI_MAX_TOKENS = 1024
+ENABLE_VOICE_AI = True
+ENABLE_SENTIMENT_ANALYSIS = True
+ENABLE_PERSONALITY_ANALYSIS = True
+
+METRICS_RETENTION_DAYS = 30

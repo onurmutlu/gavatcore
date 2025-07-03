@@ -23,6 +23,7 @@ import time
 import signal
 import logging
 import os
+import json
 from typing import List, Tuple, Optional, Dict, Any
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -135,14 +136,14 @@ class GavatCoreSystemLauncher:
             logger.info("🌐 Flask API Server başlatılıyor (localhost:5050)...")
             
             # Check if already running
-            if self._check_service_health("http://localhost:5050/api/system/health"):
+            if self._check_service_health("http://localhost:5050/api/system/status"):
                 logger.info("✅ Flask API zaten çalışıyor!")
                 self.status.successful_components += 1
                 return True
             
             # Start new process
             process = subprocess.Popen(
-                [sys.executable, "production_bot_api.py"],
+                [sys.executable, "apis/production_bot_api.py"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 start_new_session=True
@@ -151,7 +152,7 @@ class GavatCoreSystemLauncher:
             process_info = ProcessInfo(
                 name="Flask API",
                 process=process,
-                health_url="http://localhost:5050/api/system/health"
+                health_url="http://localhost:5050/api/system/status"
             )
             
             self.processes.append(process_info)
@@ -196,7 +197,7 @@ class GavatCoreSystemLauncher:
                 return True
             
             # Check if script exists
-            script_path = Path("xp_token_api_sync.py")
+            script_path = Path("apis/xp_token_api_sync.py")
             if not script_path.exists():
                 logger.warning("⚠️ XP Token API script bulunamadı, atlanıyor",
                              script=str(script_path))
@@ -243,66 +244,165 @@ class GavatCoreSystemLauncher:
     
     def start_production_bots(self) -> bool:
         """
-        XP-enabled production botları başlat.
+        Auto-session production botları başlat.
         
         Returns:
             bool: True if started successfully, False otherwise
         """
         try:
             self.status.total_components += 1
-            logger.info("🤖 XP-enabled Production Bots başlatılıyor...")
+            logger.info("🤖 Auto-Session Production Bots başlatılıyor...")
             
-            # Check if script exists
-            possible_scripts = [
-                "production_bot_launcher_xp.py",
-                "production_multi_bot_launcher.py",
-                "ultimate_telegram_bot_launcher.py"
-            ]
+            # Yeni bot sistemi kullan
+            bot_system_path = Path("services/telegram/bot_manager/bot_system.py")
             
-            script_path = None
-            for script in possible_scripts:
-                if Path(script).exists():
-                    script_path = script
-                    break
-            
-            if not script_path:
-                logger.warning("⚠️ Production bot launcher script bulunamadı",
-                             tried_scripts=possible_scripts)
-                self.status.failed_components += 1
-                return False
-            
-            # Start new process
-            process = subprocess.Popen(
-                [sys.executable, script_path],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                start_new_session=True
-            )
-            
-            process_info = ProcessInfo(
-                name="Production Bots",
-                process=process
-            )
-            
-            self.processes.append(process_info)
-            self.status.processes.append(process_info)
-            
-            # Wait for startup
-            time.sleep(5)
-            
-            # Check if process is still running
-            if process.poll() is None:
-                process_info.status = "running"
-                self.status.successful_components += 1
-                logger.info("✅ Production Bots başlatıldı!",
-                          pid=process_info.pid,
-                          script=script_path)
-                return True
+            if bot_system_path.exists():
+                logger.info("🚀 Yeni unified bot sistemi kullanılıyor...")
+                
+                # Master bot automation'ı başlat
+                process = subprocess.Popen(
+                    [sys.executable, "-m", "services.telegram.bot_manager.bot_system"],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    start_new_session=True
+                )
+                
+                process_info = ProcessInfo(
+                    name="Production Bots (Unified System)",
+                    process=process
+                )
+                
+                self.processes.append(process_info)
+                self.status.processes.append(process_info)
+                
+                # Bot başlatma için daha uzun bekle
+                logger.info("⏳ Bot sistemi başlatılıyor...")
+                time.sleep(10)
+                
+                # Check if process is still running
+                if process.poll() is None:
+                    process_info.status = "running"
+                    self.status.successful_components += 1
+                    logger.info("✅ Production Bots başlatıldı!",
+                              pid=process_info.pid,
+                              script="services.telegram.bot_manager.bot_system")
+                    return True
+                else:
+                    process_info.status = "failed"
+                    self.status.failed_components += 1
+                    logger.error("❌ Production Bots başlatılamadı - process terminated")
+                    
+                    # Hata mesajını göster
+                    stdout, stderr = process.communicate(timeout=1)
+                    if stderr:
+                        logger.error("Bot sistem hatası", error=stderr.decode())
+                    return False
+                    
             else:
-                process_info.status = "failed"
-                self.status.failed_components += 1
-                logger.error("❌ Production Bots başlatılamadı - process terminated")
-                return False
+                # Eski sistem - fallback
+                logger.warning("⚠️ Yeni bot sistemi bulunamadı, eski launcher kullanılıyor...")
+                
+                # Bot konfigürasyonları
+                bot_configs = {
+                    "lara": {
+                        "persona_file": "data/personas/yayincilara.json",
+                        "phone": "+905382617727",
+                        "display_name": "Lara - Flörtöz Yayıncı"
+                    },
+                    "babagavat": {
+                        "persona_file": "data/personas/babagavat.json", 
+                        "phone": "+905513272355",
+                        "display_name": "BabaGavat - Pavyon Lideri"
+                    },
+                    "geisha": {
+                        "persona_file": "data/personas/xxxgeisha.json",
+                        "phone": "+905486306226",
+                        "display_name": "Geisha - Vamp Moderatör"
+                    }
+                }
+                
+                # Session dosyalarını kontrol et
+                logger.info("🔍 Session dosyaları kontrol ediliyor...")
+                valid_bots = 0
+                
+                for bot_name, config in bot_configs.items():
+                    # Persona dosyasından telefon al
+                    if Path(config["persona_file"]).exists():
+                        try:
+                            import json
+                            with open(config["persona_file"], 'r', encoding='utf-8') as f:
+                                persona = json.load(f)
+                            phone = persona.get('phone', config['phone'])
+                        except:
+                            phone = config['phone']
+                    else:
+                        phone = config['phone']
+                    
+                    # Session dosyasını kontrol et
+                    clean_phone = phone.replace('+', '')
+                    session_path = f"sessions/_{clean_phone}.session"
+                    
+                    if Path(session_path).exists():
+                        size_kb = Path(session_path).stat().st_size / 1024
+                        if size_kb > 10:
+                            logger.info(f"✅ {bot_name}: Session hazır ({size_kb:.1f}KB)")
+                            valid_bots += 1
+                        else:
+                            logger.warning(f"⚠️ {bot_name}: Session küçük ({size_kb:.1f}KB)")
+                    else:
+                        logger.error(f"❌ {bot_name}: Session bulunamadı: {session_path}")
+                
+                if valid_bots == 0:
+                    logger.error("❌ Hiç geçerli session bulunamadı!")
+                    self.status.failed_components += 1
+                    return False
+                
+                # Ultimate launcher kullan
+                if Path("launchers/gavatcore_ultimate_launcher.py").exists():
+                    script_path = "launchers/gavatcore_ultimate_launcher.py"
+                    bot_name = "Ultimate Launcher"
+                elif Path("launchers/lara_bot_launcher.py").exists():
+                    script_path = "launchers/lara_bot_launcher.py"
+                    bot_name = "Lara Bot"
+                else:
+                    logger.error("❌ Hiçbir launcher bulunamadı!")
+                    self.status.failed_components += 1
+                    return False
+                
+                # Start new process
+                process = subprocess.Popen(
+                    [sys.executable, script_path],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    start_new_session=True
+                )
+                
+                process_info = ProcessInfo(
+                    name=f"Production Bots ({bot_name})",
+                    process=process
+                )
+                
+                self.processes.append(process_info)
+                self.status.processes.append(process_info)
+                
+                # Wait for startup
+                logger.info("⏳ Bot başlatma bekleniyor...")
+                time.sleep(5)
+                
+                # Check if process is still running
+                if process.poll() is None:
+                    process_info.status = "running"
+                    self.status.successful_components += 1
+                    logger.info("✅ Production Bots başlatıldı!",
+                              pid=process_info.pid,
+                              script=script_path,
+                              valid_sessions=valid_bots)
+                    return True
+                else:
+                    process_info.status = "failed"
+                    self.status.failed_components += 1
+                    logger.error("❌ Production Bots başlatılamadı - process terminated")
+                    return False
             
         except Exception as e:
             self.status.failed_components += 1

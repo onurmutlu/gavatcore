@@ -5,8 +5,8 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from utils.anti_spam_guard import anti_spam_guard
-from utils.log_utils import log_event
+from utilities.anti_spam_guard import anti_spam_guard
+from utilities.log_utils import log_event
 
 async def test_spam_debug():
     """Anti-spam guard debug testi"""
@@ -98,7 +98,7 @@ async def test_spam_debug():
     print(f"\n⚙️ BOT KONFİGÜRASYON TESTİ:")
     print("-" * 50)
     
-    from utils.bot_config_manager import bot_config_manager
+    from utilities.bot_config_manager import bot_config_manager
     
     for username in test_bots:
         print(f"\n🤖 {username.upper()} KONFİGÜRASYON:")

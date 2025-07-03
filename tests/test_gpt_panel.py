@@ -7,8 +7,8 @@ import asyncio
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from core.profile_loader import load_profile, update_profile, save_profile
-from utils.state_utils import set_state, get_state, clear_state
-from utils.log_utils import log_event
+from utilities.state_utils import set_state, get_state, clear_state
+from utilities.log_utils import log_event
 
 async def test_gpt_panel():
     """GPT Kontrol Paneli kapsamlı test"""

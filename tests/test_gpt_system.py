@@ -9,7 +9,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from gpt.gpt_call import gpt_client
 from gpt.flirt_generator import generate_flirty_message
 from gpt.group_reply_agent import generate_mention_reply, detect_mention
-from utils.message_context_collector import extract_group_context, format_context_for_prompt
+from utilities.message_context_collector import extract_group_context, format_context_for_prompt
 from gpt.shadow_persona_generator import generate_shadow_message
 from handlers.gpt_messaging_handler import gpt_messaging_handler
 

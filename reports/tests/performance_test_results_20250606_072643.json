@@ -1,0 +1,68 @@
+{
+  "test_start_time": "2025-06-06T07:22:42.751353",
+  "test_duration_seconds": 240.36268091201782,
+  "overall_score": 63.7916767086898,
+  "test_results": {
+    "cache_performance": {
+      "cache_hit_rate": 50.0,
+      "cache_response_time": 1.6231727838516234,
+      "cache_memory_usage": 0.0,
+      "cache_operations": 10,
+      "errors": [],
+      "test_duration": 16.241372108459473
+    },
+    "memory_optimization": {
+      "memory_before_mb": 139.78515625,
+      "memory_after_mb": 132.37890625,
+      "memory_peak_mb": 35.1171875,
+      "gc_effectiveness": 7596,
+      "memory_leaks_detected": 0,
+      "errors": [],
+      "test_duration": 92.98161792755127
+    },
+    "concurrent_operations": {
+      "concurrent_users": 20,
+      "avg_response_time": 7.199783127307892,
+      "throughput_per_second": 1.8927804931563277,
+      "success_rate": 100.0,
+      "concurrent_errors": 0,
+      "errors": [],
+      "test_duration": 52.85027098655701
+    },
+    "bottleneck_detection": {
+      "bottlenecks_found": 1,
+      "memory_hotspots": 0,
+      "performance_score": 0,
+      "optimization_suggestions": [
+        "Optimize analyze_big_five_traits - slow execution detected (avg: 3.597s)",
+        "Consider implementing caching for frequently called functions",
+        "Review algorithm complexity for identified bottlenecks",
+        "Enable async processing where possible",
+        "Consider implementing lazy loading for large data sets"
+      ],
+      "errors": [],
+      "test_duration": 75.96170902252197
+    },
+    "api_performance": {
+      "dashboard_response_time": 1.1717371940612793,
+      "user_analytics_response_time": 0.00575709342956543,
+      "performance_metrics_response_time": 1.0546491146087646,
+      "api_errors": 0,
+      "errors": [],
+      "test_duration": 2.2513227462768555
+    }
+  },
+  "recommendations": [
+    "Cache hit rate düşük - cache TTL ayarlarını optimize edin",
+    "Performance bottleneck'leri tespit edildi - code profiling yapın",
+    "Genel performance düşük - sistem architecture gözden geçirin"
+  ],
+  "summary": {
+    "total_tests": 5,
+    "overall_performance": "Fair",
+    "cache_efficiency": 50.0,
+    "memory_health": "Healthy",
+    "concurrency_support": "Strong",
+    "api_responsiveness": "Fast"
+  }
+}

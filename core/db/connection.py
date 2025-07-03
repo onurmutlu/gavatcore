@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import MetaData
 import structlog
-# from utils.log_utils import log_event  # Circular import önleme
+# from utilities.log_utils import log_event  # Circular import önleme
 
 logger = structlog.get_logger("gavatcore.db")
 

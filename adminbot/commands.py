@@ -9,7 +9,7 @@ from core.profile_loader import (
     get_all_profiles, get_profile_path,
     save_profile
 )
-from utils.log_utils import get_logs, log_event, search_logs, get_log_stats
+from utilities.log_utils import get_logs, log_event, search_logs, get_log_stats
 from core.gavat_client import is_session_available
 from core.session_manager import create_session_flow, terminate_session
 from core.profile_generator import generate_bot_persona, generate_showcu_persona
@@ -666,7 +666,7 @@ Ayarlamak istediğin özelliği seç:"""
     # 💾 /backup
     elif command == "/backup":
         try:
-            from utils.file_utils import backup_file
+            from utilities.file_utils import backup_file
             files = [
                 *[os.path.join("data", f) for f in os.listdir("data") if f.endswith(".json")],
                 *[os.path.join("sessions", f) for f in os.listdir("sessions") if f.endswith(".session")]
@@ -682,7 +682,7 @@ Ayarlamak istediğin özelliği seç:"""
 
     # /show_menu_list - Show menülerini listele
     elif command == "/show_menu_list":
-        from utils.menu_manager import show_menu_manager
+        from utilities.menu_manager import show_menu_manager
         available_menus = show_menu_manager.list_available_menus()
         if available_menus:
             menu_text = "🎭 *Mevcut Show Menüleri:*\n\n"
@@ -695,7 +695,7 @@ Ayarlamak istediğin özelliği seç:"""
     # /show_menu_view [bot_name] [compact] - Show menüsünü görüntüle
     elif command.startswith("/show_menu_view"):
         try:
-            from utils.menu_manager import show_menu_manager
+            from utilities.menu_manager import show_menu_manager
             parts = command.split()
             if len(parts) < 2:
                 await event.respond("⚠️ Kullanım: /show_menu_view [bot_name] [compact]")
@@ -716,7 +716,7 @@ Ayarlamak istediğin özelliği seç:"""
     # /show_menu_update [bot_name] [title] | [content] - Show menüsünü güncelle
     elif command.startswith("/show_menu_update"):
         try:
-            from utils.menu_manager import show_menu_manager
+            from utilities.menu_manager import show_menu_manager
             content = command.replace("/show_menu_update", "").strip()
             if "|" not in content:
                 await event.respond("⚠️ Kullanım: /show_menu_update [bot_name] [title] | [menü içeriği]")

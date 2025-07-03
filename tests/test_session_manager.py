@@ -1047,7 +1047,7 @@ class TestCleanupAndMaintenance:
         """Test basic cleanup_expired_sessions functionality."""
         # Import cleanup function from contact_utils
         try:
-            from contact_utils import cleanup_expired_sessions
+            from utilities.contact_utils import cleanup_expired_sessions
         except ImportError:
             pytest.skip("cleanup_expired_sessions not available in contact_utils")
         
@@ -1077,7 +1077,7 @@ class TestCleanupAndMaintenance:
     async def test_session_cleanup_with_errors(self, temp_sessions_dir):
         """Test session cleanup with permission errors."""
         try:
-            from contact_utils import cleanup_expired_sessions
+            from utilities.contact_utils import cleanup_expired_sessions
         except ImportError:
             pytest.skip("cleanup_expired_sessions not available in contact_utils")
         

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # tests/test_anti_spam_system.py
 
-import sys
 import os
+import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import asyncio
 import json
-from utils.anti_spam_guard import anti_spam_guard
+from utilities.anti_spam_guard import anti_spam_guard
 from handlers.safe_spam_handler import safe_spam_handler
 from gpt.template_shuffler import template_shuffler
 

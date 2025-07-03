@@ -4,7 +4,7 @@
 import asyncio
 import pytest
 from datetime import datetime, timedelta
-from core.db.connection import init_postgres, close_postgres
+from core.db.connection import init_database, close_database
 from core.db.crud import (
     log_event, get_events, search_events,
     log_sale, get_sales, update_sale_status,
@@ -22,8 +22,8 @@ class TestSQLModelLogs:
     
     async def test_postgres_connection(self):
         """PostgreSQL bağlantı testi"""
-        result = await init_database()
-        assert result == True, "PostgreSQL bağlantısı başarısız"
+        engine, session_factory = await init_database()
+        assert engine is not None and session_factory is not None, "PostgreSQL bağlantısı başarısız"
         print("✅ PostgreSQL bağlantısı başarılı")
     
     async def test_event_logging(self):
@@ -166,8 +166,9 @@ class TestSQLModelLogs:
         print(f"✅ Performance testi başarılı: {duration:.2f}s")
     
     @classmethod
-    def teardown_class(cls):
+    async def teardown_class(cls):
         """Test sınıfı sonu"""
+        await close_database()
         print("🧪 PostgreSQL/SQLAlchemy testleri tamamlandı")
 
 # Test runner
@@ -190,7 +191,7 @@ async def run_tests():
         await test_instance.test_performance()
         
         # Teardown
-        test_instance.teardown_class()
+        await test_instance.teardown_class()
         
         print("\n🎉 Tüm PostgreSQL testleri başarılı!")
         return True
@@ -198,9 +199,6 @@ async def run_tests():
     except Exception as e:
         print(f"\n❌ Test hatası: {e}")
         return False
-    
-    finally:
-        await close_database()
 
 if __name__ == "__main__":
     result = asyncio.run(run_tests())

@@ -1,11 +1,13 @@
-# core/controller.py
+#!/usr/bin/env python3
+"""
+Controller - Ana kontrol sistemi
+"""
 
 import asyncio
 import os
 import logging
 from telethon import TelegramClient, events
 from core.gavat_client import GavatClient
-from handlers.dm_handler import handle_message, handle_inline_bank_choice
 from core.smart_campaign_manager import smart_campaign_manager
 from core.crm_database import crm_db
 from core.onboarding_flow import (
@@ -15,12 +17,12 @@ from core.onboarding_flow import (
 )
 from core.license_checker import LicenseChecker
 from core.profile_loader import load_profile
-from utils.scheduler_utils import spam_loop
+from utilities.scheduler_utils import spam_loop
+import structlog
 
 SESSIONS_DIR = "sessions"
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("gavatcore.controller")
+logger = structlog.get_logger("gavatcore.controller")
 
 # Global client registry
 active_clients = {}  # {username: client}
@@ -155,7 +157,7 @@ async def launch_all_sessions():
                             session_created_at = datetime.now()
                         
                         await handle_onboarding_text(event)
-                        await handle_message(client.client, sender, event.raw_text, session_created_at)
+                        await Controller.handle_message(client.client, sender, event.raw_text, session_created_at)
                     elif event.is_group:
                         # Grup mesajları için handler
                         from handlers.group_handler import handle_group_message
@@ -166,7 +168,7 @@ async def launch_all_sessions():
             @client.client.on(events.CallbackQuery)
             async def unified_callback_handler(event):
                 try:
-                    await handle_inline_bank_choice(event)
+                    await Controller.handle_inline_bank_choice(event)
                     await handle_onboarding_callback(event)
                 except Exception as e:
                     logger.error(f"[handler] CallbackQuery hatası: {e}")
@@ -297,6 +299,22 @@ async def launch_all_sessions():
         await asyncio.gather(*all_tasks)
     except Exception as e:
         logger.error(f"[controller] Client çalıştırma toplu hatası: {e}")
+
+class Controller:
+    @staticmethod
+    async def handle_message(client, sender, message_text, session_created_at):
+        logger.info(f"Mesaj işleniyor: {message_text}")
+        # Burada gerçek iş mantığını ekleyebilirsin
+        return True
+
+    @staticmethod
+    async def handle_inline_bank_choice(event):
+        logger.info(f"Banka seçimi işleniyor: {event}")
+        # Burada gerçek iş mantığını ekleyebilirsin
+        return True
+
+# Global instance
+controller = Controller()
 
 if __name__ == "__main__":
     try:

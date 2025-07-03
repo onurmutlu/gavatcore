@@ -17,16 +17,18 @@ from collections import defaultdict, Counter
 import queue
 import atexit
 import asyncio
+from pathlib import Path
 
 # Yerel modüller
-from utils.file_utils import ensure_directory, save_json, load_json
+from utilities.file_utils import ensure_directory, save_json, load_json
 from config import (
     METRICS_DIR,
     METRICS_FORMAT,
     METRICS_FLUSH_INTERVAL,
     DASHBOARD_API_KEY,
     DASHBOARD_API_URL,
-    METRICS_RETENTION_DAYS
+    METRICS_RETENTION_DAYS,
+    DEFAULT_ENCODING
 )
 
 # Logging yapılandırması
@@ -37,7 +39,11 @@ logger.setLevel(logging.INFO)
 if not os.path.exists(METRICS_DIR):
     os.makedirs(METRICS_DIR, exist_ok=True)
 
-log_path = os.path.join(METRICS_DIR, "metrics.log")
+# Log dosyası yolunu düzelt
+log_dir = Path("logs")
+log_dir.mkdir(exist_ok=True)
+log_path = log_dir / "metrics.log"
+
 file_handler = logging.FileHandler(log_path)
 file_handler.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s")

@@ -1,0 +1,29 @@
+{
+  "dashboard": {
+    "normal": {
+      "endpoint": "/api/admin/dashboard/stats",
+      "method": "GET",
+      "status_code": 0,
+      "response_time": 0.010959148406982422,
+      "success": false,
+      "error": "Cannot connect to host localhost:5055 ssl:default [Multiple exceptions: [Errno 61] Connect call failed ('::1', 5055, 0, 0), [Errno 61] Connect call failed ('127.0.0.1', 5055)]"
+    }
+  },
+  "health": {
+    "endpoint": "/api/admin/system/health",
+    "method": "GET",
+    "status_code": 0,
+    "response_time": 0.0009298324584960938,
+    "success": false,
+    "error": "Cannot connect to host localhost:5055 ssl:default [Multiple exceptions: [Errno 61] Connect call failed ('127.0.0.1', 5055), [Errno 61] Connect call failed ('::1', 5055, 0, 0)]"
+  },
+  "summary": {
+    "total_tests": 2,
+    "successful_tests": 0,
+    "failed_tests": 2,
+    "success_rate": 0.0,
+    "avg_response_time": 0,
+    "min_response_time": 0,
+    "max_response_time": 0
+  }
+}

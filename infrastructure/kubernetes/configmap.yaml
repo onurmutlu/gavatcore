@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gavatcore-config
+  namespace: gavatcore
+  labels:
+    app: gavatcore
+    version: "6.0.0"
+data:
+  # Application Configuration
+  PYTHONUNBUFFERED: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+  FLASK_ENV: "production"
+  FLASK_DEBUG: "0"
+  
+  # Database Configuration
+  DATABASE_URL: "/app/gavatcore_v2.db"
+  DATABASE_POOL_SIZE: "10"
+  DATABASE_TIMEOUT: "30"
+  
+  # Redis Configuration
+  REDIS_URL: "redis://gavatcore-redis:6379"
+  REDIS_MAX_CONNECTIONS: "20"
+  REDIS_TIMEOUT: "5"
+  
+  # API Configuration
+  API_HOST: "0.0.0.0"
+  API_PORT: "5050"
+  TOKEN_API_PORT: "5051"
+  ADMIN_API_PORT: "5055"
+  
+  # Performance Configuration
+  WORKER_PROCESSES: "4"
+  WORKER_CONNECTIONS: "1000"
+  KEEP_ALIVE: "2"
+  
+  # Monitoring Configuration
+  METRICS_ENABLED: "true"
+  HEALTH_CHECK_INTERVAL: "30"
+  
+  # Logging Configuration
+  LOG_LEVEL: "INFO"
+  LOG_FORMAT: "json"
+  LOG_FILE: "/app/logs/gavatcore.log"
+  
+  # Security Configuration
+  CORS_ORIGINS: "*"
+  RATE_LIMIT_ENABLED: "true"
+  RATE_LIMIT_PER_MINUTE: "60"
+  
+  # Feature Flags
+  XP_TOKEN_ENABLED: "true"
+  BEHAVIORAL_ANALYSIS_ENABLED: "true"
+  ADVANCED_CACHING_ENABLED: "true"
+  PERFORMANCE_MONITORING_ENABLED: "true"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gavatcore-secrets
+  namespace: gavatcore
+  labels:
+    app: gavatcore
+    version: "6.0.0"
+type: Opaque
+data:
+  # Base64 encoded secrets
+  # These will be populated by CI/CD pipeline or kubectl
+  telegram-api-key: ""
+  database-password: ""
+  jwt-secret-key: ""
+  encryption-key: ""

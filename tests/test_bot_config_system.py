@@ -5,8 +5,8 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from utils.bot_config_manager import bot_config_manager
-from utils.log_utils import log_event
+from utilities.bot_config_manager import bot_config_manager
+from utilities.log_utils import log_event
 
 async def test_bot_config_system():
     """Bot konfigürasyon sistemini test et"""

@@ -13,10 +13,10 @@ from datetime import datetime
 from core.db.connection import init_database, close_database
 from core.db.crud import log_event, get_events, search_events
 from core.profile_store import init_profile_store, close_profile_store, create_or_update_profile, get_profile_by_username
-from utils.redis_client import init_redis, close_redis, set_state, get_state, set_cooldown, check_cooldown
+from utilities.redis_client import init_redis, close_redis, set_state, get_state, set_cooldown, check_cooldown
 
 # Updated handlers
-from utils.log_utils import log_event_async
+from utilities.log_utils import log_event_async
 from core.profile_loader import load_profile_async, save_profile_async
 
 async def test_postgresql_logs():

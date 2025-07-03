@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gavatcore
+  labels:
+    name: gavatcore
+    app: gavatcore-platform
+    version: "6.0.0"
+    tier: production
