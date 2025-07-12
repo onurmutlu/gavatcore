@@ -30,6 +30,7 @@ logs/*
 !logs/.gitkeep
 sessions/*
 !sessions/.gitkeep
+downloads/
 
 # Hassas Veriler
 *.key

@@ -1,0 +1,39 @@
+[Unit]
+Description=GavatCore SaaS API Service
+After=network.target
+
+[Container]
+Image=ghcr.io/gavatcore/gavatcore-api:latest
+ContainerName=gavatcore-api
+
+# Ports
+PublishPort=8000:8000
+
+# Environment
+EnvironmentFile=/opt/gavatcore/.env
+
+# Volumes
+Volume=/opt/gavatcore/data:/app/data:Z
+Volume=/opt/gavatcore/logs:/app/logs:Z
+Volume=/opt/gavatcore/sessions:/app/sessions:Z
+
+# Security
+User=1000:1000
+ReadOnlyRootFilesystem=false
+NoNewPrivileges=true
+
+# Resources
+Memory=1G
+CPUQuota=50%
+
+# Restart policy
+Restart=always
+
+# Health check
+HealthCmd=curl -f http://localhost:8000/health || exit 1
+HealthInterval=30s
+HealthTimeout=10s
+HealthRetries=3
+
+[Install]
+WantedBy=default.target 

@@ -8,10 +8,10 @@ import 'features/settings/simple_settings_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Remove # from URL in web
   usePathUrlStrategy();
-  
+
   // Set system UI overlay style
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -21,7 +21,7 @@ void main() async {
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
-  
+
   runApp(
     const ProviderScope(
       child: GavatCoreApp(),
@@ -42,7 +42,7 @@ class CharacterData {
   final Map<String, dynamic> profileData;
   final Map<String, dynamic> personaData;
   final String lastUpdated;
-  
+
   CharacterData({
     required this.name,
     required this.username,
@@ -77,21 +77,21 @@ class CharacterData {
 // API Service
 class GAVATCoreAPIService {
   static const String baseUrl = 'http://localhost:5050';
-  
+
   static Future<Map<String, dynamic>> getSystemStatus() async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/api/system/status'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 5));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('API Error: $e');
     }
-    
+
     // Mock data if API unavailable
     return {
       'status': 'running',
@@ -101,25 +101,27 @@ class GAVATCoreAPIService {
       'response_time': 125
     };
   }
-  
+
   static Future<List<CharacterData>> getCharacters() async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/api/characters'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data['success'] == true) {
           final List<dynamic> charactersJson = data['characters'];
-          return charactersJson.map((json) => CharacterData.fromJson(json)).toList();
+          return charactersJson
+              .map((json) => CharacterData.fromJson(json))
+              .toList();
         }
       }
     } catch (e) {
       print('Characters API Error: $e');
     }
-    
+
     // Mock data if API unavailable
     return [
       CharacterData(
@@ -127,7 +129,8 @@ class GAVATCoreAPIService {
         username: 'yayincilara',
         phone: '+905382617727',
         status: 'active',
-        description: 'Flörtöz streamer karakteri. Gaming ve eğlence odaklı sohbet tarzı.',
+        description:
+            'Flörtöz streamer karakteri. Gaming ve eğlence odaklı sohbet tarzı.',
         messageCount: 1247,
         responseTime: 2.3,
         features: ['Flört Modu', 'Gaming Chat', 'Emoji Master', 'Voice Notes'],
@@ -140,10 +143,16 @@ class GAVATCoreAPIService {
         username: 'xxxgeisha',
         phone: '+905486306226',
         status: 'active',
-        description: 'Gizemli ve zarif moderatör karakteri. Sofistike sohbet tarzı.',
+        description:
+            'Gizemli ve zarif moderatör karakteri. Sofistike sohbet tarzı.',
         messageCount: 856,
         responseTime: 1.8,
-        features: ['Zarif Sohbet', 'Moderasyon', 'AI Enhanced', 'Multi-language'],
+        features: [
+          'Zarif Sohbet',
+          'Moderasyon',
+          'AI Enhanced',
+          'Multi-language'
+        ],
         profileData: {},
         personaData: {},
         lastUpdated: '',
@@ -153,7 +162,8 @@ class GAVATCoreAPIService {
         username: 'babagavat',
         phone: '+905513272355',
         status: 'banned',
-        description: 'Spam nedeniyle geçici olarak devre dışı. Sistem güncelleme bekleniyor.',
+        description:
+            'Spam nedeniyle geçici olarak devre dışı. Sistem güncelleme bekleniyor.',
         messageCount: 0,
         responseTime: 0.0,
         features: ['Devre Dışı', 'Spam Koruması', 'Güncelleme Bekliyor'],
@@ -164,14 +174,17 @@ class GAVATCoreAPIService {
     ];
   }
 
-  static Future<bool> updateCharacter(String username, Map<String, dynamic> updateData) async {
+  static Future<bool> updateCharacter(
+      String username, Map<String, dynamic> updateData) async {
     try {
-      final response = await http.put(
-        Uri.parse('$baseUrl/api/characters/$username'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(updateData),
-      ).timeout(const Duration(seconds: 10));
-      
+      final response = await http
+          .put(
+            Uri.parse('$baseUrl/api/characters/$username'),
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode(updateData),
+          )
+          .timeout(const Duration(seconds: 10));
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         return data['success'] == true;
@@ -184,12 +197,14 @@ class GAVATCoreAPIService {
 
   static Future<bool> characterAction(String username, String action) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/characters/$username/action'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({'action': action}),
-      ).timeout(const Duration(seconds: 10));
-      
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl/api/characters/$username/action'),
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode({'action': action}),
+          )
+          .timeout(const Duration(seconds: 10));
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         return data['success'] == true;
@@ -206,7 +221,7 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/performers'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data['success'] == true) {
@@ -216,19 +231,22 @@ class GAVATCoreAPIService {
     } catch (e) {
       print('Performers API Error: $e');
     }
-    
+
     // Mock data if API unavailable
     return [];
   }
 
-  static Future<bool> createPerformer(Map<String, dynamic> performerData) async {
+  static Future<bool> createPerformer(
+      Map<String, dynamic> performerData) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/performers'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(performerData),
-      ).timeout(const Duration(seconds: 10));
-      
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl/api/performers'),
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode(performerData),
+          )
+          .timeout(const Duration(seconds: 10));
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         return data['success'] == true;
@@ -249,17 +267,18 @@ class GAVATCoreAPIService {
       final queryParams = <String, String>{
         'limit': limit.toString(),
       };
-      
+
       if (botName != null) queryParams['bot_name'] = botName;
       if (chatType != null) queryParams['chat_type'] = chatType;
       if (messageType != null) queryParams['message_type'] = messageType;
-      
-      final uri = Uri.parse('$baseUrl/api/messages').replace(queryParameters: queryParams);
+
+      final uri = Uri.parse('$baseUrl/api/messages')
+          .replace(queryParameters: queryParams);
       final response = await http.get(
         uri,
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data['success'] == true) {
@@ -273,7 +292,7 @@ class GAVATCoreAPIService {
     } catch (e) {
       print('Messages API Error: $e');
     }
-    
+
     return {
       'messages': <Map<String, dynamic>>[],
       'count': 0,
@@ -287,26 +306,26 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/messages/stats'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('Message Stats API Error: $e');
     }
-    
-    // Mock data
+
+    // Mock data: bot_distribution values should match expected {dm, group, total} structure
     return {
       'total_messages': 1247,
       'bot_distribution': {
-        'yayincilara': 45,
-        'xxxgeisha': 35,
-        'babagavat': 20
+        'yayincilara': {'dm': 45, 'group': 0, 'total': 45},
+        'xxxgeisha': {'dm': 35, 'group': 0, 'total': 35},
+        'babagavat': {'dm': 20, 'group': 0, 'total': 20},
       },
       'sentiment_distribution': {
         'positive': 60,
         'neutral': 30,
-        'motivational': 10
+        'motivational': 10,
       }
     };
   }
@@ -317,14 +336,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/analytics/advanced'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('Advanced Analytics API Error: $e');
     }
-    
+
     // Mock data
     return {
       'ai_manager': {
@@ -418,14 +437,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/ai/models/status'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('AI Models Status API Error: $e');
     }
-    
+
     // Mock data
     return {
       'models': {
@@ -469,14 +488,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/behavioral/personality-insights'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('Personality Insights API Error: $e');
     }
-    
+
     // Mock data
     return {
       'insights': {
@@ -519,24 +538,21 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/performance/system-metrics'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('System Performance API Error: $e');
     }
-    
+
     // Mock data
     return {
       'metrics': {
         'cpu_usage': '45%',
         'memory_usage': '62%',
         'disk_usage': '38%',
-        'network_io': {
-          'bytes_sent': '250MB',
-          'bytes_received': '480MB'
-        },
+        'network_io': {'bytes_sent': '250MB', 'bytes_received': '480MB'},
         'database_performance': {
           'query_time_avg': '0.125s',
           'connections_active': 12,
@@ -560,14 +576,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/smart-campaign/manager'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('Smart Campaign Manager API Error: $e');
     }
-    
+
     // Mock data fallback
     return {
       'data': {
@@ -593,14 +609,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/smart-personality/adapter'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('Smart Personality Adapter API Error: $e');
     }
-    
+
     // Mock data fallback
     return {
       'data': {
@@ -620,14 +636,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/user-analyzer/insights'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('User Analyzer API Error: $e');
     }
-    
+
     // Mock data fallback
     return {
       'data': {
@@ -647,14 +663,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/user-segmentation/advanced'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('User Segmentation API Error: $e');
     }
-    
+
     // Mock data fallback
     return {
       'data': {
@@ -675,14 +691,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/smart-modules/dashboard'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('Smart Modules Dashboard API Error: $e');
     }
-    
+
     // Mock data fallback
     return {
       'data': {
@@ -722,14 +738,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/core-modules/overview'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('Core Modules API Error: $e');
     }
-    
+
     // Mock data
     return {
       'status': 'success',
@@ -748,14 +764,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/babagavat-user-analyzer/insights'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('BabaGAVAT User Analyzer API Error: $e');
     }
-    
+
     // Mock data
     return {
       'status': 'success',
@@ -775,22 +791,19 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/erko-analyzer/segments'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('Erko Analyzer API Error: $e');
     }
-    
+
     // Mock data
     return {
       'status': 'success',
       'data': {
-        'analyzer_status': {
-          'total_male_users': 1847,
-          'analyzed_users': 1723
-        }
+        'analyzer_status': {'total_male_users': 1847, 'analyzed_users': 1723}
       }
     };
   }
@@ -801,14 +814,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/ai-crm-analyzer/insights'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('AI CRM Analyzer API Error: $e');
     }
-    
+
     // Mock data
     return {
       'status': 'success',
@@ -828,14 +841,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/behavioral-engine/analysis'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('Behavioral Engine API Error: $e');
     }
-    
+
     // Mock data
     return {
       'status': 'success',
@@ -855,14 +868,14 @@ class GAVATCoreAPIService {
         Uri.parse('$baseUrl/api/social-gaming/metrics'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       }
     } catch (e) {
       print('Social Gaming API Error: $e');
     }
-    
+
     // Mock data
     return {
       'status': 'success',
@@ -886,7 +899,8 @@ final charactersProvider = FutureProvider<List<CharacterData>>((ref) async {
   return await GAVATCoreAPIService.getCharacters();
 });
 
-final performersProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
+final performersProvider =
+    FutureProvider<List<Map<String, dynamic>>>((ref) async {
   return await GAVATCoreAPIService.getPerformers();
 });
 
@@ -902,7 +916,8 @@ final coreModulesProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   return await GAVATCoreAPIService.getCoreModulesOverview();
 });
 
-final babaGavatAnalyzerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
+final babaGavatAnalyzerProvider =
+    FutureProvider<Map<String, dynamic>>((ref) async {
   return await GAVATCoreAPIService.getBabaGAVATUserAnalyzer();
 });
 
@@ -914,7 +929,8 @@ final aiCrmAnalyzerProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   return await GAVATCoreAPIService.getAICRMAnalyzer();
 });
 
-final behavioralEngineProvider = FutureProvider<Map<String, dynamic>>((ref) async {
+final behavioralEngineProvider =
+    FutureProvider<Map<String, dynamic>>((ref) async {
   return await GAVATCoreAPIService.getBehavioralEngine();
 });
 
@@ -1016,13 +1032,14 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               },
               extended: true,
               backgroundColor: const Color(0xFF1A1A1F),
-              destinations: _navigationItems.map((item) => NavigationRailDestination(
-                icon: Icon(item.icon, color: const Color(0xFF757575)),
-                selectedIcon: Icon(item.icon, color: item.color),
-                label: Text(item.label),
-              )).toList(),
+              destinations: _navigationItems
+                  .map((item) => NavigationRailDestination(
+                        icon: Icon(item.icon, color: const Color(0xFF757575)),
+                        selectedIcon: Icon(item.icon, color: item.color),
+                        label: Text(item.label),
+                      ))
+                  .toList(),
             ),
-          
           Expanded(
             child: IndexedStack(
               index: _selectedIndex,
@@ -1039,25 +1056,29 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
           ),
         ],
       ),
-      bottomNavigationBar: !isDesktop ? NavigationBar(
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        destinations: _navigationItems.map((item) => NavigationDestination(
-          icon: Icon(item.icon),
-          label: item.label,
-        )).toList(),
-      ) : null,
+      bottomNavigationBar: !isDesktop
+          ? NavigationBar(
+              selectedIndex: _selectedIndex,
+              onDestinationSelected: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              destinations: _navigationItems
+                  .map((item) => NavigationDestination(
+                        icon: Icon(item.icon),
+                        label: item.label,
+                      ))
+                  .toList(),
+            )
+          : null,
     );
   }
 
   Widget _buildDashboardContent() {
     final systemStatsAsync = ref.watch(systemStatsProvider);
     final performersAsync = ref.watch(performersProvider);
-    
+
     return Scaffold(
       backgroundColor: const Color(0xFF0A0A0F),
       appBar: AppBar(
@@ -1097,7 +1118,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               data: (stats) => GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: MediaQuery.of(context).size.width > 1200 ? 4 : 2,
+                crossAxisCount:
+                    MediaQuery.of(context).size.width > 1200 ? 4 : 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
                 children: [
@@ -1117,7 +1139,9 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     'Sistem Durumu',
                     stats['status'] == 'running' ? 'Çalışıyor' : 'Durduruldu',
                     Icons.check_circle,
-                    stats['status'] == 'running' ? const Color(0xFF4CAF50) : const Color(0xFFF44336),
+                    stats['status'] == 'running'
+                        ? const Color(0xFF4CAF50)
+                        : const Color(0xFFF44336),
                   ),
                   _buildStatCard(
                     'API Yanıt Süresi',
@@ -1150,9 +1174,9 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 32),
-            
+
             // Şovcu Stats
             const Text(
               '🎭 Şovcu İstatistikleri',
@@ -1165,18 +1189,24 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
             const SizedBox(height: 16),
             performersAsync.when(
               data: (performers) {
-                final performersData = performers.isNotEmpty ? performers : _mockPerformers;
-                final activeCount = performersData.where((p) => p['status'] == 'online').length;
-                final totalEarnings = performersData.fold<int>(0, (sum, p) => sum + (p['earnings_month'] as int));
-                final todayEarnings = performersData.fold<int>(0, (sum, p) => sum + (p['earnings_today'] as int));
-                final vipCount = performersData.fold<int>(0, (sum, p) => sum + (p['vip_count'] as int));
-                
+                final performersData =
+                    performers.isNotEmpty ? performers : _mockPerformers;
+                final activeCount =
+                    performersData.where((p) => p['status'] == 'online').length;
+                final totalEarnings = performersData.fold<int>(
+                    0, (sum, p) => sum + (p['earnings_month'] as int));
+                final todayEarnings = performersData.fold<int>(
+                    0, (sum, p) => sum + (p['earnings_today'] as int));
+                final vipCount = performersData.fold<int>(
+                    0, (sum, p) => sum + (p['vip_count'] as int));
+
                 return Column(
                   children: [
                     GridView.count(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount: MediaQuery.of(context).size.width > 1200 ? 4 : 2,
+                      crossAxisCount:
+                          MediaQuery.of(context).size.width > 1200 ? 4 : 2,
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
                       children: [
@@ -1206,9 +1236,9 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                         ),
                       ],
                     ),
-                    
+
                     const SizedBox(height: 24),
-                    
+
                     // Top Performers
                     Card(
                       color: const Color(0xFF1A1A1F),
@@ -1219,7 +1249,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                           children: [
                             Row(
                               children: [
-                                const Icon(Icons.emoji_events, color: Color(0xFFFF9800)),
+                                const Icon(Icons.emoji_events,
+                                    color: Color(0xFFFF9800)),
                                 const SizedBox(width: 8),
                                 const Text(
                                   'En İyi Performans Gösteren Şovcular',
@@ -1242,67 +1273,71 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                             ),
                             const SizedBox(height: 12),
                             ...(performersData
-                                .where((p) => p['status'] == 'online')
-                                .toList()
-                                ..sort((a, b) => (b['earnings_today'] as int).compareTo(a['earnings_today'] as int)))
+                                    .where((p) => p['status'] == 'online')
+                                    .toList()
+                                  ..sort((a, b) => (b['earnings_today'] as int)
+                                      .compareTo(a['earnings_today'] as int)))
                                 .take(5)
                                 .map((performer) => Container(
-                                  margin: const EdgeInsets.only(bottom: 8),
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF2A2A2F),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        performer['avatar'],
-                                        style: const TextStyle(fontSize: 24),
+                                      margin: const EdgeInsets.only(bottom: 8),
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF2A2A2F),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
-                                      const SizedBox(width: 12),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              performer['name'],
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            Text(
-                                              '${performer['character']} • ${performer['tone']}',
-                                              style: const TextStyle(
-                                                color: Colors.white70,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                      child: Row(
                                         children: [
                                           Text(
-                                            '₺${performer['earnings_today']}',
-                                            style: const TextStyle(
-                                              color: Color(0xFF4CAF50),
-                                              fontWeight: FontWeight.bold,
+                                            performer['avatar'],
+                                            style:
+                                                const TextStyle(fontSize: 24),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  performer['name'],
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${performer['character']} • ${performer['tone']}',
+                                                  style: const TextStyle(
+                                                    color: Colors.white70,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          Text(
-                                            '${performer['vip_count']} VIP',
-                                            style: const TextStyle(
-                                              color: Colors.white70,
-                                              fontSize: 12,
-                                            ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                '₺${performer['earnings_today']}',
+                                                style: const TextStyle(
+                                                  color: Color(0xFF4CAF50),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                '${performer['vip_count']} VIP',
+                                                style: const TextStyle(
+                                                  color: Colors.white70,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                )),
+                                    )),
                           ],
                         ),
                       ),
@@ -1341,7 +1376,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
 
   Widget _buildCharactersContent() {
     final charactersAsync = ref.watch(charactersProvider);
-    
+
     return Scaffold(
       backgroundColor: const Color(0xFF0A0A0F),
       appBar: AppBar(
@@ -1371,7 +1406,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
             children: [
               CircularProgressIndicator(),
               SizedBox(height: 16),
-              Text('Karakterler yükleniyor...', style: TextStyle(color: Colors.white70)),
+              Text('Karakterler yükleniyor...',
+                  style: TextStyle(color: Colors.white70)),
             ],
           ),
         ),
@@ -1396,7 +1432,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
 
   Widget _buildShowcuPanelContent() {
     final performersAsync = ref.watch(performersProvider);
-    
+
     return Scaffold(
       backgroundColor: const Color(0xFF0A0A0F),
       appBar: AppBar(
@@ -1418,12 +1454,17 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
       ),
       body: performersAsync.when(
         data: (performers) {
-          final performersData = performers.isNotEmpty ? performers : _mockPerformers;
-          final activeCount = performersData.where((p) => p['status'] == 'online').length;
-          final totalEarnings = performersData.fold<int>(0, (sum, p) => sum + (p['earnings_month'] as int));
-          final monthlyEarnings = performersData.fold<int>(0, (sum, p) => sum + (p['earnings_today'] as int));
-          final vipCount = performersData.fold<int>(0, (sum, p) => sum + (p['vip_count'] as int));
-          
+          final performersData =
+              performers.isNotEmpty ? performers : _mockPerformers;
+          final activeCount =
+              performersData.where((p) => p['status'] == 'online').length;
+          final totalEarnings = performersData.fold<int>(
+              0, (sum, p) => sum + (p['earnings_month'] as int));
+          final monthlyEarnings = performersData.fold<int>(
+              0, (sum, p) => sum + (p['earnings_today'] as int));
+          final vipCount = performersData.fold<int>(
+              0, (sum, p) => sum + (p['vip_count'] as int));
+
           return Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -1469,7 +1510,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                   ],
                 ),
                 const SizedBox(height: 24),
-                
+
                 // Şovcu List
                 Expanded(
                   child: Card(
@@ -1481,7 +1522,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                         children: [
                           Row(
                             children: [
-                              const Icon(Icons.people, color: Color(0xFFFF9800)),
+                              const Icon(Icons.people,
+                                  color: Color(0xFFFF9800)),
                               const SizedBox(width: 8),
                               Text(
                                 'Şovcu Listesi (${performersData.length})',
@@ -1548,7 +1590,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
   }
 
   // This is now handled by performersProvider
-  
+
   // Gerçek şovcu data - telefon numaraları ile eşleştirme (fallback)
   final List<Map<String, dynamic>> _mockPerformers = [
     {
@@ -1567,7 +1609,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
       'onboarding_date': '2025-01-15',
     },
     {
-      'id': 'performer_2', 
+      'id': 'performer_2',
       'name': 'MysteryLady',
       'phone': '+905486306226',
       'character': 'Geisha',
@@ -1735,7 +1777,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
 
   Widget _buildPerformerCard(Map<String, dynamic> performer) {
     final isOnline = performer['status'] == 'online';
-    final statusColor = isOnline ? const Color(0xFF4CAF50) : const Color(0xFF757575);
+    final statusColor =
+        isOnline ? const Color(0xFF4CAF50) : const Color(0xFF757575);
 
     return Card(
       color: const Color(0xFF2A2A2F),
@@ -1761,7 +1804,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               ),
             ),
             const SizedBox(width: 16),
-            
+
             // Info
             Expanded(
               child: Column(
@@ -1779,7 +1822,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                       ),
                       const SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
                           color: statusColor.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(8),
@@ -1813,7 +1857,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 ],
               ),
             ),
-            
+
             // Stats
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -1841,14 +1885,15 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 ),
               ],
             ),
-            
+
             const SizedBox(width: 16),
-            
+
             // Actions
             PopupMenuButton<String>(
               icon: const Icon(Icons.more_vert, color: Colors.white70),
               color: const Color(0xFF2A2A2F),
-              onSelected: (action) => _performPerformerAction(performer['id'], action),
+              onSelected: (action) =>
+                  _performPerformerAction(performer['id'], action),
               itemBuilder: (context) => [
                 const PopupMenuItem(
                   value: 'view',
@@ -1856,7 +1901,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     children: [
                       Icon(Icons.visibility, color: Colors.blue, size: 20),
                       SizedBox(width: 8),
-                      Text('Detayları Gör', style: TextStyle(color: Colors.white)),
+                      Text('Detayları Gör',
+                          style: TextStyle(color: Colors.white)),
                     ],
                   ),
                 ),
@@ -1876,7 +1922,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     children: [
                       Icon(Icons.attach_money, color: Colors.green, size: 20),
                       SizedBox(width: 8),
-                      Text('Kazanç Raporu', style: TextStyle(color: Colors.white)),
+                      Text('Kazanç Raporu',
+                          style: TextStyle(color: Colors.white)),
                     ],
                   ),
                 ),
@@ -1898,7 +1945,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                       children: [
                         Icon(Icons.play_arrow, color: Colors.green, size: 20),
                         SizedBox(width: 8),
-                        Text('Aktifleştir', style: TextStyle(color: Colors.white)),
+                        Text('Aktifleştir',
+                            style: TextStyle(color: Colors.white)),
                       ],
                     ),
                   ),
@@ -1922,7 +1970,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => Dialog(
           backgroundColor: const Color(0xFF1A1A1F),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Container(
             width: 500,
             padding: const EdgeInsets.all(24),
@@ -1933,12 +1982,16 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.star, color: Color(0xFFFF9800), size: 32),
+                      const Icon(Icons.star,
+                          color: Color(0xFFFF9800), size: 32),
                       const SizedBox(width: 12),
                       const Expanded(
                         child: Text(
                           'Yeni Şovcu Ekle',
-                          style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       IconButton(
@@ -1948,7 +2001,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  
+
                   // Şovcu Adı
                   TextField(
                     controller: nameController,
@@ -1967,7 +2020,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Telefon Numarası
                   TextField(
                     controller: phoneController,
@@ -1986,7 +2039,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Papara IBAN
                   TextField(
                     controller: ibanController,
@@ -2005,11 +2058,14 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Karakter Seçimi
                   const Text(
                     'Karakter Seç',
-                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   DropdownButtonFormField<String>(
@@ -2026,18 +2082,28 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                       ),
                     ),
                     items: const [
-                      DropdownMenuItem(value: 'lara', child: Text('💋 Lara - Flörtöz Rus güzeli')),
-                      DropdownMenuItem(value: 'geisha', child: Text('🌸 Geisha - Mistik bilge')),
-                      DropdownMenuItem(value: 'babagavat', child: Text('😤 BabaGavat - Sokak adamı')),
+                      DropdownMenuItem(
+                          value: 'lara',
+                          child: Text('💋 Lara - Flörtöz Rus güzeli')),
+                      DropdownMenuItem(
+                          value: 'geisha',
+                          child: Text('🌸 Geisha - Mistik bilge')),
+                      DropdownMenuItem(
+                          value: 'babagavat',
+                          child: Text('😤 BabaGavat - Sokak adamı')),
                     ],
-                    onChanged: (value) => setState(() => selectedCharacter = value!),
+                    onChanged: (value) =>
+                        setState(() => selectedCharacter = value!),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Ton Seçimi
                   const Text(
                     'Ton Seç',
-                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   DropdownButtonFormField<String>(
@@ -2054,15 +2120,20 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                       ),
                     ),
                     items: const [
-                      DropdownMenuItem(value: 'flirty', child: Text('💕 Flörtöz')),
-                      DropdownMenuItem(value: 'soft', child: Text('🌸 Yumuşak')),
-                      DropdownMenuItem(value: 'dark', child: Text('🌙 Karanlık')),
-                      DropdownMenuItem(value: 'mystic', child: Text('✨ Mistik')),
-                      DropdownMenuItem(value: 'aggressive', child: Text('🔥 Agresif')),
+                      DropdownMenuItem(
+                          value: 'flirty', child: Text('💕 Flörtöz')),
+                      DropdownMenuItem(
+                          value: 'soft', child: Text('🌸 Yumuşak')),
+                      DropdownMenuItem(
+                          value: 'dark', child: Text('🌙 Karanlık')),
+                      DropdownMenuItem(
+                          value: 'mystic', child: Text('✨ Mistik')),
+                      DropdownMenuItem(
+                          value: 'aggressive', child: Text('🔥 Agresif')),
                     ],
                     onChanged: (value) => setState(() => selectedTone = value!),
                   ),
-                  
+
                   const SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -2096,7 +2167,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     );
   }
 
-  Future<void> _createPerformer(String name, String phone, String iban, String character, String tone) async {
+  Future<void> _createPerformer(String name, String phone, String iban,
+      String character, String tone) async {
     if (name.isEmpty || phone.isEmpty || iban.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -2109,7 +2181,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
 
     // Close dialog
     Navigator.of(context).pop();
-    
+
     try {
       // API call to create performer
       final success = await GAVATCoreAPIService.createPerformer({
@@ -2119,7 +2191,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
         'character': character,
         'tone': tone,
       });
-      
+
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -2127,7 +2199,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
             backgroundColor: const Color(0xFF4CAF50),
           ),
         );
-        
+
         // Refresh performers list
         ref.refresh(performersProvider);
       } else {
@@ -2148,7 +2220,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     }
   }
 
-  Future<void> _performPerformerAction(String performerId, String action) async {
+  Future<void> _performPerformerAction(
+      String performerId, String action) async {
     switch (action) {
       case 'view':
         _showPerformerDetails(performerId);
@@ -2173,7 +2246,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
 
   void _showPerformerDetails(String performerId) {
     final performer = _mockPerformers.firstWhere((p) => p['id'] == performerId);
-    
+
     showDialog(
       context: context,
       builder: (context) => Dialog(
@@ -2206,7 +2279,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                         ),
                         Text(
                           'Karakter: ${performer['character']}',
-                          style: const TextStyle(color: Colors.white70, fontSize: 16),
+                          style: const TextStyle(
+                              color: Colors.white70, fontSize: 16),
                         ),
                       ],
                     ),
@@ -2218,7 +2292,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 ],
               ),
               const SizedBox(height: 24),
-              
+
               // Stats Grid
               Row(
                 children: [
@@ -2258,7 +2332,9 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                       'Durum',
                       performer['status'] == 'online' ? 'ONLİNE' : 'OFFLİNE',
                       Icons.circle,
-                      performer['status'] == 'online' ? const Color(0xFF4CAF50) : const Color(0xFF757575),
+                      performer['status'] == 'online'
+                          ? const Color(0xFF4CAF50)
+                          : const Color(0xFF757575),
                     ),
                   ),
                 ],
@@ -2270,7 +2346,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     );
   }
 
-  Widget _buildPerformerStat(String label, String value, IconData icon, Color color) {
+  Widget _buildPerformerStat(
+      String label, String value, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -2319,15 +2396,15 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
   }
 
   Widget _buildAdvancedCharacterCard(CharacterData character) {
-    final statusColor = character.status == 'active' 
-        ? const Color(0xFF4CAF50) 
-        : character.status == 'banned' 
+    final statusColor = character.status == 'active'
+        ? const Color(0xFF4CAF50)
+        : character.status == 'banned'
             ? const Color(0xFFF44336)
             : const Color(0xFFFF9800);
-            
-    final statusIcon = character.status == 'active' 
-        ? Icons.check_circle 
-        : character.status == 'banned' 
+
+    final statusIcon = character.status == 'active'
+        ? Icons.check_circle
+        : character.status == 'banned'
             ? Icons.block
             : Icons.warning;
 
@@ -2367,18 +2444,23 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                       const SizedBox(height: 4),
                       Text(
                         '@${character.username}',
-                        style: const TextStyle(color: Colors.white70, fontSize: 14),
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 14),
                       ),
                       const SizedBox(height: 4),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                           color: statusColor.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           character.status.toUpperCase(),
-                          style: TextStyle(color: statusColor, fontSize: 12, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: statusColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -2399,9 +2481,13 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
             const SizedBox(height: 16),
             Row(
               children: [
-                _buildMetric('Mesajlar', character.messageCount.toString(), Icons.message),
+                _buildMetric('Mesajlar', character.messageCount.toString(),
+                    Icons.message),
                 const SizedBox(width: 24),
-                _buildMetric('Yanıt Süresi', '${character.responseTime.toStringAsFixed(1)}s', Icons.speed),
+                _buildMetric(
+                    'Yanıt Süresi',
+                    '${character.responseTime.toStringAsFixed(1)}s',
+                    Icons.speed),
                 const Spacer(),
                 ElevatedButton.icon(
                   onPressed: () => _showCharacterDetails(character),
@@ -2428,8 +2514,11 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(value, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-            Text(label, style: const TextStyle(color: Colors.white70, fontSize: 12)),
+            Text(value,
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+            Text(label,
+                style: const TextStyle(color: Colors.white70, fontSize: 12)),
           ],
         ),
       ],
@@ -2452,8 +2541,12 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               Row(
                 children: [
                   Icon(
-                    character.status == 'active' ? Icons.check_circle : Icons.block,
-                    color: character.status == 'active' ? const Color(0xFF4CAF50) : const Color(0xFFF44336),
+                    character.status == 'active'
+                        ? Icons.check_circle
+                        : Icons.block,
+                    color: character.status == 'active'
+                        ? const Color(0xFF4CAF50)
+                        : const Color(0xFFF44336),
                     size: 32,
                   ),
                   const SizedBox(width: 12),
@@ -2463,11 +2556,15 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                       children: [
                         Text(
                           character.name,
-                          style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
                         ),
                         Text(
                           '@${character.username}',
-                          style: const TextStyle(color: Colors.white70, fontSize: 16),
+                          style: const TextStyle(
+                              color: Colors.white70, fontSize: 16),
                         ),
                       ],
                     ),
@@ -2481,12 +2578,17 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               const SizedBox(height: 24),
               _buildDetailRow('Telefon', character.phone),
               _buildDetailRow('Durum', character.status.toUpperCase()),
-              _buildDetailRow('Mesaj Sayısı', character.messageCount.toString()),
-              _buildDetailRow('Ortalama Yanıt Süresi', '${character.responseTime.toStringAsFixed(1)} saniye'),
+              _buildDetailRow(
+                  'Mesaj Sayısı', character.messageCount.toString()),
+              _buildDetailRow('Ortalama Yanıt Süresi',
+                  '${character.responseTime.toStringAsFixed(1)} saniye'),
               const SizedBox(height: 16),
               const Text(
                 'Açıklama',
-                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Text(
@@ -2496,24 +2598,31 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               const SizedBox(height: 16),
               const Text(
                 'Özellikler',
-                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
-                children: character.features.map((feature) => Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF9C27B0).withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: const Color(0xFF9C27B0)),
-                  ),
-                  child: Text(
-                    feature,
-                    style: const TextStyle(color: Color(0xFF9C27B0), fontSize: 12),
-                  ),
-                )).toList(),
+                children: character.features
+                    .map((feature) => Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF9C27B0).withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: const Color(0xFF9C27B0)),
+                          ),
+                          child: Text(
+                            feature,
+                            style: const TextStyle(
+                                color: Color(0xFF9C27B0), fontSize: 12),
+                          ),
+                        ))
+                    .toList(),
               ),
               const SizedBox(height: 24),
               Row(
@@ -2521,14 +2630,16 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 children: [
                   if (character.status == 'active') ...[
                     TextButton(
-                      onPressed: () => _performCharacterAction(character.username, 'stop'),
+                      onPressed: () =>
+                          _performCharacterAction(character.username, 'stop'),
                       child: const Text('Durdur'),
                     ),
                     const SizedBox(width: 8),
                   ],
                   if (character.status == 'banned') ...[
                     TextButton(
-                      onPressed: () => _performCharacterAction(character.username, 'unban'),
+                      onPressed: () =>
+                          _performCharacterAction(character.username, 'unban'),
                       child: const Text('Unban'),
                     ),
                     const SizedBox(width: 8),
@@ -2555,15 +2666,12 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
   void _showCharacterEditDialog(CharacterData character) {
     final displayNameController = TextEditingController(text: character.name);
     final gptPromptController = TextEditingController(
-      text: character.personaData['persona']?['gpt_prompt'] ?? ''
-    );
+        text: character.personaData['persona']?['gpt_prompt'] ?? '');
     final responseStyleController = TextEditingController(
-      text: character.profileData['response_style'] ?? 'friendly'
-    );
-    final toneController = TextEditingController(
-      text: character.profileData['tone'] ?? 'warm'
-    );
-    
+        text: character.profileData['response_style'] ?? 'friendly');
+    final toneController =
+        TextEditingController(text: character.profileData['tone'] ?? 'warm');
+
     bool isSpamActive = character.profileData['is_spam_active'] ?? true;
     bool isDmActive = character.profileData['is_dm_active'] ?? true;
     bool isGroupActive = character.profileData['is_group_active'] ?? true;
@@ -2573,7 +2681,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => Dialog(
           backgroundColor: const Color(0xFF1A1A1F),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Container(
             width: 600,
             padding: const EdgeInsets.all(24),
@@ -2584,12 +2693,16 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.edit, color: const Color(0xFF9C27B0), size: 32),
+                      Icon(Icons.edit,
+                          color: const Color(0xFF9C27B0), size: 32),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           '${character.name} Düzenle',
-                          style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       IconButton(
@@ -2599,7 +2712,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  
+
                   // Display Name
                   TextField(
                     controller: displayNameController,
@@ -2617,7 +2730,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // GPT Prompt
                   TextField(
                     controller: gptPromptController,
@@ -2636,7 +2749,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Response Style and Tone
                   Row(
                     children: [
@@ -2678,33 +2791,39 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Activity toggles
                   const Text(
                     'Aktivite Ayarları',
-                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  
+
                   SwitchListTile(
-                    title: const Text('Spam Aktif', style: TextStyle(color: Colors.white)),
+                    title: const Text('Spam Aktif',
+                        style: TextStyle(color: Colors.white)),
                     value: isSpamActive,
                     onChanged: (value) => setState(() => isSpamActive = value),
                     activeColor: const Color(0xFF9C27B0),
                   ),
                   SwitchListTile(
-                    title: const Text('DM Aktif', style: TextStyle(color: Colors.white)),
+                    title: const Text('DM Aktif',
+                        style: TextStyle(color: Colors.white)),
                     value: isDmActive,
                     onChanged: (value) => setState(() => isDmActive = value),
                     activeColor: const Color(0xFF9C27B0),
                   ),
                   SwitchListTile(
-                    title: const Text('Grup Aktif', style: TextStyle(color: Colors.white)),
+                    title: const Text('Grup Aktif',
+                        style: TextStyle(color: Colors.white)),
                     value: isGroupActive,
                     onChanged: (value) => setState(() => isGroupActive = value),
                     activeColor: const Color(0xFF9C27B0),
                   ),
-                  
+
                   const SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -2743,7 +2862,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     );
   }
 
-  Future<void> _saveCharacterChanges(String username, Map<String, dynamic> updateData) async {
+  Future<void> _saveCharacterChanges(
+      String username, Map<String, dynamic> updateData) async {
     // Show loading
     showDialog(
       context: context,
@@ -2754,18 +2874,19 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     );
 
     try {
-      final success = await GAVATCoreAPIService.updateCharacter(username, updateData);
-      
+      final success =
+          await GAVATCoreAPIService.updateCharacter(username, updateData);
+
       // Close loading dialog
       Navigator.of(context).pop();
-      
+
       if (success) {
         // Close edit dialog
         Navigator.of(context).pop();
-        
+
         // Refresh characters
         ref.refresh(charactersProvider);
-        
+
         // Show success message
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -2784,7 +2905,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     } catch (e) {
       // Close loading dialog
       Navigator.of(context).pop();
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Hata: $e'),
@@ -2805,19 +2926,20 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     );
 
     try {
-      final success = await GAVATCoreAPIService.characterAction(username, action);
-      
+      final success =
+          await GAVATCoreAPIService.characterAction(username, action);
+
       // Close loading dialog
       Navigator.of(context).pop();
-      
+
       if (success) {
         // Close any open dialogs
         Navigator.of(context).pop();
-        
+
         // Refresh characters
         ref.refresh(charactersProvider);
         ref.refresh(systemStatsProvider);
-        
+
         // Show success message
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -2836,7 +2958,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     } catch (e) {
       // Close loading dialog
       Navigator.of(context).pop();
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Hata: $e'),
@@ -2860,7 +2982,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
           ),
           Text(
             value,
-            style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),
+            style: const TextStyle(
+                color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),
           ),
         ],
       ),
@@ -2870,7 +2993,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
   Widget _buildMessageLogsContent() {
     final messagesAsync = ref.watch(messagesProvider);
     final messageStatsAsync = ref.watch(messageStatsProvider);
-    
+
     return Scaffold(
       backgroundColor: const Color(0xFF0A0A0F),
       appBar: AppBar(
@@ -2942,9 +3065,10 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  
+
                   // Bot Distribution
-                  if (stats['bot_distribution'] != null && stats['bot_distribution'].isNotEmpty)
+                  if (stats['bot_distribution'] != null &&
+                      stats['bot_distribution'].isNotEmpty)
                     Card(
                       color: const Color(0xFF1A1A1F),
                       child: Padding(
@@ -2967,7 +3091,9 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                               ],
                             ),
                             const SizedBox(height: 12),
-                            ...stats['bot_distribution'].entries.map<Widget>((entry) {
+                            ...stats['bot_distribution']
+                                .entries
+                                .map<Widget>((entry) {
                               final botName = entry.key;
                               final botStats = entry.value;
                               return Container(
@@ -2979,7 +3105,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                                 ),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.android, color: Color(0xFF00BCD4)),
+                                    const Icon(Icons.android,
+                                        color: Color(0xFF00BCD4)),
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Text(
@@ -2992,12 +3119,14 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                                     ),
                                     Text(
                                       'DM: ${botStats['dm'] ?? 0}',
-                                      style: const TextStyle(color: Colors.white70),
+                                      style: const TextStyle(
+                                          color: Colors.white70),
                                     ),
                                     const SizedBox(width: 16),
                                     Text(
                                       'Grup: ${botStats['group'] ?? 0}',
-                                      style: const TextStyle(color: Colors.white70),
+                                      style: const TextStyle(
+                                          color: Colors.white70),
                                     ),
                                     const SizedBox(width: 16),
                                     Text(
@@ -3040,9 +3169,9 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 32),
-            
+
             // Messages List
             const Text(
               '📝 Son Mesajlar',
@@ -3053,11 +3182,11 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             messagesAsync.when(
               data: (data) {
                 final messages = data['messages'] as List<Map<String, dynamic>>;
-                
+
                 if (messages.isEmpty) {
                   return Card(
                     color: const Color(0xFF1A1A1F),
@@ -3066,11 +3195,13 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                       child: const Center(
                         child: Column(
                           children: [
-                            Icon(Icons.chat_bubble_outline, size: 48, color: Colors.white30),
+                            Icon(Icons.chat_bubble_outline,
+                                size: 48, color: Colors.white30),
                             SizedBox(height: 16),
                             Text(
                               'Henüz mesaj yok',
-                              style: TextStyle(color: Colors.white70, fontSize: 16),
+                              style: TextStyle(
+                                  color: Colors.white70, fontSize: 16),
                             ),
                           ],
                         ),
@@ -3078,11 +3209,13 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     ),
                   );
                 }
-                
+
                 return Card(
                   color: const Color(0xFF1A1A1F),
                   child: Column(
-                    children: messages.map((message) => _buildMessageCard(message)).toList(),
+                    children: messages
+                        .map((message) => _buildMessageCard(message))
+                        .toList(),
                   ),
                 );
               },
@@ -3121,7 +3254,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     final botName = message['bot_display_name'] ?? message['bot_name'];
     final timestamp = DateTime.parse(message['timestamp']);
     final timeAgo = _getTimeAgo(timestamp);
-    
+
     return Container(
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.all(16),
@@ -3131,7 +3264,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
         border: Border(
           left: BorderSide(
             width: 4,
-            color: isIncoming ? const Color(0xFF4CAF50) : const Color(0xFF00BCD4),
+            color:
+                isIncoming ? const Color(0xFF4CAF50) : const Color(0xFF00BCD4),
           ),
         ),
       ),
@@ -3143,7 +3277,9 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
             children: [
               Icon(
                 isIncoming ? Icons.call_received : Icons.call_made,
-                color: isIncoming ? const Color(0xFF4CAF50) : const Color(0xFF00BCD4),
+                color: isIncoming
+                    ? const Color(0xFF4CAF50)
+                    : const Color(0xFF00BCD4),
                 size: 16,
               ),
               const SizedBox(width: 8),
@@ -3173,7 +3309,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
             ],
           ),
           const SizedBox(height: 8),
-          
+
           // User info
           Row(
             children: [
@@ -3195,7 +3331,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
             ],
           ),
           const SizedBox(height: 12),
-          
+
           // Message content
           Container(
             padding: const EdgeInsets.all(12),
@@ -3208,7 +3344,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               style: const TextStyle(color: Colors.white),
             ),
           ),
-          
+
           // AI Response (if any)
           if (message['ai_response'] != null) ...[
             const SizedBox(height: 8),
@@ -3217,14 +3353,16 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               decoration: BoxDecoration(
                 color: const Color(0xFF0D47A1).withOpacity(0.2),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFF00BCD4).withOpacity(0.3)),
+                border:
+                    Border.all(color: const Color(0xFF00BCD4).withOpacity(0.3)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.smart_toy, color: Color(0xFF00BCD4), size: 16),
+                      const Icon(Icons.smart_toy,
+                          color: Color(0xFF00BCD4), size: 16),
                       const SizedBox(width: 8),
                       const Text(
                         'AI Yanıtı',
@@ -3254,7 +3392,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               ),
             ),
           ],
-          
+
           // Footer with sentiment and status
           const SizedBox(height: 8),
           Row(
@@ -3269,13 +3407,19 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 const SizedBox(width: 16),
               ],
               Icon(
-                message['status'] == 'delivered' ? Icons.check_circle : Icons.send,
-                color: message['status'] == 'delivered' ? const Color(0xFF4CAF50) : Colors.white70,
+                message['status'] == 'delivered'
+                    ? Icons.check_circle
+                    : Icons.send,
+                color: message['status'] == 'delivered'
+                    ? const Color(0xFF4CAF50)
+                    : Colors.white70,
                 size: 14,
               ),
               const SizedBox(width: 4),
               Text(
-                message['status'] == 'delivered' ? 'Teslim edildi' : 'Gönderildi',
+                message['status'] == 'delivered'
+                    ? 'Teslim edildi'
+                    : 'Gönderildi',
                 style: const TextStyle(color: Colors.white70, fontSize: 12),
               ),
             ],
@@ -3288,13 +3432,17 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
   Widget _getSentimentIcon(String sentiment) {
     switch (sentiment) {
       case 'positive':
-        return const Icon(Icons.sentiment_very_satisfied, color: Color(0xFF4CAF50), size: 14);
+        return const Icon(Icons.sentiment_very_satisfied,
+            color: Color(0xFF4CAF50), size: 14);
       case 'neutral':
-        return const Icon(Icons.sentiment_neutral, color: Colors.orange, size: 14);
+        return const Icon(Icons.sentiment_neutral,
+            color: Colors.orange, size: 14);
       case 'motivational':
-        return const Icon(Icons.fitness_center, color: Color(0xFF9C27B0), size: 14);
+        return const Icon(Icons.fitness_center,
+            color: Color(0xFF9C27B0), size: 14);
       default:
-        return const Icon(Icons.sentiment_neutral, color: Colors.white70, size: 14);
+        return const Icon(Icons.sentiment_neutral,
+            color: Colors.white70, size: 14);
     }
   }
 
@@ -3314,7 +3462,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
   String _getTimeAgo(DateTime timestamp) {
     final now = DateTime.now();
     final difference = now.difference(timestamp);
-    
+
     if (difference.inMinutes < 1) {
       return 'Az önce';
     } else if (difference.inMinutes < 60) {
@@ -3362,7 +3510,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               child: CircularProgressIndicator(color: Color(0xFF9C27B0)),
             );
           }
-          
+
           if (snapshot.hasError) {
             return Center(
               child: Column(
@@ -3379,7 +3527,7 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               ),
             );
           }
-          
+
           final data = snapshot.data ?? {};
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
@@ -3392,80 +3540,80 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                   data['ai_manager'] ?? {},
                   const Color(0xFF9C27B0),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Behavioral Analytics
                 _buildAnalyticsSection(
                   '🧠 Behavioral Analytics',
                   data['behavioral_analytics'] ?? {},
                   const Color(0xFF4CAF50),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // CRM Analytics
                 _buildAnalyticsSection(
                   '📊 CRM Analytics',
                   data['crm_analytics'] ?? {},
                   const Color(0xFF2196F3),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Content Generator
                 _buildAnalyticsSection(
                   '✨ Content Generator',
                   data['content_generator'] ?? {},
                   const Color(0xFFFF9800),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Erko Analyzer
                 _buildAnalyticsSection(
                   '🔍 Erko Analyzer',
                   data['erko_analyzer'] ?? {},
                   const Color(0xFFF44336),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // AI Models Status
                 _buildAIModelsStatus(),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Personality Insights
                 _buildPersonalityInsights(),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // System Performance
                 _buildSystemPerformance(),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Smart AI Modules
                 _buildSmartAIModules(),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Smart Campaign Manager
                 _buildSmartCampaignManager(),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Smart Personality Adapter
                 _buildSmartPersonalityAdapter(),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // User Analyzer
                 _buildUserAnalyzer(),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // User Segmentation
                 _buildUserSegmentation(),
               ],
@@ -3483,7 +3631,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     );
   }
 
-  Widget _buildStatCard(String title, String value, IconData icon, Color color) {
+  Widget _buildStatCard(
+      String title, String value, IconData icon, Color color) {
     return Card(
       color: const Color(0xFF1A1A1F),
       child: Padding(
@@ -3521,7 +3670,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     return await GAVATCoreAPIService.getAdvancedAnalytics();
   }
 
-  Widget _buildAnalyticsSection(String title, Map<String, dynamic> data, Color color) {
+  Widget _buildAnalyticsSection(
+      String title, Map<String, dynamic> data, Color color) {
     return Card(
       color: const Color(0xFF1A1A1F),
       child: Padding(
@@ -3605,9 +3755,11 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
   }
 
   String _formatKey(String key) {
-    return key.replaceAll('_', ' ').split(' ').map((word) => 
-      word[0].toUpperCase() + word.substring(1)
-    ).join(' ');
+    return key
+        .replaceAll('_', ' ')
+        .split(' ')
+        .map((word) => word[0].toUpperCase() + word.substring(1))
+        .join(' ');
   }
 
   Widget _buildValueWidget(dynamic value) {
@@ -3628,7 +3780,10 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 ),
                 Text(
                   entry.value.toString(),
-                  style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -3686,7 +3841,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               children: [
                 const Row(
                   children: [
-                    Icon(Icons.model_training, color: Color(0xFF9C27B0), size: 24),
+                    Icon(Icons.model_training,
+                        color: Color(0xFF9C27B0), size: 24),
                     SizedBox(width: 12),
                     Text(
                       '🤖 AI Model Durumları',
@@ -3702,15 +3858,19 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 GridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: MediaQuery.of(context).size.width > 1200 ? 4 : 2,
+                  crossAxisCount:
+                      MediaQuery.of(context).size.width > 1200 ? 4 : 2,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                   children: models.entries.map((entry) {
                     final modelData = entry.value as Map<String, dynamic>;
                     final status = modelData['status'] ?? 'unknown';
-                    final statusColor = status == 'active' ? const Color(0xFF4CAF50) : 
-                                       status == 'standby' ? const Color(0xFFFF9800) : Colors.red;
-                    
+                    final statusColor = status == 'active'
+                        ? const Color(0xFF4CAF50)
+                        : status == 'standby'
+                            ? const Color(0xFFFF9800)
+                            : Colors.red;
+
                     return Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
@@ -3723,7 +3883,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.smart_toy, color: statusColor, size: 16),
+                              Icon(Icons.smart_toy,
+                                  color: statusColor, size: 16),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
@@ -3740,19 +3901,23 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                           const SizedBox(height: 8),
                           Text(
                             'Durum: ${status}',
-                            style: const TextStyle(color: Colors.white70, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.white70, fontSize: 12),
                           ),
                           Text(
                             'Yanıt Süresi: ${modelData['response_time'] ?? 'N/A'}',
-                            style: const TextStyle(color: Colors.white70, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.white70, fontSize: 12),
                           ),
                           Text(
                             'Başarı Oranı: ${modelData['success_rate'] ?? 'N/A'}',
-                            style: const TextStyle(color: Colors.white70, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.white70, fontSize: 12),
                           ),
                           Text(
                             'Günlük Maliyet: ${modelData['cost_today'] ?? 'N/A'}',
-                            style: const TextStyle(color: Colors.white70, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.white70, fontSize: 12),
                           ),
                         ],
                       ),
@@ -3765,11 +3930,13 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                   children: [
                     Text(
                       'Toplam Günlük Maliyet: ${data['total_cost_today'] ?? 'N/A'}',
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       'Toplam Request: ${data['total_requests_today'] ?? 'N/A'}',
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -3797,7 +3964,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
 
         final data = snapshot.data ?? {};
         final insights = data['insights'] as Map<String, dynamic>? ?? {};
-        final personalityTypes = insights['top_personality_types'] as List? ?? [];
+        final personalityTypes =
+            insights['top_personality_types'] as List? ?? [];
 
         return Card(
           color: const Color(0xFF1A1A1F),
@@ -3823,7 +3991,10 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 const SizedBox(height: 16),
                 const Text(
                   'En Yaygın Kişilik Tipleri',
-                  style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),
                 ...personalityTypes.map((type) {
@@ -3834,14 +4005,17 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     decoration: BoxDecoration(
                       color: const Color(0xFF4CAF50).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: const Color(0xFF4CAF50).withOpacity(0.3)),
+                      border: Border.all(
+                          color: const Color(0xFF4CAF50).withOpacity(0.3)),
                     ),
                     child: Row(
                       children: [
                         Expanded(
                           child: Text(
                             typeData['type'] ?? '',
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         Text(
@@ -3851,7 +4025,9 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                         const SizedBox(width: 16),
                         Text(
                           typeData['percentage'] ?? '',
-                          style: const TextStyle(color: Color(0xFF4CAF50), fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              color: Color(0xFF4CAF50),
+                              fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -3904,10 +4080,14 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                     ),
                     const Spacer(),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
-                        color: healthScore > 80 ? const Color(0xFF4CAF50) : 
-                               healthScore > 60 ? const Color(0xFFFF9800) : Colors.red,
+                        color: healthScore > 80
+                            ? const Color(0xFF4CAF50)
+                            : healthScore > 60
+                                ? const Color(0xFFFF9800)
+                                : Colors.red,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Text(
@@ -3925,14 +4105,32 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 GridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: MediaQuery.of(context).size.width > 1200 ? 4 : 2,
+                  crossAxisCount:
+                      MediaQuery.of(context).size.width > 1200 ? 4 : 2,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                   children: [
-                    _buildPerformanceCard('CPU Kullanımı', metrics['cpu_usage'] ?? 'N/A', Icons.memory, const Color(0xFFFF9800)),
-                    _buildPerformanceCard('RAM Kullanımı', metrics['memory_usage'] ?? 'N/A', Icons.storage, const Color(0xFF9C27B0)),
-                    _buildPerformanceCard('Disk Kullanımı', metrics['disk_usage'] ?? 'N/A', Icons.save, const Color(0xFF4CAF50)),
-                    _buildPerformanceCard('API Uptime', (metrics['api_performance'] as Map?)?['uptime'] ?? 'N/A', Icons.check_circle, const Color(0xFF2196F3)),
+                    _buildPerformanceCard(
+                        'CPU Kullanımı',
+                        metrics['cpu_usage'] ?? 'N/A',
+                        Icons.memory,
+                        const Color(0xFFFF9800)),
+                    _buildPerformanceCard(
+                        'RAM Kullanımı',
+                        metrics['memory_usage'] ?? 'N/A',
+                        Icons.storage,
+                        const Color(0xFF9C27B0)),
+                    _buildPerformanceCard(
+                        'Disk Kullanımı',
+                        metrics['disk_usage'] ?? 'N/A',
+                        Icons.save,
+                        const Color(0xFF4CAF50)),
+                    _buildPerformanceCard(
+                        'API Uptime',
+                        (metrics['api_performance'] as Map?)?['uptime'] ??
+                            'N/A',
+                        Icons.check_circle,
+                        const Color(0xFF2196F3)),
                   ],
                 ),
               ],
@@ -3943,7 +4141,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     );
   }
 
-  Widget _buildPerformanceCard(String title, String value, IconData icon, Color color) {
+  Widget _buildPerformanceCard(
+      String title, String value, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -4005,7 +4204,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
               children: [
                 const Row(
                   children: [
-                    Icon(Icons.auto_awesome, color: Color(0xFFE91E63), size: 24),
+                    Icon(Icons.auto_awesome,
+                        color: Color(0xFFE91E63), size: 24),
                     SizedBox(width: 12),
                     Text(
                       '🧠 Smart AI Modules Overview',
@@ -4021,14 +4221,17 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 GridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: MediaQuery.of(context).size.width > 1200 ? 4 : 2,
+                  crossAxisCount:
+                      MediaQuery.of(context).size.width > 1200 ? 4 : 2,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                   children: modules.entries.map((entry) {
                     final moduleData = entry.value as Map<String, dynamic>;
                     final status = moduleData['status'] ?? 'unknown';
-                    final statusColor = status == 'active' ? const Color(0xFF4CAF50) : Colors.red;
-                    
+                    final statusColor = status == 'active'
+                        ? const Color(0xFF4CAF50)
+                        : Colors.red;
+
                     return Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
@@ -4041,7 +4244,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                         children: [
                           Row(
                             children: [
-                              Icon(_getModuleIcon(entry.key), color: statusColor, size: 16),
+                              Icon(_getModuleIcon(entry.key),
+                                  color: statusColor, size: 16),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
@@ -4056,12 +4260,15 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                             ],
                           ),
                           const SizedBox(height: 8),
-                          ...moduleData.entries.where((e) => e.key != 'status').map((stat) {
+                          ...moduleData.entries
+                              .where((e) => e.key != 'status')
+                              .map((stat) {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 2),
                               child: Text(
                                 '${_formatKey(stat.key)}: ${stat.value}',
-                                style: const TextStyle(color: Colors.white70, fontSize: 11),
+                                style: const TextStyle(
+                                    color: Colors.white70, fontSize: 11),
                               ),
                             );
                           }).toList(),
@@ -4080,21 +4287,31 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
 
   IconData _getModuleIcon(String moduleName) {
     switch (moduleName) {
-      case 'campaign_manager': return Icons.campaign;
-      case 'personality_adapter': return Icons.psychology;
-      case 'user_analyzer': return Icons.analytics;
-      case 'user_segmentation': return Icons.group;
-      default: return Icons.smart_toy;
+      case 'campaign_manager':
+        return Icons.campaign;
+      case 'personality_adapter':
+        return Icons.psychology;
+      case 'user_analyzer':
+        return Icons.analytics;
+      case 'user_segmentation':
+        return Icons.group;
+      default:
+        return Icons.smart_toy;
     }
   }
 
   String _formatModuleName(String moduleName) {
     switch (moduleName) {
-      case 'campaign_manager': return 'Campaign Manager';
-      case 'personality_adapter': return 'Personality Adapter';
-      case 'user_analyzer': return 'User Analyzer';
-      case 'user_segmentation': return 'User Segmentation';
-      default: return moduleName.replaceAll('_', ' ');
+      case 'campaign_manager':
+        return 'Campaign Manager';
+      case 'personality_adapter':
+        return 'Personality Adapter';
+      case 'user_analyzer':
+        return 'User Analyzer';
+      case 'user_segmentation':
+        return 'User Segmentation';
+      default:
+        return moduleName.replaceAll('_', ' ');
     }
   }
 
@@ -4114,7 +4331,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
 
         final data = snapshot.data?['data'] ?? {};
         final campaigns = data['campaigns'] as List? ?? [];
-        final performance = data['campaign_performance'] as Map<String, dynamic>? ?? {};
+        final performance =
+            data['campaign_performance'] as Map<String, dynamic>? ?? {};
 
         return Card(
           color: const Color(0xFF1A1A1F),
@@ -4138,37 +4356,56 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Performance Overview
                 Row(
                   children: [
                     Expanded(
-                      child: _buildCampaignMetric('Total Reach', performance['total_reach']?.toString() ?? '0', Icons.visibility, const Color(0xFF2196F3)),
+                      child: _buildCampaignMetric(
+                          'Total Reach',
+                          performance['total_reach']?.toString() ?? '0',
+                          Icons.visibility,
+                          const Color(0xFF2196F3)),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: _buildCampaignMetric('Engagement Rate', performance['engagement_rate'] ?? '0%', Icons.thumb_up, const Color(0xFF4CAF50)),
+                      child: _buildCampaignMetric(
+                          'Engagement Rate',
+                          performance['engagement_rate'] ?? '0%',
+                          Icons.thumb_up,
+                          const Color(0xFF4CAF50)),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: _buildCampaignMetric('Conversion Rate', performance['conversion_rate'] ?? '0%', Icons.trending_up, const Color(0xFF9C27B0)),
+                      child: _buildCampaignMetric(
+                          'Conversion Rate',
+                          performance['conversion_rate'] ?? '0%',
+                          Icons.trending_up,
+                          const Color(0xFF9C27B0)),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: _buildCampaignMetric('ROI', performance['roi'] ?? '0%', Icons.attach_money, const Color(0xFF4CAF50)),
+                      child: _buildCampaignMetric(
+                          'ROI',
+                          performance['roi'] ?? '0%',
+                          Icons.attach_money,
+                          const Color(0xFF4CAF50)),
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Active Campaigns
                 const Text(
                   'Active Campaigns',
-                  style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),
-                
+
                 ...campaigns.take(3).map((campaign) {
                   final campaignData = campaign as Map<String, dynamic>;
                   return Container(
@@ -4185,7 +4422,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                           width: 8,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: _getCampaignStatusColor(campaignData['status']),
+                            color:
+                                _getCampaignStatusColor(campaignData['status']),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -4196,18 +4434,23 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                             children: [
                               Text(
                                 campaignData['name'] ?? 'Unknown Campaign',
-                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 'Type: ${campaignData['type']} | Reach: ${campaignData['reach']}',
-                                style: const TextStyle(color: Colors.white70, fontSize: 12),
+                                style: const TextStyle(
+                                    color: Colors.white70, fontSize: 12),
                               ),
                             ],
                           ),
                         ),
                         Text(
                           'ROI: ${campaignData['roi']}',
-                          style: const TextStyle(color: Color(0xFF4CAF50), fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              color: Color(0xFF4CAF50),
+                              fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -4221,7 +4464,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     );
   }
 
-  Widget _buildCampaignMetric(String title, String value, IconData icon, Color color) {
+  Widget _buildCampaignMetric(
+      String title, String value, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -4256,10 +4500,14 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
 
   Color _getCampaignStatusColor(String? status) {
     switch (status) {
-      case 'active': return const Color(0xFF4CAF50);
-      case 'paused': return const Color(0xFFFF9800);
-      case 'completed': return const Color(0xFF2196F3);
-      default: return Colors.grey;
+      case 'active':
+        return const Color(0xFF4CAF50);
+      case 'paused':
+        return const Color(0xFFFF9800);
+      case 'completed':
+        return const Color(0xFF2196F3);
+      default:
+        return Colors.grey;
     }
   }
 
@@ -4279,7 +4527,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
 
         final data = snapshot.data?['data'] ?? {};
         final engine = data['adaptation_engine'] as Map<String, dynamic>? ?? {};
-        final distribution = data['personality_distribution'] as Map<String, dynamic>? ?? {};
+        final distribution =
+            data['personality_distribution'] as Map<String, dynamic>? ?? {};
         final bigFive = distribution['big_five'] as Map<String, dynamic>? ?? {};
 
         return Card(
@@ -4304,40 +4553,55 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Engine Stats
                 Row(
                   children: [
                     Expanded(
-                      child: _buildPersonalityMetric('Active Profiles', engine['active_profiles']?.toString() ?? '0', Icons.person, const Color(0xFF2196F3)),
+                      child: _buildPersonalityMetric(
+                          'Active Profiles',
+                          engine['active_profiles']?.toString() ?? '0',
+                          Icons.person,
+                          const Color(0xFF2196F3)),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: _buildPersonalityMetric('Accuracy', engine['adaptation_accuracy'] ?? '0%', Icons.precision_manufacturing, const Color(0xFF4CAF50)),
+                      child: _buildPersonalityMetric(
+                          'Accuracy',
+                          engine['adaptation_accuracy'] ?? '0%',
+                          Icons.precision_manufacturing,
+                          const Color(0xFF4CAF50)),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: _buildPersonalityMetric('Adjustments', engine['real_time_adjustments']?.toString() ?? '0', Icons.tune, const Color(0xFFFF9800)),
+                      child: _buildPersonalityMetric(
+                          'Adjustments',
+                          engine['real_time_adjustments']?.toString() ?? '0',
+                          Icons.tune,
+                          const Color(0xFFFF9800)),
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Big Five Distribution
                 const Text(
                   'Big Five Personality Distribution',
-                  style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),
-                
+
                 ...bigFive.entries.map((trait) {
                   final traitData = trait.value as Map<String, dynamic>? ?? {};
                   final high = traitData['high'] ?? 0;
                   final medium = traitData['medium'] ?? 0;
                   final low = traitData['low'] ?? 0;
                   final total = high + medium + low;
-                  
+
                   return Container(
                     margin: const EdgeInsets.only(bottom: 8),
                     child: Column(
@@ -4345,7 +4609,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                       children: [
                         Text(
                           _formatKey(trait.key),
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 4),
                         Row(
@@ -4388,11 +4653,17 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            Text('High: $high%', style: const TextStyle(color: Color(0xFF4CAF50), fontSize: 11)),
+                            Text('High: $high%',
+                                style: const TextStyle(
+                                    color: Color(0xFF4CAF50), fontSize: 11)),
                             const SizedBox(width: 16),
-                            Text('Medium: $medium%', style: const TextStyle(color: Color(0xFFFF9800), fontSize: 11)),
+                            Text('Medium: $medium%',
+                                style: const TextStyle(
+                                    color: Color(0xFFFF9800), fontSize: 11)),
                             const SizedBox(width: 16),
-                            Text('Low: $low%', style: const TextStyle(color: Color(0xFFF44336), fontSize: 11)),
+                            Text('Low: $low%',
+                                style: const TextStyle(
+                                    color: Color(0xFFF44336), fontSize: 11)),
                           ],
                         ),
                       ],
@@ -4407,7 +4678,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     );
   }
 
-  Widget _buildPersonalityMetric(String title, String value, IconData icon, Color color) {
+  Widget _buildPersonalityMetric(
+      String title, String value, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -4455,9 +4727,12 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
         }
 
         final data = snapshot.data?['data'] ?? {};
-        final overview = data['analysis_overview'] as Map<String, dynamic>? ?? {};
-        final behavioral = data['behavioral_insights'] as Map<String, dynamic>? ?? {};
-        final predictive = data['predictive_analytics'] as Map<String, dynamic>? ?? {};
+        final overview =
+            data['analysis_overview'] as Map<String, dynamic>? ?? {};
+        final behavioral =
+            data['behavioral_insights'] as Map<String, dynamic>? ?? {};
+        final predictive =
+            data['predictive_analytics'] as Map<String, dynamic>? ?? {};
 
         return Card(
           color: const Color(0xFF1A1A1F),
@@ -4481,33 +4756,48 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Overview Stats
                 Row(
                   children: [
                     Expanded(
-                      child: _buildAnalyzerMetric('Users Analyzed', overview['total_users_analyzed']?.toString() ?? '0', Icons.people, const Color(0xFF2196F3)),
+                      child: _buildAnalyzerMetric(
+                          'Users Analyzed',
+                          overview['total_users_analyzed']?.toString() ?? '0',
+                          Icons.people,
+                          const Color(0xFF2196F3)),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: _buildAnalyzerMetric('Active Analyses', overview['active_analyses']?.toString() ?? '0', Icons.trending_up, const Color(0xFFFF9800)),
+                      child: _buildAnalyzerMetric(
+                          'Active Analyses',
+                          overview['active_analyses']?.toString() ?? '0',
+                          Icons.trending_up,
+                          const Color(0xFFFF9800)),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: _buildAnalyzerMetric('Accuracy', overview['analysis_accuracy'] ?? '0%', Icons.verified, const Color(0xFF4CAF50)),
+                      child: _buildAnalyzerMetric(
+                          'Accuracy',
+                          overview['analysis_accuracy'] ?? '0%',
+                          Icons.verified,
+                          const Color(0xFF4CAF50)),
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Predictive Analytics
                 const Text(
                   'Predictive Analytics',
-                  style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),
-                
+
                 if (predictive['churn_prediction'] != null) ...[
                   const Text(
                     'Churn Risk Distribution',
@@ -4517,15 +4807,30 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                   Row(
                     children: [
                       Expanded(
-                        child: _buildRiskCard('High Risk', predictive['churn_prediction']['high_risk']?.toString() ?? '0', const Color(0xFFF44336)),
+                        child: _buildRiskCard(
+                            'High Risk',
+                            predictive['churn_prediction']['high_risk']
+                                    ?.toString() ??
+                                '0',
+                            const Color(0xFFF44336)),
                       ),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: _buildRiskCard('Medium Risk', predictive['churn_prediction']['medium_risk']?.toString() ?? '0', const Color(0xFFFF9800)),
+                        child: _buildRiskCard(
+                            'Medium Risk',
+                            predictive['churn_prediction']['medium_risk']
+                                    ?.toString() ??
+                                '0',
+                            const Color(0xFFFF9800)),
                       ),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: _buildRiskCard('Low Risk', predictive['churn_prediction']['low_risk']?.toString() ?? '0', const Color(0xFF4CAF50)),
+                        child: _buildRiskCard(
+                            'Low Risk',
+                            predictive['churn_prediction']['low_risk']
+                                    ?.toString() ??
+                                '0',
+                            const Color(0xFF4CAF50)),
                       ),
                     ],
                   ),
@@ -4538,7 +4843,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     );
   }
 
-  Widget _buildAnalyzerMetric(String title, String value, IconData icon, Color color) {
+  Widget _buildAnalyzerMetric(
+      String title, String value, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -4617,7 +4923,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
         }
 
         final data = snapshot.data?['data'] ?? {};
-        final overview = data['segmentation_overview'] as Map<String, dynamic>? ?? {};
+        final overview =
+            data['segmentation_overview'] as Map<String, dynamic>? ?? {};
         final segments = data['primary_segments'] as List? ?? [];
 
         return Card(
@@ -4642,38 +4949,56 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Segmentation Overview
                 Row(
                   children: [
                     Expanded(
-                      child: _buildSegmentMetric('Total Segments', overview['total_segments']?.toString() ?? '0', Icons.category, const Color(0xFF2196F3)),
+                      child: _buildSegmentMetric(
+                          'Total Segments',
+                          overview['total_segments']?.toString() ?? '0',
+                          Icons.category,
+                          const Color(0xFF2196F3)),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: _buildSegmentMetric('Active Segments', overview['active_segments']?.toString() ?? '0', Icons.play_circle, const Color(0xFF4CAF50)),
+                      child: _buildSegmentMetric(
+                          'Active Segments',
+                          overview['active_segments']?.toString() ?? '0',
+                          Icons.play_circle,
+                          const Color(0xFF4CAF50)),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: _buildSegmentMetric('Accuracy', overview['segmentation_accuracy'] ?? '0%', Icons.precision_manufacturing, const Color(0xFF9C27B0)),
+                      child: _buildSegmentMetric(
+                          'Accuracy',
+                          overview['segmentation_accuracy'] ?? '0%',
+                          Icons.precision_manufacturing,
+                          const Color(0xFF9C27B0)),
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Primary Segments
                 const Text(
                   'Primary User Segments',
-                  style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),
-                
+
                 ...segments.take(4).map((segment) {
                   final segmentData = segment as Map<String, dynamic>;
-                  final metrics = segmentData['metrics'] as Map<String, dynamic>? ?? {};
-                  final characteristics = segmentData['characteristics'] as Map<String, dynamic>? ?? {};
-                  
+                  final metrics =
+                      segmentData['metrics'] as Map<String, dynamic>? ?? {};
+                  final characteristics =
+                      segmentData['characteristics'] as Map<String, dynamic>? ??
+                          {};
+
                   return Container(
                     margin: const EdgeInsets.only(bottom: 12),
                     padding: const EdgeInsets.all(12),
@@ -4699,18 +5024,25 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                             Expanded(
                               child: Text(
                                 segmentData['name'] ?? 'Unknown Segment',
-                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 4),
                               decoration: BoxDecoration(
                                 color: _getGrowthColor(segmentData['growth']),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
                                 segmentData['growth'] ?? '0%',
-                                style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],
@@ -4718,12 +5050,16 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                         const SizedBox(height: 8),
                         Text(
                           'Size: ${segmentData['size']} users | Engagement: ${characteristics['engagement']} | LTV: ${metrics['ltv']}',
-                          style: const TextStyle(color: Colors.white70, fontSize: 13),
+                          style: const TextStyle(
+                              color: Colors.white70, fontSize: 13),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           segmentData['ai_insights'] ?? 'No insights available',
-                          style: const TextStyle(color: Colors.white60, fontSize: 12, fontStyle: FontStyle.italic),
+                          style: const TextStyle(
+                              color: Colors.white60,
+                              fontSize: 12,
+                              fontStyle: FontStyle.italic),
                         ),
                       ],
                     ),
@@ -4737,7 +5073,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     );
   }
 
-  Widget _buildSegmentMetric(String title, String value, IconData icon, Color color) {
+  Widget _buildSegmentMetric(
+      String title, String value, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -4772,11 +5109,16 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
 
   Color _getSegmentColor(String? segmentName) {
     switch (segmentName) {
-      case 'VIP Power Users': return const Color(0xFFFFD700);
-      case 'Creative Explorers': return const Color(0xFF9C27B0);
-      case 'Social Connectors': return const Color(0xFF2196F3);
-      case 'At-Risk Users': return const Color(0xFFF44336);
-      default: return Colors.grey;
+      case 'VIP Power Users':
+        return const Color(0xFFFFD700);
+      case 'Creative Explorers':
+        return const Color(0xFF9C27B0);
+      case 'Social Connectors':
+        return const Color(0xFF2196F3);
+      case 'At-Risk Users':
+        return const Color(0xFFF44336);
+      default:
+        return Colors.grey;
     }
   }
 
@@ -4819,29 +5161,29 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
           children: [
             // Core Modules Overview
             _buildCoreModulesOverview(),
-            
+
             const SizedBox(height: 24),
-            
+
             // BabaGAVAT User Analyzer
             _buildBabaGAVATUserAnalyzer(),
-            
+
             const SizedBox(height: 24),
-            
+
             // Erko Analyzer
             _buildErkoAnalyzer(),
-            
+
             const SizedBox(height: 24),
-            
+
             // AI CRM Analyzer
             _buildAICRMAnalyzer(),
-            
+
             const SizedBox(height: 24),
-            
+
             // Behavioral Engine
             _buildBehavioralEngine(),
-            
+
             const SizedBox(height: 24),
-            
+
             // Social Gaming Engine
             _buildSocialGamingEngine(),
           ],
@@ -4849,10 +5191,10 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
       ),
     );
   }
-  
+
   Widget _buildCoreModulesOverview() {
     final coreModulesAsync = ref.watch(coreModulesProvider);
-    
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -4873,7 +5215,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
                 ),
                 const Spacer(),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: const Color(0xFFE91E63).withOpacity(0.2),
                     borderRadius: BorderRadius.circular(20),
@@ -4892,7 +5235,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
             const SizedBox(height: 16),
             coreModulesAsync.when(
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stack) => Text('Hata: $error', style: const TextStyle(color: Colors.red)),
+              error: (error, stack) => Text('Hata: $error',
+                  style: const TextStyle(color: Colors.red)),
               data: (data) {
                 final moduleData = data['data'] ?? {};
                 return Column(
@@ -4946,7 +5290,8 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
     );
   }
 
-  Widget _buildCoreModuleCard(String title, String value, IconData icon, Color color) {
+  Widget _buildCoreModuleCard(
+      String title, String value, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -4990,7 +5335,10 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
           children: [
             const Text(
               '🧠 BabaGAVAT User Analyzer',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
             const SizedBox(height: 16),
             const Text(
@@ -5011,7 +5359,10 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
           children: [
             const Text(
               '👨 Erko Analyzer',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
             const SizedBox(height: 16),
             const Text(
@@ -5032,7 +5383,10 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
           children: [
             const Text(
               '🤖 AI CRM Analyzer',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
             const SizedBox(height: 16),
             const Text(
@@ -5053,7 +5407,10 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
           children: [
             const Text(
               '🧬 Behavioral Engine',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
             const SizedBox(height: 16),
             const Text(
@@ -5074,7 +5431,10 @@ class _SimpleDashboardState extends ConsumerState<SimpleDashboard> {
           children: [
             const Text(
               '🎮 Social Gaming Engine',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
             const SizedBox(height: 16),
             const Text(
@@ -5098,4 +5458,4 @@ class NavigationItem {
     required this.label,
     required this.color,
   });
-} 
+}
