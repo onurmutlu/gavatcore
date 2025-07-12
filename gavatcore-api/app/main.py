@@ -132,6 +132,8 @@ app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(payment.router, prefix="/api/payment", tags=["Payment"])
 app.include_router(bots.router, prefix="/api/bots", tags=["Bots"])
 app.include_router(users.router, prefix="/api/users", tags=["Users"])
+from app.routes.communication import router as communication_router
+app.include_router(communication_router, prefix="/api/analysis", tags=["Analysis"])
 
 
 if __name__ == "__main__":

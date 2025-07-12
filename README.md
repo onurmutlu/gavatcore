@@ -172,6 +172,10 @@ bot_system.run_all_bots()
 status = bot_system.get_bot_status("lara")
 ```
 
+## 🏛 Architecture and Refactoring Plan
+
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the high-level architecture overview and the staged refactoring roadmap.
+
 ## 🔧 Geliştirme
 
 ### Test Çalıştırma

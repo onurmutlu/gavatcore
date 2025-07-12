@@ -31,7 +31,7 @@ from gpt.modes.reply_mode_engine import ReplyModeEngine
 
 # GAVATCore 2.1 YENİ modülleri
 from emotion_quality_analyzer import EmotionQualityAnalyzer, EmotionalState
-from deep_bait_classifier import DeepBaitClassifier, InteractionType, AuthenticityLevel
+from domain.deep_bait_classifier import DeepBaitClassifier, InteractionType, AuthenticityLevel
 from heatmap_intimacy_tracker import HeatmapIntimacyTracker, IntimacyType
 from release_expectation_mapper import ReleaseExpectationMapper, ExpectationType, SatisfactionLevel
 
