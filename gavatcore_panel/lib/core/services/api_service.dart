@@ -12,6 +12,8 @@ class ApiConfig {
     'API_BASE_URL',
     defaultValue: 'http://localhost:8000/api', // SaaS API
   );
+  /// Communication analysis endpoint (bait vs genuine)
+  static const String communicationAnalysisUrl = '$baseUrl/analysis/communication';
   
   static const String wsUrl = String.fromEnvironment(
     'WS_URL', 
@@ -883,4 +885,3 @@ class SaasApiService {
     return await _apiService.getAvailablePersonalities();
   }
 }
-
