@@ -1,3 +1,5 @@
+from infrastructure.config.loader import config_path
+
 """
 Configuration loader for centralized config directory.
 """

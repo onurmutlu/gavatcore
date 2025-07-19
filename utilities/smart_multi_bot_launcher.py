@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🧠 Smart Multi-Bot Launcher v2.0 🧠

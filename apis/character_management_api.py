@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 GavatCore Character Management API
@@ -19,7 +21,7 @@ app = Flask(__name__)
 CORS(app)  # Flutter panel için CORS enable
 
 # Logging setup
-logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger(__name__)
 
 # Paths

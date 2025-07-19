@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🚀 Production Bot Management API v6.0 🚀

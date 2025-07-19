@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🪙 GavatCoin Token Manager v1.1 🪙

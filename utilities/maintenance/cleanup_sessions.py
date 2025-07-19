@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 # cleanup_sessions.py - Journal dosyalarını sürekli temizle
 
@@ -6,7 +8,7 @@ import time
 import glob
 import logging
 
-logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger("session_cleanup")
 
 def cleanup_journal_files():

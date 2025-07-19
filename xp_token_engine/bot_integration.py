@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🎮 GavatCoin Bot Integration v1.0 🎮

@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🚀 GAVATCore Scalable FastAPI Server
@@ -69,7 +71,7 @@ except ImportError:
         return decorator
 
 # Configure structured logging
-logging.basicConfig(level=logging.INFO)
+
 logger = structlog.get_logger("gavatcore.scalable_api")
 
 # Pydantic Models

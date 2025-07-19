@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 """
 Character Analytics Logger Module
 

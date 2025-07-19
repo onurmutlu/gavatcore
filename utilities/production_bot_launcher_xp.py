@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🎯 Production Multi-Bot Launcher with XP/Token Integration v4.0 🎯

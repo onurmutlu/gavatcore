@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🔥 GavatCoin Spend Handlers v1.0 🔥

@@ -29,7 +29,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Tuple
 from pathlib import Path
 from dataclasses import dataclass, field
-import structlog
+from infrastructure.config.logger import get_logger
 
 # AI/ML imports
 try:
@@ -40,7 +40,7 @@ try:
 except ImportError:
     ML_AVAILABLE = False
 
-logger = structlog.get_logger("ai_self_optimizer")
+logger = get_logger("ai_self_optimizer")
 
 @dataclass
 class PerformanceMetrics:
@@ -264,7 +264,7 @@ class AIOptimizationEngine:
             "peak_performance_time": datetime.now().isoformat()
         }
         
-        baseline_file = Path("config/system_baseline.json")
+        baseline_file = config_path("system_baseline.json")
         baseline_file.parent.mkdir(exist_ok=True)
         
         with open(baseline_file, 'w') as f:

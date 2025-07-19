@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 import time
 import asyncio
 from openai import OpenAI

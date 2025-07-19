@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 """
 💰 Token Usage Logger - GPT API kullanım ve maliyet takibi
 """

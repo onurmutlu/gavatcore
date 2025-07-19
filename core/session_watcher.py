@@ -50,7 +50,7 @@ async def notify_session_down(username, error=None):
     if error:
         msg_admin += f"\n<b>Detay:</b> <code>{error}</code>"
     await send_bot_dm(int(GAVATCORE_ADMIN_ID), msg_admin)
-    logging.error(f"[WATCHER] {username} session düştü: {error}")
+    logger.error(f"[WATCHER] {username} session düştü: {error}")
 
     # Şovcuya da DM (eğer user_id biliniyorsa)
     showcu_id = get_performer_user_id(username)

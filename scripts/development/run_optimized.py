@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 # run_optimized.py - Optimize Edilmiş Gavatcore Çalıştırma Scripti
 
@@ -639,10 +641,9 @@ if __name__ == "__main__":
     try:
         # Test modu için log seviyesini ayarla
         if os.getenv("TEST_MODE", "false").lower() == "true":
-            logging.basicConfig(level=logging.DEBUG)
+
         else:
-            logging.basicConfig(level=logging.INFO)
-        
+
         # Asyncio debug mode
         if os.getenv("ASYNCIO_DEBUG", "false").lower() == "true":
             asyncio.set_debug(True)

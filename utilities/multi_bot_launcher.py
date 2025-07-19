@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🚀 GavatCore Multi-Bot Launcher v1.0 🚀

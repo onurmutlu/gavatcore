@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 SEFERVERSE AI PIPELINE v2.0 - GPT-4 Powered

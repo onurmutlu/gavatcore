@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 GERÇEK BOT YÖNETİM API'Sİ - MOCK DATA YOK!
@@ -15,7 +17,7 @@ from real_process_monitor import real_monitor
 app = Flask(__name__)
 CORS(app, origins=["*"])
 
-logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger(__name__)
 
 # Bot script paths - GERÇEK DOSYA YOLLARI

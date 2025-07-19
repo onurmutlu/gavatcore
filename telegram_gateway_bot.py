@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🤖 GAVATCORE TELEGRAM GATEWAY BOT
@@ -30,7 +32,7 @@ except ImportError as e:
     sys.exit(1)
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+
 logger = structlog.get_logger("gavatcore.telegram_bot")
 
 # Configuration

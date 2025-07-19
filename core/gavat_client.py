@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 # core/gavat_client.py
 
 import os

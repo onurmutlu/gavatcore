@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 ⚡ Power Mode Controller API
@@ -15,6 +17,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, asdict
 from pathlib import Path
+from infrastructure.config.loader import config_path
 
 import uvicorn
 from fastapi import FastAPI, HTTPException, BackgroundTasks
@@ -98,9 +101,9 @@ class PowerModeChange:
     reason: Optional[str] = None
 
 class PowerModeManager:
-    def __init__(self):
-        from infrastructure.config.loader import config_path
-        self.config_file = config_path("power_mode.json")
+    def __init__(self, config_file: Path = config_path("power_mode.json")):
+        """Manages system power mode using external config file."""
+        self.config_file = config_file
         self.history_file = Path("logs/power_mode_history.json")
         self.current_mode = "turbo"  # Default mode
         self.mode_history: List[PowerModeChange] = []

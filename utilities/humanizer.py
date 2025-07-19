@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 """
 🎭 Humanizer - Natural Behavior Layer
 Bot'ların insan gibi davranmasını sağlayan doğallık katmanı
