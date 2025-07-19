@@ -28,7 +28,7 @@ We will adopt a layered, modular structure inspired by Clean Architecture / Hexa
 - Presentation: `apis/`, `launchers/`, `services/telegram/bot_manager/`, `web/`
 - Application: `pipelines/`, `handlers/`, `modules/*` as orchestrators and handlers
 - Domain: `core/`, `gavatcore_engine/`, `character_engine/`, `deep_bait_classifier.py`
-- Infrastructure: `config/`, `data/`, `utils/`, `tools/`, external client wrappers
+- Infrastructure: `infrastructure/config/`, `data/`, `utils/`, `tools/`, external client wrappers
 
 ## 🚀 Refactoring Phases
 1. **Discovery & Documentation** (current)

@@ -99,7 +99,8 @@ class PowerModeChange:
 
 class PowerModeManager:
     def __init__(self):
-        self.config_file = Path("config/power_mode.json")
+        from infrastructure.config.loader import config_path
+        self.config_file = config_path("power_mode.json")
         self.history_file = Path("logs/power_mode_history.json")
         self.current_mode = "turbo"  # Default mode
         self.mode_history: List[PowerModeChange] = []

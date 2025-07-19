@@ -2,7 +2,7 @@
 
 import os
 import asyncio
-import logging
+from infrastructure.config.logger import get_logger
 from telethon import TelegramClient
 from aiogram import Bot
 from config import (
@@ -16,13 +16,14 @@ SESSIONS_DIR = "sessions"
 CHECK_INTERVAL = 300  # saniye
 
 bot = Bot(token=ADMIN_BOT_TOKEN, parse_mode="HTML")
-logging.basicConfig(level=logging.INFO)
+# Initialize central logger
+logger = get_logger("session_watcher")
 
 async def send_bot_dm(user_id: int, msg: str):
     try:
         await bot.send_message(user_id, msg)
     except Exception as e:
-        logging.error(f"[DM] Gönderilemedi (user: {user_id}): {e}")
+        logger.error(f"[DM] Gönderilemedi (user: {user_id}): {e}")
 
 async def watch_sessions():
     while True:

@@ -232,7 +232,8 @@ class AIOptimizationEngine:
     
     def __init__(self):
         self.analyzer = AIPerformanceAnalyzer()
-        self.config_path = Path("config/engine_config.yaml")
+        from infrastructure.config.loader import config_path
+        self.config_path = config_path("engine_config.yaml")
         self.recommendations_history: List[OptimizationRecommendation] = []
         
         # Baseline performance
@@ -243,7 +244,8 @@ class AIOptimizationEngine:
     
     def _load_baseline(self):
         """Baseline performance'ı yükle."""
-        baseline_file = Path("config/system_baseline.json")
+        from infrastructure.config.loader import config_path
+        baseline_file = config_path("system_baseline.json")
         if baseline_file.exists():
             try:
                 with open(baseline_file, 'r') as f:
