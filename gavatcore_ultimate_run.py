@@ -297,10 +297,9 @@ class GavatCoreUltimateSystem:
             env['GAVATCORE_CHARACTER'] = json.dumps(config['character'])
             
             # Start multi bot launcher with character config
+            # Launch character bot interactively to allow Telegram code prompts
             process = subprocess.Popen(
                 ["python", "multi_bot_launcher.py"],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
                 start_new_session=True,
                 env=env
             )
