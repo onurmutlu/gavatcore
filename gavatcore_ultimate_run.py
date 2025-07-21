@@ -1,5 +1,12 @@
 from infrastructure.config.logger import get_logger
 
+# Auto-activate project virtualenv if present (so pip dependencies resolve)
+import sys, os
+venv_py = os.path.join(os.path.dirname(__file__), '.venv', 'bin', 'python3')
+if os.path.isfile(venv_py) and os.path.realpath(sys.executable) != os.path.realpath(venv_py):
+    print(f"⚡ Switching to virtualenv Python: {venv_py}", file=sys.stderr)
+    os.execv(venv_py, [venv_py] + sys.argv)
+
 #!/usr/bin/env python3
 """
 🚀 GavatCore Ultimate Run v4.0 🚀
