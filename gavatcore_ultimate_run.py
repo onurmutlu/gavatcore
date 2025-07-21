@@ -272,8 +272,12 @@ class GavatCoreUltimateSystem:
                 return True
             
             # Start new process
+            # Launch system component with same Python interpreter
+            cmd = config['command']
+            if cmd and cmd[0] == 'python':
+                cmd[0] = sys.executable
             process = subprocess.Popen(
-                config['command'],
+                cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 start_new_session=True
