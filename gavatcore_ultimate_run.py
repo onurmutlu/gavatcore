@@ -332,8 +332,10 @@ class GavatCoreUltimateSystem:
             
             # Start multi bot launcher with character config
             # Launch character bot interactively to allow Telegram code prompts
+            # Launch character bot via the utilities folder so the launcher script is found
+            launcher_path = os.path.join(os.path.dirname(__file__), 'utilities', 'multi_bot_launcher.py')
             process = subprocess.Popen(
-                ["python", "multi_bot_launcher.py"],
+                [sys.executable, launcher_path],
                 start_new_session=True,
                 env=env
             )
