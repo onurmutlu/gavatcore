@@ -1,5 +1,3 @@
-from infrastructure.config.logger import get_logger
-
 #!/usr/bin/env python3
 """
 🚀 GavatCore Multi-Bot Launcher v1.0 🚀
@@ -14,6 +12,11 @@ Kullanım:
 python multi_bot_launcher.py
 """
 
+import os, sys
+# Ensure project root is on sys.path for imports
+proj_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if proj_root not in sys.path:
+    sys.path.insert(0, proj_root)
 import asyncio
 import json
 import os
