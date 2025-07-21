@@ -87,7 +87,12 @@ class BotInstance:
                 logger.warning(f"⚠️ {self.display_name} session bulunamadı, yeni session oluşturulacak")
                 self.client = TelegramClient(f"sessions/{self.username}_conversation", API_ID, API_HASH)
             
-            await self.client.start(phone=self.phone)
+            # Start session; if no existing session file, prompt interactively for the login code
+            if not os.path.exists(self.session_path + '.session'):
+                code_prompt = lambda: input(f"▶ Enter Telegram code for {self.display_name} ({self.phone}): ")
+                await self.client.start(phone=self.phone, code_callback=code_prompt)
+            else:
+                await self.client.start()
             
             # Verify connection
             me = await self.client.get_me()
