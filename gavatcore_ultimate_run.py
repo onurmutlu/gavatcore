@@ -29,15 +29,34 @@ import json
 from typing import List, Tuple, Optional, Dict, Any
 from dataclasses import dataclass, field
 from datetime import datetime
+# Threading, HTTP and monitoring deps
 import threading
+# Use requests if available, else fallback
 try:
     import requests
 except ImportError:
-    print("❌ Missing 'requests' package. Please install with: pip install requests", file=sys.stderr)
-    sys.exit(1)
-from pathlib import Path
+    requests = None
+from urllib.request import urlopen
+# psutil for process stats
+try:
+    import psutil
+except ImportError:
+    psutil = None
 import structlog
-import psutil
+from pathlib import Path
+# Verify critical dependencies
+missing = []
+if requests is None:
+    missing.append("requests")
+if psutil is None:
+    missing.append("psutil")
+if missing:
+    print(
+        f"❌ Missing dependencies: {', '.join(missing)}."
+        f" Please install with: python3 -m pip install {' '.join(missing)}",
+        file=sys.stderr
+    )
+    sys.exit(1)
 
 # Configure structured logging
 log_processors = [
@@ -213,12 +232,14 @@ class GavatCoreUltimateSystem:
     def _check_service_health(self, url: str, timeout: int = 2) -> bool:
         """Check if a service is healthy by making HTTP request."""
         try:
-            response = requests.get(url, timeout=timeout)
-            return response.status_code in [200, 201]
-        except (requests.RequestException, requests.Timeout):
-            return False
-        except Exception as e:
-            logger.warning("⚠️ Health check error", url=url, error=str(e))
+            if requests:
+                resp = requests.get(url, timeout=timeout)
+                code = resp.status_code
+            else:
+                resp = urlopen(url, timeout=timeout)
+                code = resp.getcode()
+            return code in (200, 201)
+        except Exception:
             return False
     
     def start_system_component(self, comp_key: str, config: Dict) -> bool:
