@@ -88,8 +88,11 @@ class BotInstance:
                 self.client = TelegramClient(f"sessions/{self.username}_conversation", API_ID, API_HASH)
             
             # Start session; if no existing session file, prompt interactively for the login code
-            if not os.path.exists(self.session_path + '.session'):
-                code_prompt = lambda: input(f"▶ Enter Telegram code for {self.display_name} ({self.phone}): ")
+            if not os.path.exists(self.session_path):
+                def code_prompt():
+                    # Prompt synchronously for the code
+                    return input(f"▶ Enter Telegram code for {self.display_name} ({self.phone}): ")
+
                 await self.client.start(phone=self.phone, code_callback=code_prompt)
             else:
                 await self.client.start()
