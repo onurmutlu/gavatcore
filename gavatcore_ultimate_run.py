@@ -30,7 +30,11 @@ from typing import List, Tuple, Optional, Dict, Any
 from dataclasses import dataclass, field
 from datetime import datetime
 import threading
-import requests
+try:
+    import requests
+except ImportError:
+    print("❌ Missing 'requests' package. Please install with: pip install requests", file=sys.stderr)
+    sys.exit(1)
 from pathlib import Path
 import structlog
 import psutil

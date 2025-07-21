@@ -1,5 +1,3 @@
-from infrastructure.config.logger import get_logger
-
 #!/usr/bin/env python3
 """
 🚀 GAVATCORE LOGGER MODULE
