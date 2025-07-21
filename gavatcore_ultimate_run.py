@@ -51,11 +51,20 @@ if requests is None:
 if psutil is None:
     missing.append("psutil")
 if missing:
-    print(
-        f"❌ Missing dependencies: {', '.join(missing)}."
-        f" Please install with: python3 -m pip install {' '.join(missing)}",
-        file=sys.stderr
-    )
+    # Suggest activating project venv if present, else fall back to system pip
+    venv_dir = Path(__file__).parent / '.venv'
+    if venv_dir.exists():
+        print(
+            f"❌ Missing dependencies: {', '.join(missing)}.",
+            f"Please activate the project venv and install: source .venv/bin/activate && pip install {' '.join(missing)}",
+            file=sys.stderr
+        )
+    else:
+        print(
+            f"❌ Missing dependencies: {', '.join(missing)}.",
+            f"Please install with: python3 -m pip install {' '.join(missing)}",
+            file=sys.stderr
+        )
     sys.exit(1)
 
 # Configure structured logging
