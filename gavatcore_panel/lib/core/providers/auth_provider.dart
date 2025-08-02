@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../services/api_service.dart';
+import '../services/telegram_service.dart';
+import '../models/user.dart';
 
 // 🚀 SaaS API Providers
 final apiServiceProvider = Provider((ref) => ApiService());
@@ -9,24 +11,44 @@ final saasApiServiceProvider = Provider((ref) {
   return SaasApiService(apiService);
 });
 
-final authProvider = AsyncNotifierProvider<AuthNotifier, UserData?>(() {
+final telegramServiceProvider = Provider((ref) => TelegramService());
+
+final authProvider = AsyncNotifierProvider<AuthNotifier, User?>(() {
   return AuthNotifier();
 });
 
-class AuthNotifier extends AsyncNotifier<UserData?> {
+class AuthNotifier extends AsyncNotifier<User?> {
   late SaasApiService _saasService;
 
   @override
-  Future<UserData?> build() async {
+  Future<User?> build() async {
     _saasService = ref.watch(saasApiServiceProvider);
+    final telegramService = ref.watch(telegramServiceProvider);
     
-    // Check if user is already authenticated
+    // Check Telegram session first
+    try {
+      final hasSession = await telegramService.checkExistingSession();
+      if (hasSession) {
+        final user = await telegramService.getCurrentUser();
+        if (user != null) return user;
+      }
+    } catch (e) {
+      // Continue to check API auth
+    }
+    
+    // Check if user is already authenticated via API
     final isLoggedIn = await isAuthenticated();
     if (isLoggedIn) {
       try {
         final apiService = ref.watch(apiServiceProvider);
-        final user = await apiService.getCurrentUser();
-        return user;
+        final userData = await apiService.getCurrentUser();
+        // Convert UserData to User model
+        return User(
+          id: userData.id.toString(),
+          email: userData.email ?? '',
+          name: userData.fullName,
+          role: 'user',
+        );
       } catch (e) {
         // Token might be expired, clear auth state
         await _clearAuthState();
@@ -36,12 +58,31 @@ class AuthNotifier extends AsyncNotifier<UserData?> {
     return null;
   }
 
-  Future<bool> login(String username, String password) async {
+  Future<bool> login(User user) async {
+    state = const AsyncValue.loading();
+    
+    try {
+      state = AsyncValue.data(user);
+      return true;
+    } catch (e, stackTrace) {
+      state = AsyncValue.error(e, stackTrace);
+      return false;
+    }
+  }
+
+  Future<bool> apiLogin(String username, String password) async {
     state = const AsyncValue.loading();
     
     try {
       final authResponse = await _saasService.login(username, password);
-      state = AsyncValue.data(authResponse.user);
+      // Convert UserData to User model
+      final user = User(
+        id: authResponse.user.id.toString(),
+        email: authResponse.user.email ?? '',
+        name: authResponse.user.fullName,
+        role: 'user',
+      );
+      state = AsyncValue.data(user);
       return true;
     } catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);
@@ -78,7 +119,13 @@ class AuthNotifier extends AsyncNotifier<UserData?> {
     state = const AsyncValue.loading();
     
     try {
+      // Clear Telegram session
+      final telegramService = ref.watch(telegramServiceProvider);
+      await telegramService.logout();
+      
+      // Clear API auth
       await _saasService.logout();
+      
       state = const AsyncValue.data(null);
     } catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);
@@ -160,7 +207,7 @@ final isAuthenticatedProvider = Provider<bool>((ref) {
   );
 });
 
-final currentUserProvider = Provider<UserData?>((ref) {
+final currentUserProvider = Provider<User?>((ref) {
   final authState = ref.watch(authProvider);
   return authState.when(
     data: (user) => user,

@@ -303,7 +303,7 @@ abstract class ApiService {
   Future<void> bulkDeleteMessages(@Body() Map<String, dynamic> request);
 
   @POST("/message-pools/enhance")
-  Future<MessageData> enhanceMessage(
+  Future<MessageData> enhanceMessagePool(
     @Path("id") String id,
     @Body() Map<String, dynamic> request,
   );

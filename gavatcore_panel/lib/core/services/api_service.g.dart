@@ -597,7 +597,7 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<MessageData> enhanceMessage(
+  Future<MessageData> enhanceMessagePool(
     String id,
     Map<String, dynamic> request,
   ) async {

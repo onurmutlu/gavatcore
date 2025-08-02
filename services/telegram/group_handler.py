@@ -11,7 +11,7 @@ from core.analytics_logger import log_analytics
 from utilities.smart_reply import smart_reply
 from core.crm_database import crm_db
 
-MANUALPLUS_TIMEOUT = 180  # saniye
+MANUALPLUS_TIMEOUT = 3600  # saniye (increased to reduce message frequency)
 
 # Dinamik spam scheduler entegrasyonu
 try:
@@ -345,7 +345,8 @@ async def handle_group_message(event, client):
         return
 
     # Bot profilinden ayarları al (kullanıcı profili değil!)
-    reply_mode = bot_profile.get("reply_mode") or "manualplus"  # ultimate safe
+    # Enforce manualplus mode to reduce flooding and disable GPT/hybrid
+    reply_mode = "manualplus"
     manualplus_timeout = int(bot_profile.get("manualplus_timeout_sec", MANUALPLUS_TIMEOUT))
 
     log_event(username, f"📥 Grup mesajı alındı: {event.raw_text} | Yanıt modu: {reply_mode}")
