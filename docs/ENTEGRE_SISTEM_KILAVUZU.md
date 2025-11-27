@@ -8,7 +8,7 @@ GavatCore Engine artık tüm modüllerin entegre çalıştığı production-read
 
 ### 🧩 **Entegre Modüller**
 - **📱 Telegram Client**: Telethon tabanlı multi-bot yönetimi
-- **📬 Message Pool**: Priority-based mesaj kuyruğu sistemi  
+- **📬 Message Pool**: Priority-based mesaj kuyruğu sistemi
 - **⏰ Scheduler Engine**: Cron ve interval tabanlı görev zamanlama
 - **🧠 AI Blending**: Intelligent mesaj geliştirme sistemi
 - **👑 Admin Commands**: Comprehensive admin komut sistemi
@@ -215,7 +215,7 @@ task = ScheduledTask(
     session_name="xxxgeisha"
 )
 
-# Scheduler'a ekle  
+# Scheduler'a ekle
 task_id = await scheduler_engine.add_task(task)
 ```
 
@@ -311,7 +311,7 @@ redis-cli
 # Telegram client test
 python test_telegram_client.py
 
-# Scheduler test  
+# Scheduler test
 python test_scheduler_engine.py
 
 # Specific module tests
@@ -500,20 +500,20 @@ class Settings(BaseSettings):
     # Redis settings
     redis_url: str = "redis://localhost:6379/0"
     redis_pool_size: int = 10
-    
+
     # Message pool settings
     message_pool_size: int = 1000
     message_retention_hours: int = 24
-    
+
     # Scheduler settings
     scheduler_check_interval: int = 1
     max_concurrent_tasks: int = 10
-    
+
     # Telegram settings
     rate_limit_delay: float = 1.0
     flood_wait_threshold: int = 60
     connection_retries: int = 5
-    
+
     # AI settings
     ai_enhancement_enabled: bool = True
     ai_response_timeout: int = 30
@@ -624,7 +624,7 @@ uvloop.install()
 
 ## 🎉 Sonuç
 
-GavatCore Engine artık tamamen entegre, production-ready bir sistem olarak çalışıyor! 
+GavatCore Engine artık tamamen entegre, production-ready bir sistem olarak çalışıyor!
 
 **✅ Tamamlanan Özellikler:**
 - Tüm modüller entegre ve çalışıyor
@@ -641,4 +641,4 @@ GavatCore Engine artık tamamen entegre, production-ready bir sistem olarak çal
 ./start_gavatcore_engine.py
 ```
 
-Sistem artık gerçek bot'larınızla production ortamında kullanıma hazır! 🎯 
+Sistem artık gerçek bot'larınızla production ortamında kullanıma hazır! 🎯

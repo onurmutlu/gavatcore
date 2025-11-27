@@ -54,7 +54,7 @@ GET  /api/system/status         - System health check
 #### **Bot Configurations**
 ```
 🤖 Lara - Flirty Streamer (+905382617727)
-🤖 BabaGavat - Club Leader (+447832134241) 
+🤖 BabaGavat - Club Leader (+447832134241)
 🤖 Geisha - Sophisticated Moderator (+905486306226)
 ```
 
