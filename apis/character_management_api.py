@@ -15,6 +15,8 @@ import sqlite3
 import glob
 import random
 
+from core.repo_analyzer import analyze_repository
+
 app = Flask(__name__)
 CORS(app)  # Flutter panel için CORS enable
 
@@ -1501,6 +1503,20 @@ def get_smart_personality_adapter():
     except Exception as e:
         logger.error(f"Smart Personality Adapter hatası: {e}")
         return jsonify({'error': str(e)}), 500
+
+@app.route('/api/repo/analysis', methods=['GET'])
+def get_repo_analysis():
+    """Repository analysis endpoint
+
+    Returns summary of codebase and git repository metrics.
+    """
+    try:
+        repo_analysis = analyze_repository()
+        return jsonify({'status': 'success', 'data': repo_analysis})
+    except Exception as e:
+        logger.error(f"Repo analysis hatası: {e}")
+        return jsonify({'status': 'error', 'error': str(e)}), 500
+
 
 @app.route('/api/user-analyzer/insights', methods=['GET'])
 def get_user_analyzer():
