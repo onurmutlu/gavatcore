@@ -46,7 +46,16 @@ class BaronSimpleLauncher:
             system_version="GAVATCore v2.1",
         )
 
-        await self.client.start(phone=self.phone)
+        login_code = os.getenv("TELEGRAM_LOGIN_CODE")
+        twofa = os.getenv("TELEGRAM_2FA_PASSWORD")
+
+        await self.client.start(
+            phone=self.phone,
+            code_callback=lambda: login_code or input("Please enter the code you received: "),
+            password=twofa if twofa else lambda: __import__("getpass").getpass(
+                "Please enter your password: "
+            ),
+        )
         me = await self.client.get_me()
         print(f"✅ {self.display_name} aktif: @{me.username or '—'} (ID: {me.id})")
         print(f"   Ad: {me.first_name} {me.last_name or ''}".strip())
