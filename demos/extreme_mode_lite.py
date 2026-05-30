@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 💀 EXTREME MODE LITE - SQLite Version 💀
@@ -228,5 +230,5 @@ async def main():
             logger.error(f"XXXGeisha also failed: {e2}")
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+
     asyncio.run(main())

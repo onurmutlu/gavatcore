@@ -494,8 +494,8 @@ async def schedule_followup_message(client, user_id, dm_key, bot_profile, client
             "Hey! Seni özledim, nasılsın? 🤗"
         ]
     else:
-        # Normal takip (ilk temas) - çok daha konservatif
-        followup_delays = [21600, 86400, 259200]  # 6 saat, 24 saat, 3 gün
+        # Normal takip (ilk temas) - reduced frequency
+        followup_delays = [86400, 259200, 604800]  # 24 saat, 3 gün, 1 hafta
         followup_messages = [
             "Merhaba! Mesajımı gördün mü? 😊",
             "Selam canım, nasılsın? Sohbet etmek ister misin? 💕",
@@ -710,8 +710,9 @@ async def handle_message(client, sender, message_text, session_created_at):
         return
 
     # Bot profilinden ayarları al (kullanıcı profili değil!)
-    reply_mode = bot_profile.get("reply_mode", "manualplus")
-    manualplus_timeout = int(bot_profile.get("manualplus_timeout_sec", 180))
+    # Enforce manualplus mode to reduce flooding and disable GPT
+    reply_mode = "manualplus"
+    manualplus_timeout = int(bot_profile.get("manualplus_timeout_sec", 3600))
     services_menu = bot_profile.get("services_menu") or DEFAULT_SERVICES_MENU
     papara_bankas = bot_profile.get("papara_accounts") or DEFAULT_PAPARA_BANKAS
 

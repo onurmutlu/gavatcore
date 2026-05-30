@@ -12,6 +12,11 @@ Kullanım:
 python multi_bot_launcher.py
 """
 
+import os, sys
+# Ensure project root is on sys.path for imports
+proj_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if proj_root not in sys.path:
+    sys.path.insert(0, proj_root)
 import asyncio
 import json
 import os
@@ -74,15 +79,18 @@ class BotInstance:
     async def connect(self) -> bool:
         """Bot'u Telegram'a bağlar"""
         try:
-            # Check if session exists
-            if os.path.exists(self.session_path):
-                logger.info(f"📁 {self.display_name} session bulundu: {self.session_path}")
-                self.client = TelegramClient(self.session_path.replace('.session', ''), API_ID, API_HASH)
-            else:
-                logger.warning(f"⚠️ {self.display_name} session bulunamadı, yeni session oluşturulacak")
-                self.client = TelegramClient(f"sessions/{self.username}_conversation", API_ID, API_HASH)
-            
-            await self.client.start(phone=self.phone)
+            # Always use bot's session path and force SMS/code prompt to login
+            session_name = self.session_path.replace('.session', '')
+            self.client = TelegramClient(session_name, API_ID, API_HASH)
+
+            def code_prompt():
+                return input(f"▶ Enter Telegram login code for {self.display_name} ({self.phone}): ")
+
+            await self.client.start(
+                phone=self.phone,
+                code_callback=code_prompt,
+                force_sms=True
+            )
             
             # Verify connection
             me = await self.client.get_me()

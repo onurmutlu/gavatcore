@@ -1,5 +1,7 @@
 # 🧠 GAVATCore Character Engine v2.0
 
+**Layer:** Domain Layer — Core business logic for character personalities and response generation.
+
 Modüler karakter yönetim sistemi - Her bot için özel kişilik ve GPT destekli yanıt motoru
 
 ## 🚀 Özellikler

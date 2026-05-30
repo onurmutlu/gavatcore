@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  telegram-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.telegram
+    container_name: gavatcore-telegram-bot
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - API_BASE_URL=https://api.gavatcore.com/api
+      - PANEL_URL=https://panel.gavatcore.com
+      - WEBAPP_URL=https://panel.gavatcore.com/#/auth/login
+    volumes:
+      - telegram_data:/app/data
+    networks:
+      - gavatcore-network
+    depends_on:
+      - gavatcore-api
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+
+volumes:
+  telegram_data:
+    driver: local
+
+networks:
+  gavatcore-network:
+    external: true 

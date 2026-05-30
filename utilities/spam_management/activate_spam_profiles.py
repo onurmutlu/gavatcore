@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 # activate_spam_profiles.py - Profilleri spam için aktif hale getir
 

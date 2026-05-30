@@ -1,0 +1,73 @@
+{
+  "account_info": {
+    "username": "gawatbaba",
+    "telegram_handle": "@gawatbaba", 
+    "phone": "+447832134241",
+    "user_id": null,
+    "first_name": "🔥 Gawat Baba ™",
+    "last_name": "💰 Abi 👑",
+    "bio": "Sokağın tecrübeli abisi 💪 | Grup liderliği ve motivasyon 🔥 | VIP danışmanlık ✨",
+    "profile_photo": null,
+    "created_at": "2025-07-03T04:53:00",
+    "status": "active",
+    "replacement_for": "babagavat"
+  },
+  "bot_config": {
+    "type": "character_bot",
+    "character_name": "GawatBaba",
+    "ai_enabled": true,
+    "gpt_model": "gpt-4o",
+    "reply_mode": "hybrid",
+    "spam_enabled": true,
+    "dm_enabled": true,
+    "group_enabled": true,
+    "vip_enabled": true,
+    "auto_menu": true
+  },
+  "telegram_session": {
+    "session_file": "sessions/gawatbaba.session",
+    "api_id": null,
+    "api_hash": null,
+    "phone_verification_needed": true,
+    "session_status": "pending"
+  },
+  "character_traits": {
+    "personality": "dominant_mentor",
+    "tone": "aggressive_protective",
+    "response_style": "street_smart",
+    "emoji_usage": "moderate",
+    "typing_style": "fast_aggressive"
+  },
+  "financial_info": {
+    "vip_price": "500",
+    "services": {
+      "Sohbet Danışmanlığı": "150",
+      "Grup Liderlik Koçluğu": "300", 
+      "İş Tavsiyeleri": "200",
+      "VIP Abi Üyeliği": "500",
+      "Sokak Rehberliği": "100"
+    },
+    "papara": "1234567890",
+    "iban": "TR00 0000 0000 0000 0000 0000 00",
+    "payment_note": "GawatBaba VIP"
+  },
+  "spam_settings": {
+    "frequency": "high",
+    "interval_min": 180,
+    "interval_max": 300,
+    "group_spam": true,
+    "dm_spam": true,
+    "aggressive_mode": true
+  },
+  "restrictions": {
+    "banned_replacement": true,
+    "new_phone_verification": true,
+    "enhanced_security": true
+  },
+  "activation_log": {
+    "created": "2025-07-03T04:53:00",
+    "replacement_reason": "babagavat_banned",
+    "new_phone": "+447832134241",
+    "activation_status": "ready_for_session"
+  }
+} 

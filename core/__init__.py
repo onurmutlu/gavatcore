@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🔧 GavatCore Core Module 🔧
@@ -167,7 +169,7 @@ ai_voice_engine = _safe_import(
 )
 
 social_gaming_engine = _safe_import(
-    "social_gaming_engine", "social_gaming_engine", 
+    "social_gaming_engine", "social_gaming", 
     "Gamification and engagement system"
 )
 

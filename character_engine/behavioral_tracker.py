@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 """
 🧠 Behavioral Tracker - Kullanıcı davranış analizi ve manipülasyon stratejileri
 """

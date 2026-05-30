@@ -23,7 +23,7 @@ class TokenTestCLI:
     """Interactive CLI for testing token system"""
     
     def __init__(self):
-        self.user_id = None
+        self.user_id: str = ""
         self.running = True
     
     async def start(self):
@@ -264,12 +264,12 @@ def run_test():
     """Run the test CLI"""
     try:
         # Install aiosqlite if not available
-        import aiosqlite
+        import aiosqlite  # noqa
     except ImportError:
         print("❌ aiosqlite not found. Installing...")
         import subprocess
         subprocess.run(["pip", "install", "aiosqlite"])
-        import aiosqlite
+        import aiosqlite  # noqa
     
     # Run the async main function
     asyncio.run(main())

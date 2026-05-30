@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 💀🔥🤖 EXTREME AI AGENT ARMY 🤖🔥💀
@@ -969,8 +971,7 @@ async def main():
 
 if __name__ == "__main__":
     import logging
-    logging.basicConfig(level=logging.INFO)
-    
+
     # Sentry monitoring
     sentry_sdk.init(
         dsn=os.getenv("SENTRY_DSN"),

@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 # core/profile_manager.py - Profil Yönetim Sistemi
 

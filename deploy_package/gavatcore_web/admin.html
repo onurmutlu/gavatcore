@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 GavatCore Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0A0A0F 0%, #1A1A1F 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(156, 39, 176, 0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(156, 39, 176, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            padding: 12px 20px;
+            margin: 2px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+            color: white;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+        }
+        
+        .nav-tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .card h3 {
+            color: #9C27B0;
+            margin-bottom: 16px;
+            font-size: 1.3rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(233, 30, 99, 0.1));
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(156, 39, 176, 0.3);
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #9C27B0;
+            margin-bottom: 8px;
+        }
+        
+        .stat-card .label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, #FF9800, #FF5722);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, #F44336, #d32f2f);
+        }
+        
+        .character-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .character-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .character-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .character-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .character-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .status-banned {
+            background: rgba(244, 67, 54, 0.2);
+            color: #F44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+        
+        .performer-card {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 87, 34, 0.1));
+            border: 1px solid rgba(255, 152, 0, 0.3);
+        }
+        
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid;
+        }
+        
+        .alert-success {
+            background: rgba(76, 175, 80, 0.1);
+            border-color: rgba(76, 175, 80, 0.3);
+            color: #4CAF50;
+        }
+        
+        .alert-info {
+            background: rgba(33, 150, 243, 0.1);
+            border-color: rgba(33, 150, 243, 0.3);
+            color: #2196F3;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #9C27B0;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #9C27B0;
+            box-shadow: 0 0 0 2px rgba(156, 39, 176, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 GavatCore Admin Panel</h1>
+            <p>Bot yönetimi, karakter kontrolü ve sistem izleme</p>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+            <button class="nav-tab" onclick="showTab('characters')">🤖 Karakterler</button>
+            <button class="nav-tab" onclick="showTab('bots')">⚡ Bot Durumları</button>
+            <button class="nav-tab" onclick="showTab('performers')">🎭 Şovcu Panel</button>
+            <button class="nav-tab" onclick="showTab('messages')">💬 Mesaj Logları</button>
+            <button class="nav-tab" onclick="showTab('analytics')">📈 Analitik</button>
+            <button class="nav-tab" onclick="showTab('modules')">🔧 Core Modules</button>
+            <button class="nav-tab" onclick="showTab('settings')">⚙️ Ayarlar</button>
+        </div>
+        
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="value">2</div>
+                    <div class="label">Aktif Karakterler</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">2,103</div>
+                    <div class="label">Toplam Mesaj</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">Çalışıyor</div>
+                    <div class="label">Sistem Durumu</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">125ms</div>
+                    <div class="label">API Yanıt Süresi</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>🎭 Şovcu İstatistikleri</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="value">2</div>
+                        <div class="label">Aktif Şovcular</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value">₺5,600</div>
+                        <div class="label">Toplam Kazanç</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value">₺430</div>
+                        <div class="label">Bugün Kazanç</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value">35</div>
+                        <div class="label">VIP Üyeler</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Characters Tab -->
+        <div id="characters" class="content">
+            <div class="card">
+                <h3>🤖 Karakter Yönetimi</h3>
+                <div class="character-list">
+                    <div class="character-item">
+                        <div class="character-info">
+                            <div class="character-avatar">💋</div>
+                            <div>
+                                <h4>Yayıncı Lara</h4>
+                                <p>@yayincilara - Flörtöz streamer karakteri</p>
+                                <p>📱 +905382617727</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="character-status status-active">AKTİF</span>
+                            <button class="btn btn-warning" onclick="editCharacter('yayincilara')">Düzenle</button>
+                            <button class="btn btn-danger" onclick="controlCharacter('yayincilara', 'stop')">Durdur</button>
+                        </div>
+                    </div>
+                    
+                    <div class="character-item">
+                        <div class="character-info">
+                            <div class="character-avatar">🌸</div>
+                            <div>
+                                <h4>XXXGeisha</h4>
+                                <p>@xxxgeisha - Gizemli ve zarif moderatör</p>
+                                <p>📱 +905486306226</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="character-status status-active">AKTİF</span>
+                            <button class="btn btn-warning" onclick="editCharacter('xxxgeisha')">Düzenle</button>
+                            <button class="btn btn-danger" onclick="controlCharacter('xxxgeisha', 'stop')">Durdur</button>
+                        </div>
+                    </div>
+                    
+                    <div class="character-item">
+                        <div class="character-info">
+                            <div class="character-avatar">😤</div>
+                            <div>
+                                <h4>BabaGavat</h4>
+                                <p>@babagavat - Spam nedeniyle geçici olarak devre dışı</p>
+                                <p>📱 +905513272355</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="character-status status-banned">BANNED</span>
+                            <button class="btn btn-success" onclick="controlCharacter('babagavat', 'activate')">Aktifleştir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bots Tab -->
+        <div id="bots" class="content">
+            <div class="card">
+                <h3>⚡ Gerçek Zamanlı Bot Durumları</h3>
+                <div class="character-list">
+                    <div class="character-item">
+                        <div class="character-info">
+                            <div class="character-avatar">💋</div>
+                            <div>
+                                <h4>Yayıncı Lara</h4>
+                                <p>Kullanıcı: 47 | Mesaj: 1,247 | Uptime: 2 saat</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="character-status status-active">ÇALIŞIYOR</span>
+                            <button class="btn btn-secondary" onclick="viewBotLogs('yayincilara')">Loglar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="character-item">
+                        <div class="character-info">
+                            <div class="character-avatar">🌸</div>
+                            <div>
+                                <h4>XXXGeisha</h4>
+                                <p>Kullanıcı: 23 | Mesaj: 856 | Uptime: 1.5 saat</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="character-status status-active">ÇALIŞIYOR</span>
+                            <button class="btn btn-secondary" onclick="viewBotLogs('xxxgeisha')">Loglar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Performers Tab -->
+        <div id="performers" class="content">
+            <div class="card performer-card">
+                <h3>🖤 Şovcu Paneli</h3>
+                <p>Bot yönetimi, bonus takibi ve kazanç sistemi</p>
+                <button class="btn btn-warning" onclick="openPerformerPanel()">Şovcu Paneli Aç</button>
+            </div>
+            
+            <div class="card">
+                <h3>🎭 Şovcu Listesi</h3>
+                <div class="character-list">
+                    <div class="character-item">
+                        <div class="character-info">
+                            <div class="character-avatar">💋</div>
+                            <div>
+                                <h4>StarGirl</h4>
+                                <p>Karakter: Lara | Bugün: ₺280 | Bu ay: ₺3,420</p>
+                                <p>VIP: 12 | Son aktif: 2 dakika önce</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="character-status status-active">ONLINE</span>
+                            <button class="btn btn-warning" onclick="editPerformer('performer_1')">Düzenle</button>
+                        </div>
+                    </div>
+                    
+                    <div class="character-item">
+                        <div class="character-info">
+                            <div class="character-avatar">🌸</div>
+                            <div>
+                                <h4>MysteryLady</h4>
+                                <p>Karakter: Geisha | Bugün: ₺150 | Bu ay: ₺2,180</p>
+                                <p>VIP: 8 | Son aktif: 5 dakika önce</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="character-status status-active">ONLINE</span>
+                            <button class="btn btn-warning" onclick="editPerformer('performer_2')">Düzenle</button>
+                        </div>
+                    </div>
+                    
+                    <div class="character-item">
+                        <div class="character-info">
+                            <div class="character-avatar">👑</div>
+                            <div>
+                                <h4>QueenBee</h4>
+                                <p>Karakter: BabaGavat | Bugün: ₺0 | Bu ay: ₺1,820</p>
+                                <p>VIP: 15 | Son aktif: 2 saat önce</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="character-status status-banned">BANNED</span>
+                            <button class="btn btn-success" onclick="activatePerformer('performer_3')">Aktifleştir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Messages Tab -->
+        <div id="messages" class="content">
+            <div class="card">
+                <h3>💬 Mesaj Logları</h3>
+                <p>Son mesajlar ve sistem aktiviteleri burada görüntülenecek...</p>
+            </div>
+        </div>
+        
+        <!-- Analytics Tab -->
+        <div id="analytics" class="content">
+            <div class="card">
+                <h3>📈 Analitik</h3>
+                <p>Detaylı istatistikler ve grafikler burada görüntülenecek...</p>
+            </div>
+        </div>
+        
+        <!-- Modules Tab -->
+        <div id="modules" class="content">
+            <div class="card">
+                <h3>🔧 Core Modules</h3>
+                <p>Sistem modülleri ve servisler burada yönetilecek...</p>
+            </div>
+        </div>
+        
+        <!-- Settings Tab -->
+        <div id="settings" class="content">
+            <div class="card">
+                <h3>⚙️ Ayarlar</h3>
+                <p>Sistem ayarları ve konfigürasyonlar burada yapılacak...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            // Hide all content
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Show selected content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Update nav tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+        
+        function controlCharacter(characterId, action) {
+            const actions = {
+                'stop': 'durduruldu',
+                'start': 'başlatıldı',
+                'activate': 'aktifleştirildi'
+            };
+            
+            showAlert(`${characterId} karakteri ${actions[action]}!`, 'success');
+        }
+        
+        function editCharacter(characterId) {
+            showAlert(`${characterId} karakteri düzenleme paneli açılacak...`, 'info');
+        }
+        
+        function viewBotLogs(botId) {
+            showAlert(`${botId} bot logları görüntülenecek...`, 'info');
+        }
+        
+        function openPerformerPanel() {
+            window.open('/', '_blank');
+        }
+        
+        function editPerformer(performerId) {
+            showAlert(`${performerId} şovcu düzenleme paneli açılacak...`, 'info');
+        }
+        
+        function activatePerformer(performerId) {
+            showAlert(`${performerId} şovcu aktifleştirildi!`, 'success');
+        }
+        
+        function showAlert(message, type) {
+            // Remove existing alerts
+            const existingAlerts = document.querySelectorAll('.alert');
+            existingAlerts.forEach(alert => alert.remove());
+            
+            // Create new alert
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            
+            // Insert at top of container
+            const container = document.querySelector('.container');
+            container.insertBefore(alert, container.firstChild);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        }
+        
+        // Auto-refresh bot status every 30 seconds
+        setInterval(() => {
+            // Simulate real-time updates
+            console.log('Refreshing bot status...');
+        }, 30000);
+    </script>
+</body>
+</html> 

@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🎮 GavatCoin Bot Integration v1.0 🎮
@@ -196,7 +198,7 @@ class XPBotIntegration:
             logger.error(f"❌ Stats command error for {user_id}: {e}")
             return "❌ İstatistik hatası!"
     
-    async def handle_spend_command(self, user_id: int, service: str, content_id: str = None) -> str:
+    async def handle_spend_command(self, user_id: int, service: str, content_id: Optional[str] = None) -> str:
         """Token harcama komutu"""
         try:
             # Check if user can afford
@@ -300,7 +302,7 @@ async def handle_user_stats(user_id: int) -> str:
     """
     return await xp_integration.handle_stats_command(user_id)
 
-async def handle_user_spend(user_id: int, service: str, content_id: str = None) -> str:
+async def handle_user_spend(user_id: int, service: str, content_id: Optional[str] = None) -> str:
     """
     Easy-to-use function for token spending
     """

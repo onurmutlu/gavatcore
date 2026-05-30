@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🔧 GAVATCore Configuration Module 🔧
@@ -41,7 +43,7 @@ except ImportError:
     print("⚠️ python-dotenv bulunamadı, environment variables kullanılacak")
 
 # Configure basic logging for config validation
-logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger("gavatcore.config")
 
 # ==================== TYPE DEFINITIONS ====================
@@ -1000,3 +1002,7 @@ ENABLE_SENTIMENT_ANALYSIS = True
 ENABLE_PERSONALITY_ANALYSIS = True
 
 METRICS_RETENTION_DAYS = 30
+
+
+# ==================== TELEGRAM WEBHOOK ====================
+TELEGRAM_WEBHOOK_URL = os.getenv("TELEGRAM_WEBHOOK_URL", "")

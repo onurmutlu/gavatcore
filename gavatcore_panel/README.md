@@ -95,16 +95,19 @@ flutter run -d android
 flutter build web --release --web-renderer html
 ```
 
-2. **Telegram Bot ayarları**
-- BotFather'da Mini App URL'ini ayarlayın
+- BotFather'da Mini App URL'ini ayarlayın (örn. https://your-domain.com/index.html)
 - Menu butonunu konfigüre edin
+- Mini App menüsüne "Communication Analysis" gibi bir seçenek ekleyin ve bu route'u panel içinde işleyin
 
 ## 🔧 Konfigürasyon
 
 ### API Endpoints
-`lib/core/services/api_service.dart` dosyasında:
 ```dart
+// lib/core/services/api_service.dart
 static const String baseUrl = 'https://api.gavatcore.com';
+
+/// Communication analysis endpoint
+static const String communicationAnalysis = '$baseUrl/api/analysis/communication';
 ```
 
 ### Telegram Config

@@ -29,7 +29,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Tuple
 from pathlib import Path
 from dataclasses import dataclass, field
-import structlog
+from infrastructure.config.logger import get_logger
 
 # AI/ML imports
 try:
@@ -40,7 +40,7 @@ try:
 except ImportError:
     ML_AVAILABLE = False
 
-logger = structlog.get_logger("ai_self_optimizer")
+logger = get_logger("ai_self_optimizer")
 
 @dataclass
 class PerformanceMetrics:
@@ -232,7 +232,8 @@ class AIOptimizationEngine:
     
     def __init__(self):
         self.analyzer = AIPerformanceAnalyzer()
-        self.config_path = Path("config/engine_config.yaml")
+        from infrastructure.config.loader import config_path
+        self.config_path = config_path("engine_config.yaml")
         self.recommendations_history: List[OptimizationRecommendation] = []
         
         # Baseline performance
@@ -243,7 +244,8 @@ class AIOptimizationEngine:
     
     def _load_baseline(self):
         """Baseline performance'ı yükle."""
-        baseline_file = Path("config/system_baseline.json")
+        from infrastructure.config.loader import config_path
+        baseline_file = config_path("system_baseline.json")
         if baseline_file.exists():
             try:
                 with open(baseline_file, 'r') as f:
@@ -262,7 +264,7 @@ class AIOptimizationEngine:
             "peak_performance_time": datetime.now().isoformat()
         }
         
-        baseline_file = Path("config/system_baseline.json")
+        baseline_file = config_path("system_baseline.json")
         baseline_file.parent.mkdir(exist_ok=True)
         
         with open(baseline_file, 'w') as f:

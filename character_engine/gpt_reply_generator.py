@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 """
 🤖 GPT Reply Generator - Karakter bazlı GPT yanıt üretim motoru
 """

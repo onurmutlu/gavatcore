@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 """
 GavatCore Engine - Main FastAPI Application
 ==========================================

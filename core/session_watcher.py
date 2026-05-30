@@ -2,7 +2,7 @@
 
 import os
 import asyncio
-import logging
+from infrastructure.config.logger import get_logger
 from telethon import TelegramClient
 from aiogram import Bot
 from config import (
@@ -16,13 +16,14 @@ SESSIONS_DIR = "sessions"
 CHECK_INTERVAL = 300  # saniye
 
 bot = Bot(token=ADMIN_BOT_TOKEN, parse_mode="HTML")
-logging.basicConfig(level=logging.INFO)
+# Initialize central logger
+logger = get_logger("session_watcher")
 
 async def send_bot_dm(user_id: int, msg: str):
     try:
         await bot.send_message(user_id, msg)
     except Exception as e:
-        logging.error(f"[DM] Gönderilemedi (user: {user_id}): {e}")
+        logger.error(f"[DM] Gönderilemedi (user: {user_id}): {e}")
 
 async def watch_sessions():
     while True:
@@ -49,7 +50,7 @@ async def notify_session_down(username, error=None):
     if error:
         msg_admin += f"\n<b>Detay:</b> <code>{error}</code>"
     await send_bot_dm(int(GAVATCORE_ADMIN_ID), msg_admin)
-    logging.error(f"[WATCHER] {username} session düştü: {error}")
+    logger.error(f"[WATCHER] {username} session düştü: {error}")
 
     # Şovcuya da DM (eğer user_id biliniyorsa)
     showcu_id = get_performer_user_id(username)

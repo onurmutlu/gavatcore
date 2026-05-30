@@ -1,0 +1,161 @@
+{
+  "timestamp": "2025-07-05T07:21:16.496919",
+  "overall_status": "healthy",
+  "health_score": 100.0,
+  "check_duration_ms": 1.65,
+  "summary": {
+    "total_systems": 6,
+    "healthy_systems": 6,
+    "warnings": 0,
+    "critical_issues": 0
+  },
+  "issues": {
+    "healthy": [
+      "directories",
+      "session_files",
+      "logs_system",
+      "bot_configurations",
+      "core_files",
+      "coin_system"
+    ],
+    "warnings": [],
+    "critical": []
+  },
+  "system_details": {
+    "directories": {
+      "status": "healthy",
+      "checked_dirs": 7,
+      "existing_dirs": 7,
+      "missing_dirs": [],
+      "directory_details": {
+        "logs": "exists",
+        "sessions": "exists",
+        "data": "exists",
+        "launchers": "exists",
+        "gpt": "exists",
+        "core": "exists",
+        "utilities": "exists"
+      }
+    },
+    "session_files": {
+      "status": "healthy",
+      "session_count": 5,
+      "valid_sessions": 5,
+      "invalid_sessions": 0,
+      "session_details": {
+        "valid": [
+          {
+            "file": "xxxgeisha_conversation.session",
+            "size": 28672
+          },
+          {
+            "file": "xxxgeisha.session",
+            "size": 40960
+          },
+          {
+            "file": "yayincilara_conversation.session",
+            "size": 28672
+          },
+          {
+            "file": "gawatbaba.session",
+            "size": 40960
+          },
+          {
+            "file": "yayincilara.session",
+            "size": 57344
+          }
+        ],
+        "invalid": []
+      }
+    },
+    "logs_system": {
+      "status": "healthy",
+      "log_count": 3,
+      "total_size": 1807,
+      "recent_activity": 3,
+      "size_mb": 0.0,
+      "recent_logs": [
+        {
+          "file": "gpt_simulation.log",
+          "size": 964,
+          "age_minutes": 4
+        },
+        {
+          "file": "coin_log_test.log",
+          "size": 374,
+          "age_minutes": 4
+        },
+        {
+          "file": "simple_log_test.log",
+          "size": 469,
+          "age_minutes": 4
+        }
+      ]
+    },
+    "bot_configurations": {
+      "status": "healthy",
+      "expected_bots": 3,
+      "available_bots": 3,
+      "missing_bots": 0,
+      "master_launcher_exists": true,
+      "bot_details": {
+        "available": [
+          {
+            "name": "gawatbaba",
+            "file": "gawatbaba.json",
+            "phone": "+447832134241",
+            "display_name": "gawatbaba"
+          },
+          {
+            "name": "yayincilara",
+            "file": "yayincilara.json",
+            "phone": "+905382617727",
+            "display_name": "yayincilara"
+          },
+          {
+            "name": "xxxgeisha",
+            "file": "xxxgeisha.json",
+            "phone": "+905486306226",
+            "display_name": "xxxgeisha"
+          }
+        ],
+        "missing": []
+      }
+    },
+    "core_files": {
+      "status": "healthy",
+      "checked_files": 5,
+      "existing_files": 5,
+      "missing_files": [],
+      "file_details": [
+        {
+          "file": "config.py",
+          "size": 36399
+        },
+        {
+          "file": "launchers/gavatcore_master_launcher.py",
+          "size": 21152
+        },
+        {
+          "file": "test_coin_system_simple.py",
+          "size": 8475
+        },
+        {
+          "file": "test_simple_logs.py",
+          "size": 7808
+        },
+        {
+          "file": "gavatcore_health_check.py",
+          "size": 17338
+        }
+      ]
+    },
+    "coin_system": {
+      "status": "healthy",
+      "test_file_exists": true,
+      "users_count": 1,
+      "transactions_count": 2,
+      "file_size": 627
+    }
+  }
+}

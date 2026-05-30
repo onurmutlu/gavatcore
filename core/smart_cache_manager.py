@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 # core/smart_cache_manager.py - Akıllı Cache Yönetim Sistemi
 

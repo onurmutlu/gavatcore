@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🤖 GERÇEK BOT YÖNETİM SİSTEMİ v1.1 - CLEAN VERSION
@@ -23,7 +25,7 @@ app = Flask(__name__)
 CORS(app, origins=["*"])
 
 # Logging
-logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger(__name__)
 
 # Bot Configuration - 3 Ana Karakter Botu

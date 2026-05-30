@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 # ===============================================================
 #   adminbot/dispatcher.py  ✦  GAVATCORE ADMIN BOT DISPATCHER
 # ---------------------------------------------------------------

@@ -1,3 +1,5 @@
+from infrastructure.config.logger import get_logger
+
 #!/usr/bin/env python3
 """
 🎭 GAVATCore 2.0 - System Prompt Manager

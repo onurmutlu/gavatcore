@@ -1,3 +1,12 @@
+from infrastructure.config.logger import get_logger
+
+# Auto-activate project virtualenv if present (so pip dependencies resolve)
+import sys, os
+venv_py = os.path.join(os.path.dirname(__file__), '.venv', 'bin', 'python3')
+if os.path.isfile(venv_py) and os.path.realpath(sys.executable) != os.path.realpath(venv_py):
+    print(f"⚡ Switching to virtualenv Python: {venv_py}", file=sys.stderr)
+    os.execv(venv_py, [venv_py] + sys.argv)
+
 #!/usr/bin/env python3
 """
 🚀 GavatCore Ultimate Run v4.0 🚀
@@ -27,11 +36,43 @@ import json
 from typing import List, Tuple, Optional, Dict, Any
 from dataclasses import dataclass, field
 from datetime import datetime
+# Threading, HTTP and monitoring deps
 import threading
-import requests
-from pathlib import Path
+# Use requests if available, else fallback
+try:
+    import requests
+except ImportError:
+    requests = None
+from urllib.request import urlopen
+# psutil for process stats
+try:
+    import psutil
+except ImportError:
+    psutil = None
 import structlog
-import psutil
+from pathlib import Path
+# Verify critical dependencies
+missing = []
+if requests is None:
+    missing.append("requests")
+if psutil is None:
+    missing.append("psutil")
+if missing:
+    # Suggest activating project venv if present, else fall back to system pip
+    venv_dir = Path(__file__).parent / '.venv'
+    if venv_dir.exists():
+        print(
+            f"❌ Missing dependencies: {', '.join(missing)}.",
+            f"Please activate the project venv and install: source .venv/bin/activate && pip install {' '.join(missing)}",
+            file=sys.stderr
+        )
+    else:
+        print(
+            f"❌ Missing dependencies: {', '.join(missing)}.",
+            f"Please install with: python3 -m pip install {' '.join(missing)}",
+            file=sys.stderr
+        )
+    sys.exit(1)
 
 # Configure structured logging
 log_processors = [
@@ -207,12 +248,14 @@ class GavatCoreUltimateSystem:
     def _check_service_health(self, url: str, timeout: int = 2) -> bool:
         """Check if a service is healthy by making HTTP request."""
         try:
-            response = requests.get(url, timeout=timeout)
-            return response.status_code in [200, 201]
-        except (requests.RequestException, requests.Timeout):
-            return False
-        except Exception as e:
-            logger.warning("⚠️ Health check error", url=url, error=str(e))
+            if requests:
+                resp = requests.get(url, timeout=timeout)
+                code = resp.status_code
+            else:
+                resp = urlopen(url, timeout=timeout)
+                code = resp.getcode()
+            return code in (200, 201)
+        except Exception:
             return False
     
     def start_system_component(self, comp_key: str, config: Dict) -> bool:
@@ -229,8 +272,12 @@ class GavatCoreUltimateSystem:
                 return True
             
             # Start new process
+            # Launch system component with same Python interpreter
+            cmd = config['command']
+            if cmd and cmd[0] == 'python':
+                cmd[0] = sys.executable
             process = subprocess.Popen(
-                config['command'],
+                cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 start_new_session=True
@@ -295,10 +342,11 @@ class GavatCoreUltimateSystem:
             env['GAVATCORE_CHARACTER'] = json.dumps(config['character'])
             
             # Start multi bot launcher with character config
+            # Launch character bot interactively to allow Telegram code prompts
+            # Launch character bot via the utilities folder so the launcher script is found
+            launcher_path = os.path.join(os.path.dirname(__file__), 'utilities', 'multi_bot_launcher.py')
             process = subprocess.Popen(
-                ["python", "multi_bot_launcher.py"],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+                [sys.executable, launcher_path],
                 start_new_session=True,
                 env=env
             )
