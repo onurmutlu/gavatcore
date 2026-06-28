@@ -19,7 +19,7 @@ sys.path.insert(0, str(project_root))
 from core.base.bot_handler import BaseBotHandler
 from core.config import ConfigValidationError, get_config
 from core.database.connection_manager import get_connection_manager
-from services.telegram.bot_manager.bot_system import YagmurBotAutomation
+from yagmur_bot_launcher import YagmurConservativeLauncher
 
 logger = structlog.get_logger("gavatcore.main")
 
@@ -66,7 +66,7 @@ class GavatCoreApplication:
         # In the future, this would dynamically load bot handlers
         if not bot_names or "yagmur" in bot_names:
             try:
-                yagmur_bot = YagmurBotAutomation()
+                yagmur_bot = YagmurConservativeLauncher()
                 await yagmur_bot.start()
                 logger.info("Yagmur bot started successfully")
             except Exception as e:
@@ -133,6 +133,8 @@ class GavatCoreApplication:
         try:
             # Run all components concurrently
             await asyncio.gather(*tasks)
+            if self.api_tasks:
+                await asyncio.gather(*self.api_tasks)
         except KeyboardInterrupt:
             logger.info("Received shutdown signal")
             await self.stop()
