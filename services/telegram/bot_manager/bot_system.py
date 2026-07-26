@@ -49,6 +49,12 @@ class MasterBotAutomation:
                 "expected_phone": "+905513272355",
                 "display_name": "BabaGavat - Pavyon Lideri"
             },
+            "baron": {
+                "persona_file": "data/personas/baron.json",
+                "launcher_script": "baron_simple_launcher.py",
+                "expected_phone": "+905325566496",
+                "display_name": "BaronBaba - Sokak Lideri"
+            },
             "geisha": {
                 "persona_file": "data/personas/xxxgeisha.json",
                 "launcher_script": "geisha_simple_launcher.py",  # Basit launcher oluşturacağız
@@ -176,6 +182,58 @@ if __name__ == "__main__":
     asyncio.run(launcher.start())
 '''
         
+        # Baron Simple Launcher
+        baron_launcher = '''#!/usr/bin/env python3
+import asyncio
+import json
+import os
+from telethon import TelegramClient, events
+from telethon.tl.types import User
+from config import TELEGRAM_API_ID, TELEGRAM_API_HASH
+from datetime import datetime
+
+class BaronSimpleLauncher:
+    def __init__(self):
+        self.client = None
+        
+    async def start(self):
+        print("🔥 BaronBaba Bot başlatılıyor...")
+        
+        # Persona dosyasından telefon al
+        with open('data/personas/baron.json', 'r', encoding='utf-8') as f:
+            persona = json.load(f)
+        
+        phone = persona.get('phone', '+905325566496')
+        clean_phone = phone.replace('+', '')
+        session_path = f'sessions/_{clean_phone}'
+        
+        print(f"📱 Telefon: {phone}")
+        print(f"💾 Session: {session_path}")
+        
+        self.client = TelegramClient(
+            session_path, TELEGRAM_API_ID, TELEGRAM_API_HASH,
+            device_model="BaronBaba Bot", system_version="GAVATCore v2.0"
+        )
+        
+        await self.client.start()
+        me = await self.client.get_me()
+        print(f"✅ BaronBaba aktif: @{me.username} (ID: {me.id})")
+        
+        @self.client.on(events.NewMessage(incoming=True))
+        async def handler(event):
+            if event.is_private:
+                sender = await event.get_sender()
+                if sender and not getattr(sender, 'bot', False):
+                    print(f"💬 BaronBaba DM: {sender.first_name} -> {event.raw_text[:30]}...")
+        
+        print("🔥 BaronBaba hazır - mesajları dinliyor!")
+        await self.client.run_until_disconnected()
+
+if __name__ == "__main__":
+    launcher = BaronSimpleLauncher()
+    asyncio.run(launcher.start())
+'''
+
         # Geisha Simple Launcher  
         geisha_launcher = '''#!/usr/bin/env python3
 import asyncio
@@ -232,11 +290,15 @@ if __name__ == "__main__":
         with open('babagavat_simple_launcher.py', 'w', encoding='utf-8') as f:
             f.write(babagavat_launcher)
         
+        with open('baron_simple_launcher.py', 'w', encoding='utf-8') as f:
+            f.write(baron_launcher)
+        
         with open('geisha_simple_launcher.py', 'w', encoding='utf-8') as f:
             f.write(geisha_launcher)
         
         # Executable yap
         os.chmod('babagavat_simple_launcher.py', 0o755)
+        os.chmod('baron_simple_launcher.py', 0o755)
         os.chmod('geisha_simple_launcher.py', 0o755)
         
         print("✅ Basit bot launcher'ları oluşturuldu!")
@@ -426,7 +488,7 @@ if __name__ == "__main__":
         print(f"""
 🔥🔥🔥 MASTER BOT AUTOMATION 🔥🔥🔥
 =====================================
-🤖 3 Bot Otomatik Başlatılacak
+🤖 {len(self.bot_configs)} Bot Otomatik Başlatılacak
 📊 Monitoring API Otomatik
 📱 Flutter Dashboard Otomatik  
 ❌ HİÇ BİR MANUEL İŞLEM YOK!
@@ -451,7 +513,7 @@ Başlatma zamanı: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
             bot_results = self.start_all_bots()
             success_count = sum(bot_results.values())
             
-            print(f"\n🎯 BOT BAŞLATMA SONUCU: {success_count}/3 başarılı")
+            print(f"\n🎯 BOT BAŞLATMA SONUCU: {success_count}/{len(self.bot_configs)} başarılı")
             
             # 5. Flutter dashboard'u başlat
             if not self.start_flutter_dashboard():
@@ -466,7 +528,7 @@ Başlatma zamanı: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 ==================================
 📊 Monitoring: http://localhost:5005
 📱 Dashboard: http://localhost:9095
-🤖 {success_count}/3 bot aktif
+🤖 {success_count}/{len(self.bot_configs)} bot aktif
 ==================================
 🎯 Ctrl+C ile tüm sistemi durdur
             """)

@@ -316,6 +316,11 @@ class GavatCoreSystemLauncher:
                         "phone": "+905513272355",
                         "display_name": "BabaGavat - Pavyon Lideri"
                     },
+                    "baron": {
+                        "persona_file": "data/personas/baron.json",
+                        "phone": "+905325566496",
+                        "display_name": "BaronBaba - Sokak Lideri"
+                    },
                     "geisha": {
                         "persona_file": "data/personas/xxxgeisha.json",
                         "phone": "+905486306226",
@@ -421,12 +426,13 @@ class GavatCoreSystemLauncher:
         print("📊 COMPONENTS:")
         print("   🌐 Flask API Server    → localhost:5050")
         print("   🪙 XP Token API Server → localhost:5051 (NEW!)")
-        print("   🤖 Production Bots (3) → Telegram")
+        print("   🤖 Production Bots (4) → Telegram")
         print("   💰 GavatCoin Token Engine → SQLite")
         print()
         print("🎯 ACTIVE BOTS:")
         print("   🌟 @yayincilara (Lara)")
         print("   🦁 @babagavat (Gavat Baba)")
+        print("   🔥 @baron (BaronBaba)")
         print("   🌸 @xxxgeisha (Geisha)")
         print()
         print("🪙 TOKEN FEATURES:")
