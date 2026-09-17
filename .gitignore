@@ -32,6 +32,15 @@ sessions/*
 !sessions/.gitkeep
 downloads/
 
+# Environment ve hassas runtime config
+env.conf
+.env.local
+.env.*.local
+*.env
+*.env.*
+!*.env.example
+!env.conf.example
+
 # Hassas Veriler
 *.key
 *.token
@@ -67,8 +76,6 @@ site/
 *.bak
 *.tmp
 *~
-.env.local
-.env.*.local
 
 # Sertifikalar ve Hassas Bilgiler
 *.pem
@@ -89,4 +96,4 @@ metrics_*.jsonl
 backup_*.zip
 backup_*.tar.gz
 backups/
-backup_*/ 
+backup_*/
