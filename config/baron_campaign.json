@@ -1,0 +1,419 @@
+{
+  "profile_about": "Yapay zekâ destekli sohbet ajanı · Otomatik yayın hesabı",
+  "broadcast": {
+    "enabled": true,
+    "interval_seconds": 14400,
+    "initial_delay_seconds": 30,
+    "send_gap_seconds": 90,
+    "groups": [
+      {
+        "id": -1002620284563,
+        "title": "ARAYIŞ ZİRVESİ",
+        "detection_score": 0.82,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002346704940,
+        "title": "Arayış sohbet 7",
+        "detection_score": 0.94,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002470299657,
+        "title": "TÜRKİYE ARAYIŞ SOHBET MUHABBET",
+        "detection_score": 0.88,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002759649272,
+        "title": "TÜRKİYE ARAYIŞ +18",
+        "detection_score": 0.835,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002355652503,
+        "title": "Kız Arayış Sohbet Grubu",
+        "detection_score": 0.955,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002577075839,
+        "title": "ARAYIŞ BETA",
+        "detection_score": 0.955,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002358927800,
+        "title": "Kocaeli tanışma",
+        "detection_score": 0.925,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1001096466210,
+        "title": "ARAYIŞ TANIŞMA",
+        "detection_score": 0.88,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004496550449,
+        "title": "LOLİPOP ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1001564372826,
+        "title": "Arayış Sohbet Gel",
+        "detection_score": 0.835,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003950486043,
+        "title": "EFSANE ARAYIŞ 7",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003763334569,
+        "title": "SHOWCU ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002585608129,
+        "title": "SOHBET ARAYIŞ +18 💜",
+        "detection_score": 0.858,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004486470543,
+        "title": "ARAYIŞ GENEL",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003549541171,
+        "title": "ATEŞLİ ARAYIŞ SOHBET GRUBU +18 👠",
+        "detection_score": 0.97,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003913748409,
+        "title": "LIVE ARAYIŞ",
+        "detection_score": 0.85,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003985656949,
+        "title": "YENİ ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003737342099,
+        "title": "LİBİDO ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002341904305,
+        "title": "Arayış sohbet 6",
+        "detection_score": 0.82,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003446873659,
+        "title": "ÇITIR ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004399365713,
+        "title": "Arayış sarmalı",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004491272161,
+        "title": "EFSANE ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004318571984,
+        "title": "Arayış sarmalı",
+        "detection_score": 0.985,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003833442535,
+        "title": "Arayış sex",
+        "detection_score": 0.94,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002217756014,
+        "title": "Arayış Muhabbet Grubu•",
+        "detection_score": 0.88,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004461155432,
+        "title": "Turkish Arayış +18",
+        "detection_score": 0.865,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004276669946,
+        "title": "ÖZEL ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003945086620,
+        "title": "MİLF ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004397180371,
+        "title": "ARAYIŞ ODASI",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003973432241,
+        "title": "ARAYIŞ BURDA",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1001855153783,
+        "title": "Turkish Arayış Sohbet +18",
+        "detection_score": 0.835,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004436445154,
+        "title": "SEVGİLİ ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003953739806,
+        "title": "AŞK ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003757315618,
+        "title": "Arayış Sohbet 4",
+        "detection_score": 0.97,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002340265764,
+        "title": "Cehennem.arayis #+18",
+        "detection_score": 0.97,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004435320081,
+        "title": "Roll Arayış 3",
+        "detection_score": 0.94,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004355829818,
+        "title": "Arayış kız bul",
+        "detection_score": 0.955,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003980122623,
+        "title": "SÜPER ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003930023979,
+        "title": "Arayış Sohbet 5",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004347648065,
+        "title": "İZMİR ARAYIŞLAR",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004351504995,
+        "title": "ESKİ ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004489265223,
+        "title": "Arayış cenetti",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004260634568,
+        "title": "NET ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002066001385,
+        "title": "ARAYIŞ VAKTİ",
+        "detection_score": 0.805,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004333629728,
+        "title": "GENEL ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003936342073,
+        "title": "TEN ARAYIŞ 5",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003875329676,
+        "title": "Arayış Sohbet",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004408905495,
+        "title": "Arayış Sohbet 2",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004389740195,
+        "title": "Roll Arayış 4",
+        "detection_score": 0.955,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004445149611,
+        "title": "KOCAELİ - İZMİT PARTNER ARAYIŞ",
+        "detection_score": 0.985,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002558488419,
+        "title": "Arayış sohbet 9",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004404561564,
+        "title": "İSTANBUL ARAYIŞLAR",
+        "detection_score": 0.955,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004342804312,
+        "title": "Arayış buluşma",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004391076794,
+        "title": "Arayış grubu katıl",
+        "detection_score": 0.91,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004381334215,
+        "title": "TEN ARAYIŞ 2",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004350831496,
+        "title": "ARAYIŞ YUPİ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004484271280,
+        "title": "Roll Arayış 1",
+        "detection_score": 0.91,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004383111910,
+        "title": "ARAYIŞ 2",
+        "detection_score": 0.955,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004378329948,
+        "title": "TEN ARAYIŞ 4",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004241896641,
+        "title": "İSTANBUL ARAYIŞ SOHBET",
+        "detection_score": 0.94,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1002364833307,
+        "title": "Arayış sohbet 8",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003803962439,
+        "title": "BAYAN ARAYIŞ",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003715036630,
+        "title": "AKTİF - PASİF ARAYIŞ",
+        "detection_score": 0.97,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1004367507857,
+        "title": "Arayış sohbet kızlar",
+        "detection_score": 0.97,
+        "permission_confirmed": true
+      },
+      {
+        "id": -1003877829985,
+        "title": "Arayış grubu katıl",
+        "detection_score": 1.0,
+        "permission_confirmed": true
+      }
+    ],
+    "messages": [
+      "Selam, bugün nasıl gidiyor? Sohbet etmek isteyenler ne konuşuyor?",
+      "Günün nasıl geçiyor? Buradaki muhabbete katılmak istedim."
+    ]
+  },
+  "shop_username": "",
+  "sales_enabled": false,
+  "support": "",
+  "products": {},
+  "adaptive": {
+    "enabled": true,
+    "templates_file": "config/baron_messages.json",
+    "context_limit": 40,
+    "context_max_age_hours": 12,
+    "min_context_messages": 3,
+    "candidate_threshold": 0.8,
+    "feedback_window_hours": 24,
+    "retention_days": 30
+  }
+}

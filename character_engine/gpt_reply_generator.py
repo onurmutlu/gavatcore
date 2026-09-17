@@ -24,18 +24,29 @@ logger = logging.getLogger(__name__)
 class GPTReplyGenerator:
     """GPT tabanlı yanıt üretici"""
     
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        base_url: Optional[str] = None,
+        default_model: Optional[str] = None,
+    ):
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.base_url = base_url
+        self.default_model = default_model
+        self.is_xai = bool(base_url and "api.x.ai" in base_url)
         if not self.api_key:
             logger.warning("⚠️ OpenAI API key bulunamadı - GPT özellikleri devre dışı")
             self.client = None
         else:
-            self.client = AsyncOpenAI(api_key=self.api_key)
+            client_options = {"api_key": self.api_key}
+            if self.base_url:
+                client_options["base_url"] = self.base_url
+            self.client = AsyncOpenAI(**client_options)
             logger.info("✅ GPT Reply Generator başlatıldı")
         
         # Default GPT ayarları
         self.default_settings = {
-            "model": "gpt-4-turbo-preview",
+            "model": self.default_model or "gpt-4-turbo-preview",
             "temperature": 0.8,
             "max_tokens": 300,
             "presence_penalty": 0.3,
@@ -90,14 +101,22 @@ class GPTReplyGenerator:
             model = self._select_model(character_config, strategy, user_message)
             
             # GPT'ye sor
-            response = await self.client.chat.completions.create(
+            request_options = dict(
                 model=model,
                 messages=messages,
                 temperature=settings["temperature"],
                 max_tokens=settings["max_tokens"],
-                presence_penalty=settings["presence_penalty"],
-                frequency_penalty=settings["frequency_penalty"]
             )
+            if self.is_xai:
+                request_options["reasoning_effort"] = os.getenv(
+                    "XAI_REASONING_EFFORT", "low"
+                )
+            else:
+                request_options.update(
+                    presence_penalty=settings["presence_penalty"],
+                    frequency_penalty=settings["frequency_penalty"],
+                )
+            response = await self.client.chat.completions.create(**request_options)
             
             reply = response.choices[0].message.content.strip()
             
@@ -127,7 +146,7 @@ class GPTReplyGenerator:
                 token_logger.log_usage(
                     character=character_config.get("name", "Unknown"),
                     user_id=user_id or "unknown",
-                    model=settings.get("model", "unknown"),
+                    model=locals().get("model", settings.get("model", "unknown")),
                     prompt_tokens=0,
                     completion_tokens=0,
                     reply_mode=character_config.get("reply_mode", "gpt"),
@@ -149,6 +168,8 @@ class GPTReplyGenerator:
         # Config'de belirtilmişse öncelik onda
         if "gpt_model" in character_config:
             return character_config["gpt_model"]
+        if self.default_model:
+            return self.default_model
         
         # Mesaj uzunluğu ve karmaşıklık kontrolü
         message_length = len(message.split())
@@ -223,7 +244,7 @@ class GPTReplyGenerator:
         }
         
         # Prompt birleştir
-        final_prompt = base_prompt + humanizer_prompt
+        final_prompt = base_prompt if character_config.get("transparent_assistant") else base_prompt + humanizer_prompt
         
         if strategy and strategy in strategy_prompts:
             final_prompt += f"\n\nSTRATEJİ: {strategy_prompts[strategy]}"
@@ -383,4 +404,4 @@ class GPTReplyGenerator:
                 "risk_score": 0.5,
                 "topics": [],
                 "urgency": "medium"
-            } 
+            }

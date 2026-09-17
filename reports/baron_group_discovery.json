@@ -1,0 +1,2855 @@
+{
+  "complete": true,
+  "scanned_at": "2026-09-17T01:23:34.484234+00:00",
+  "groups": [
+    {
+      "id": -1002620284563,
+      "title": "ARAYIŞ ZİRVESİ",
+      "candidate": true,
+      "score": 0.82,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.2
+      },
+      "topics": {
+        "introduction": 8
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002458945712,
+      "title": "𝙊𝙣𝙡𝙞𝙣𝙚𝘼𝙧𝙖𝙮𝙞𝙨𝙏𝙍",
+      "candidate": false,
+      "score": 0.165,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.275
+      },
+      "topics": {
+        "introduction": 11
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002346704940,
+      "title": "Arayış sohbet 7",
+      "candidate": true,
+      "score": 0.94,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.4
+      },
+      "topics": {
+        "introduction": 16,
+        "hobby": 2,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002470299657,
+      "title": "TÜRKİYE ARAYIŞ SOHBET MUHABBET",
+      "candidate": true,
+      "score": 0.88,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.3
+      },
+      "topics": {
+        "introduction": 12,
+        "hobby": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1001099014055,
+      "title": "OWNER ARAYIŞ BULMA +18 🇹🇷",
+      "candidate": false,
+      "score": 0.745,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.075
+      },
+      "topics": {
+        "introduction": 3,
+        "hobby": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002759649272,
+      "title": "TÜRKİYE ARAYIŞ +18",
+      "candidate": true,
+      "score": 0.835,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.225
+      },
+      "topics": {
+        "introduction": 9
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002355652503,
+      "title": "Kız Arayış Sohbet Grubu",
+      "candidate": true,
+      "score": 0.955,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.425
+      },
+      "topics": {
+        "introduction": 17
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002577075839,
+      "title": "ARAYIŞ BETA",
+      "candidate": true,
+      "score": 0.955,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.425
+      },
+      "topics": {
+        "introduction": 17
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002358927800,
+      "title": "Kocaeli tanışma",
+      "candidate": true,
+      "score": 0.925,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.375
+      },
+      "topics": {
+        "introduction": 15,
+        "food": 1,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1001096466210,
+      "title": "ARAYIŞ TANIŞMA",
+      "candidate": true,
+      "score": 0.88,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.3
+      },
+      "topics": {
+        "introduction": 12,
+        "hobby": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004496550449,
+      "title": "LOLİPOP ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.568
+      },
+      "topics": {
+        "introduction": 21,
+        "hobby": 2
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1001564372826,
+      "title": "Arayış Sohbet Gel",
+      "candidate": true,
+      "score": 0.835,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.225
+      },
+      "topics": {
+        "introduction": 9,
+        "hobby": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004376638598,
+      "title": "sohbet grubu bul",
+      "candidate": false,
+      "score": 0.605,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.425
+      },
+      "topics": {
+        "introduction": 17,
+        "food": 1,
+        "hobby": 3,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003950486043,
+      "title": "EFSANE ARAYIŞ 7",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.703
+      },
+      "topics": {
+        "introduction": 26,
+        "food": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002193093336,
+      "title": "KADIN ARA BUL",
+      "candidate": false,
+      "score": 0.15,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.25
+      },
+      "topics": {
+        "introduction": 10
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003763334569,
+      "title": "SHOWCU ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.525
+      },
+      "topics": {
+        "introduction": 21,
+        "hobby": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002733456640,
+      "title": "SHOWCU DÜNYASI (satılık)",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": true,
+        "social_message_ratio": 0.125
+      },
+      "topics": {
+        "introduction": 5
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002585608129,
+      "title": "SOHBET ARAYIŞ +18 💜",
+      "candidate": true,
+      "score": 0.858,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.263
+      },
+      "topics": {
+        "introduction": 10,
+        "hobby": 1
+      },
+      "sample_size": 38,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004486470543,
+      "title": "ARAYIŞ GENEL",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.622
+      },
+      "topics": {
+        "introduction": 23,
+        "hobby": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003982604677,
+      "title": "İSTANBUL SOHBET",
+      "candidate": false,
+      "score": 0.605,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.425
+      },
+      "topics": {
+        "introduction": 17,
+        "food": 1,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003549541171,
+      "title": "ATEŞLİ ARAYIŞ SOHBET GRUBU +18 👠",
+      "candidate": true,
+      "score": 0.97,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.45
+      },
+      "topics": {
+        "introduction": 18
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003913748409,
+      "title": "LIVE ARAYIŞ",
+      "candidate": true,
+      "score": 0.85,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.25
+      },
+      "topics": {
+        "introduction": 10,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003985656949,
+      "title": "YENİ ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.595
+      },
+      "topics": {
+        "introduction": 22,
+        "hobby": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003737342099,
+      "title": "LİBİDO ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.553
+      },
+      "topics": {
+        "introduction": 21,
+        "hobby": 2,
+        "daily": 1
+      },
+      "sample_size": 38,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002341904305,
+      "title": "Arayış sohbet 6",
+      "candidate": true,
+      "score": 0.82,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.2
+      },
+      "topics": {
+        "introduction": 8,
+        "food": 1,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004485714462,
+      "title": "ARAYIŞ VAKTİ",
+      "candidate": false,
+      "score": 0.775,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.125
+      },
+      "topics": {
+        "introduction": 5,
+        "food": 1,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003446873659,
+      "title": "ÇITIR ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.556
+      },
+      "topics": {
+        "introduction": 20,
+        "food": 1
+      },
+      "sample_size": 36,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004399365713,
+      "title": "Arayış sarmalı",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.55
+      },
+      "topics": {
+        "introduction": 22,
+        "food": 1,
+        "hobby": 3,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002801147911,
+      "title": "EVLİ GİZLİ | GAVAT ARAYIŞ (SATILIK)",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": true,
+        "social_message_ratio": 0.25
+      },
+      "topics": {
+        "introduction": 10
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004487645702,
+      "title": "🥀Cuckold Hanem🥀 SOHBET",
+      "candidate": false,
+      "score": 0.59,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.4
+      },
+      "topics": {
+        "introduction": 16,
+        "hobby": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004491272161,
+      "title": "EFSANE ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.649
+      },
+      "topics": {
+        "introduction": 24,
+        "food": 1,
+        "hobby": 2
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004318571984,
+      "title": "Arayış sarmalı",
+      "candidate": true,
+      "score": 0.985,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.475
+      },
+      "topics": {
+        "introduction": 19,
+        "food": 1,
+        "hobby": 2,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003833442535,
+      "title": "Arayış sex",
+      "candidate": true,
+      "score": 0.94,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.4
+      },
+      "topics": {
+        "introduction": 16,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002217756014,
+      "title": "Arayış Muhabbet Grubu•",
+      "candidate": true,
+      "score": 0.88,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.3
+      },
+      "topics": {
+        "introduction": 12,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004461155432,
+      "title": "Turkish Arayış +18",
+      "candidate": true,
+      "score": 0.865,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.275
+      },
+      "topics": {
+        "introduction": 11,
+        "daily": 3
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002424106362,
+      "title": "VIRUS general chat",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 39,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003014312552,
+      "title": "Evli Çiftler",
+      "candidate": false,
+      "score": 0.09,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.15
+      },
+      "topics": {
+        "introduction": 6
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004310597084,
+      "title": "SOHBET ODASI",
+      "candidate": false,
+      "score": 0.65,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.711
+      },
+      "topics": {
+        "introduction": 27,
+        "hobby": 1
+      },
+      "sample_size": 38,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004343010044,
+      "title": "KOCAELİ - İZMİT SOHBET MUHABBET",
+      "candidate": false,
+      "score": 0.62,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.45
+      },
+      "topics": {
+        "introduction": 18,
+        "food": 1,
+        "hobby": 2,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004276669946,
+      "title": "ÖZEL ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.55
+      },
+      "topics": {
+        "introduction": 22,
+        "hobby": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003945086620,
+      "title": "MİLF ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.595
+      },
+      "topics": {
+        "introduction": 22,
+        "hobby": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004397180371,
+      "title": "ARAYIŞ ODASI",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.541
+      },
+      "topics": {
+        "introduction": 20,
+        "food": 1,
+        "hobby": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003973432241,
+      "title": "ARAYIŞ BURDA",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.595
+      },
+      "topics": {
+        "introduction": 22,
+        "food": 1,
+        "hobby": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004464590475,
+      "title": "SHOWCULAR EVİ",
+      "candidate": false,
+      "score": 0.3,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.676
+      },
+      "topics": {
+        "introduction": 25,
+        "food": 1,
+        "hobby": 2
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1001855153783,
+      "title": "Turkish Arayış Sohbet +18",
+      "candidate": true,
+      "score": 0.835,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.225
+      },
+      "topics": {
+        "introduction": 9,
+        "food": 2,
+        "hobby": 1,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004436445154,
+      "title": "SEVGİLİ ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.595
+      },
+      "topics": {
+        "introduction": 22,
+        "food": 1,
+        "hobby": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003953739806,
+      "title": "AŞK ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.575
+      },
+      "topics": {
+        "introduction": 23,
+        "food": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003757315618,
+      "title": "Arayış Sohbet 4",
+      "candidate": true,
+      "score": 0.97,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.45
+      },
+      "topics": {
+        "introduction": 18,
+        "food": 2,
+        "hobby": 2,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002340265764,
+      "title": "Cehennem.arayis #+18",
+      "candidate": true,
+      "score": 0.97,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.45
+      },
+      "topics": {
+        "introduction": 18,
+        "hobby": 2,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002567128238,
+      "title": "SHOW DÜNYASI",
+      "candidate": false,
+      "score": 0.3,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.625
+      },
+      "topics": {
+        "introduction": 25,
+        "food": 1,
+        "hobby": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004435320081,
+      "title": "Roll Arayış 3",
+      "candidate": true,
+      "score": 0.94,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.4
+      },
+      "topics": {
+        "introduction": 16,
+        "food": 1,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004355829818,
+      "title": "Arayış kız bul",
+      "candidate": true,
+      "score": 0.955,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.425
+      },
+      "topics": {
+        "introduction": 17,
+        "food": 1,
+        "hobby": 3,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003980122623,
+      "title": "SÜPER ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.595
+      },
+      "topics": {
+        "introduction": 22,
+        "hobby": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003930023979,
+      "title": "Arayış Sohbet 5",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.725
+      },
+      "topics": {
+        "introduction": 29,
+        "food": 1,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004330964708,
+      "title": "İZMİR SOHBETTE",
+      "candidate": false,
+      "score": 0.65,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.525
+      },
+      "topics": {
+        "introduction": 21,
+        "food": 1,
+        "hobby": 3,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004347648065,
+      "title": "İZMİR ARAYIŞLAR",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.575
+      },
+      "topics": {
+        "introduction": 23,
+        "food": 1,
+        "hobby": 3,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004351504995,
+      "title": "ESKİ ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.541
+      },
+      "topics": {
+        "introduction": 20,
+        "hobby": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004489265223,
+      "title": "Arayış cenetti",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.575
+      },
+      "topics": {
+        "introduction": 23,
+        "food": 1,
+        "hobby": 2,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004260634568,
+      "title": "NET ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.568
+      },
+      "topics": {
+        "introduction": 21,
+        "food": 1,
+        "hobby": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002066001385,
+      "title": "ARAYIŞ VAKTİ",
+      "candidate": true,
+      "score": 0.805,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.175
+      },
+      "topics": {
+        "introduction": 7,
+        "hobby": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004333629728,
+      "title": "GENEL ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.541
+      },
+      "topics": {
+        "introduction": 20,
+        "hobby": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004275917813,
+      "title": "DATE MEKANI",
+      "candidate": false,
+      "score": 0.3,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.622
+      },
+      "topics": {
+        "introduction": 23,
+        "food": 1,
+        "hobby": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003936342073,
+      "title": "TEN ARAYIŞ 5",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.595
+      },
+      "topics": {
+        "introduction": 22
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004460647549,
+      "title": "KOCAELİ - İZMİT SOHBETTE",
+      "candidate": false,
+      "score": 0.605,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.425
+      },
+      "topics": {
+        "introduction": 17,
+        "food": 1,
+        "hobby": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003875329676,
+      "title": "Arayış Sohbet",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.575
+      },
+      "topics": {
+        "introduction": 23,
+        "hobby": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004408905495,
+      "title": "Arayış Sohbet 2",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.525
+      },
+      "topics": {
+        "introduction": 21,
+        "hobby": 1,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004389740195,
+      "title": "Roll Arayış 4",
+      "candidate": true,
+      "score": 0.955,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.425
+      },
+      "topics": {
+        "introduction": 17,
+        "food": 1,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004307849101,
+      "title": "Showcu bul",
+      "candidate": false,
+      "score": 0.3,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.5
+      },
+      "topics": {
+        "introduction": 20,
+        "food": 1,
+        "hobby": 3,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004445149611,
+      "title": "KOCAELİ - İZMİT PARTNER ARAYIŞ",
+      "candidate": true,
+      "score": 0.985,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.475
+      },
+      "topics": {
+        "introduction": 19,
+        "food": 1,
+        "hobby": 3,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002558488419,
+      "title": "Arayış sohbet 9",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.525
+      },
+      "topics": {
+        "introduction": 21,
+        "food": 1,
+        "hobby": 1,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004404561564,
+      "title": "İSTANBUL ARAYIŞLAR",
+      "candidate": true,
+      "score": 0.955,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.425
+      },
+      "topics": {
+        "introduction": 17,
+        "food": 1,
+        "hobby": 2,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004342804312,
+      "title": "Arayış buluşma",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.5
+      },
+      "topics": {
+        "introduction": 20,
+        "food": 1,
+        "hobby": 3,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003876393728,
+      "title": "🥂 Dawson Sohbet 🥂",
+      "candidate": false,
+      "score": 0.381,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.051
+      },
+      "topics": {
+        "introduction": 2
+      },
+      "sample_size": 39,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004391076794,
+      "title": "Arayış grubu katıl",
+      "candidate": true,
+      "score": 0.91,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.35
+      },
+      "topics": {
+        "introduction": 14,
+        "hobby": 2,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004381334215,
+      "title": "TEN ARAYIŞ 2",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.703
+      },
+      "topics": {
+        "introduction": 26,
+        "food": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004454822269,
+      "title": "AKTİF PASİF GEL",
+      "candidate": false,
+      "score": 0.255,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.425
+      },
+      "topics": {
+        "introduction": 17,
+        "hobby": 2,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004350831496,
+      "title": "ARAYIŞ YUPİ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.676
+      },
+      "topics": {
+        "introduction": 25,
+        "hobby": 2
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004484271280,
+      "title": "Roll Arayış 1",
+      "candidate": true,
+      "score": 0.91,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.35
+      },
+      "topics": {
+        "introduction": 14,
+        "food": 1,
+        "hobby": 2,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004383111910,
+      "title": "ARAYIŞ 2",
+      "candidate": true,
+      "score": 0.955,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.425
+      },
+      "topics": {
+        "introduction": 17,
+        "food": 1,
+        "hobby": 3,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004378329948,
+      "title": "TEN ARAYIŞ 4",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.595
+      },
+      "topics": {
+        "introduction": 22,
+        "food": 1
+      },
+      "sample_size": 37,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1001895483081,
+      "title": "Referans kasma ve reklam grubu",
+      "candidate": false,
+      "score": 0.06,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.1
+      },
+      "topics": {
+        "introduction": 4,
+        "food": 3,
+        "hobby": 2,
+        "travel": 9,
+        "daily": 4
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004241896641,
+      "title": "İSTANBUL ARAYIŞ SOHBET",
+      "candidate": true,
+      "score": 0.94,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.4
+      },
+      "topics": {
+        "introduction": 16,
+        "food": 1,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002364833307,
+      "title": "Arayış sohbet 8",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.575
+      },
+      "topics": {
+        "introduction": 23,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003865687501,
+      "title": "Şehvet Arayış 🔞",
+      "candidate": false,
+      "score": 0.775,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.125
+      },
+      "topics": {
+        "introduction": 5,
+        "hobby": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003707377876,
+      "title": "İSTANBUL SOHBETTE",
+      "candidate": false,
+      "score": 0.65,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.525
+      },
+      "topics": {
+        "introduction": 21,
+        "food": 1,
+        "hobby": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003803962439,
+      "title": "BAYAN ARAYIŞ",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.975
+      },
+      "topics": {
+        "introduction": 39
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003715036630,
+      "title": "AKTİF - PASİF ARAYIŞ",
+      "candidate": true,
+      "score": 0.97,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.45
+      },
+      "topics": {
+        "introduction": 18,
+        "food": 1,
+        "hobby": 2,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004367507857,
+      "title": "Arayış sohbet kızlar",
+      "candidate": true,
+      "score": 0.97,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.45
+      },
+      "topics": {
+        "introduction": 18,
+        "daily": 3
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004481741165,
+      "title": "EFSANE ARAYIŞ",
+      "candidate": false,
+      "score": 0.777,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.128
+      },
+      "topics": {
+        "introduction": 5,
+        "food": 1,
+        "daily": 2
+      },
+      "sample_size": 39,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003964033398,
+      "title": "KOCAELİ - İZMİT ÖĞRENCİ MEKANI",
+      "candidate": false,
+      "score": 0.255,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.425
+      },
+      "topics": {
+        "introduction": 17,
+        "food": 1,
+        "hobby": 2,
+        "daily": 1
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002352676907,
+      "title": "𝑲𝒂𝒐𝒔 𝑨𝒓𝒂𝒚𝒊𝒔",
+      "candidate": false,
+      "score": 0.255,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.425
+      },
+      "topics": {
+        "introduction": 17,
+        "hobby": 5
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002251469634,
+      "title": "⁣Taşındık...",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "hobby": 1
+      },
+      "sample_size": 2,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003906987901,
+      "title": "Gece Vardiyası +18",
+      "candidate": false,
+      "score": 0.105,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.175
+      },
+      "topics": {
+        "introduction": 7
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003956517856,
+      "title": "Gündüz Vardiyanız",
+      "candidate": false,
+      "score": 0.045,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.075
+      },
+      "topics": {
+        "introduction": 3
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003779300854,
+      "title": "7/24 VARDİYA",
+      "candidate": false,
+      "score": 0.12,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.2
+      },
+      "topics": {
+        "introduction": 8
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003877829985,
+      "title": "Arayış grubu katıl",
+      "candidate": true,
+      "score": 1.0,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.5
+      },
+      "topics": {
+        "introduction": 20,
+        "food": 1,
+        "hobby": 3,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003655969863,
+      "title": "VİP LOCA ⚡️",
+      "candidate": false,
+      "score": 0.1,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.167
+      },
+      "topics": {
+        "introduction": 1
+      },
+      "sample_size": 6,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1001274333834,
+      "title": "Coin Mühendisi (Topluluk)",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003213280469,
+      "title": "Casinos Kumarhane Slotlar Spor",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "hobby": 7,
+        "daily": 2
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003706233352,
+      "title": "81 İL ARAYIŞ",
+      "candidate": false,
+      "score": 0.777,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.128
+      },
+      "topics": {
+        "introduction": 5
+      },
+      "sample_size": 39,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003524907186,
+      "title": "777 CASİNO",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "hobby": 3,
+        "daily": 2
+      },
+      "sample_size": 10,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004371978539,
+      "title": "Bursa Arkadaş",
+      "candidate": false,
+      "score": 0.15,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.25
+      },
+      "topics": {
+        "introduction": 10,
+        "film": 4
+      },
+      "sample_size": 40,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003376430515,
+      "title": "SLOT MACHİNE",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "hobby": 2
+      },
+      "sample_size": 9,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003756403489,
+      "title": "POKER CASİNO",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 9,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003647364389,
+      "title": "MAX KAZANÇ",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "hobby": 1,
+        "daily": 1
+      },
+      "sample_size": 9,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003896299589,
+      "title": "LEON CASİNO",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "hobby": 1,
+        "daily": 1
+      },
+      "sample_size": 9,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003697523922,
+      "title": "Nazli ablacık",
+      "candidate": false,
+      "score": 0.2,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.333
+      },
+      "topics": {
+        "introduction": 5
+      },
+      "sample_size": 15,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003515499867,
+      "title": "༺𝐌𝐄𝐋𝐄Ğİ𝐍 𝐃Ü𝐍𝐘𝐀𝐒𝐈༻💋",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 1,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002648385354,
+      "title": "DarkWeb Chat",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 4,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003914015798,
+      "title": "TÜRKİYE ARAYIŞ GRUBU",
+      "candidate": false,
+      "score": 0.7,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1001796922133,
+      "title": "ulTrader Kripto ve Borsa Sohbet Muhabbet Fikir Paylaşımı ve Çekiliş Airdrop Grubu",
+      "candidate": false,
+      "score": 0.35,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 15,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003947399371,
+      "title": "Gizli Vault",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004374367204,
+      "title": "Felix Ticaret Ve Sohbet Grubu",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": true,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002247748626,
+      "title": "İzmitce Vice Ctıy",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002362720532,
+      "title": "CatalinaBelencia🦋",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004401976056,
+      "title": "gavatVEkaşar",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003532565253,
+      "title": "Arayış Sunum",
+      "candidate": false,
+      "score": 0.7,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": true,
+      "baron_is_admin": true,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003515429592,
+      "title": "BUSE KAZANDIRIYOR",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003326233717,
+      "title": "Prime Arayış",
+      "candidate": false,
+      "score": 0.7,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1004474433505,
+      "title": "zig souver ads system",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -5478436402,
+      "title": "Arayış OnlyVIPS",
+      "candidate": false,
+      "score": 0.7,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": true,
+      "baron_is_admin": true,
+      "permission_confirmed": false
+    },
+    {
+      "id": -5250644584,
+      "title": "SiyahKare",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": true,
+      "baron_is_admin": true,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1001929500950,
+      "title": "Prime Academy 💎",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -5554686904,
+      "title": "Beril YANAR",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": true,
+      "baron_is_admin": true,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003457012366,
+      "title": "𝐒𝐎𝐑𝐆𝐔𝐂𝐔 𝐒𝐎𝐇𝐁𝐄𝐓",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -5490764109,
+      "title": "Grup",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": true,
+      "baron_is_admin": true,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003783449089,
+      "title": "ARKADAŞ BUL TANIŞ🤩",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1001487643321,
+      "title": "Dumanbet Sohbet",
+      "candidate": false,
+      "score": 0.35,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -5186662669,
+      "title": "MUTLU & Irina",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": true,
+      "baron_is_admin": true,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002304938315,
+      "title": "🇳🇱 TARZAN SOHBET KANALLARI 🇳🇱",
+      "candidate": false,
+      "score": 0.35,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003145690757,
+      "title": "ARAYIŞ SOHBET GRUBU+¹⁸",
+      "candidate": false,
+      "score": 0.7,
+      "reasons": {
+        "explicit_social_title": true,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -5138912187,
+      "title": "KARE",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": true,
+      "baron_is_admin": true,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002640045188,
+      "title": "SeferVerse",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": true,
+      "baron_is_admin": true,
+      "permission_confirmed": false
+    },
+    {
+      "id": -5114802623,
+      "title": "SiyahKare",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": true,
+      "baron_is_admin": true,
+      "permission_confirmed": false
+    },
+    {
+      "id": -5298432399,
+      "title": "PokerVerse",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": true,
+      "baron_is_admin": true,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1003445858886,
+      "title": "Azeri ifşa 18🔞 chat",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002664058058,
+      "title": "Bu grup kapandı",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002713276663,
+      "title": "🇳🇱 TARZAN SOHBET 🇳🇱",
+      "candidate": false,
+      "score": 0.35,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002354961291,
+      "title": "CasinoFast Sohbet",
+      "candidate": false,
+      "score": 0.35,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": true,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -1002277005308,
+      "title": "MEGA AJANS YAYINCI GRUBU",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    },
+    {
+      "id": -4914232975,
+      "title": "SeferVerse",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": true,
+      "baron_is_admin": true,
+      "permission_confirmed": false
+    },
+    {
+      "id": -457435519,
+      "title": "Siyahkare ofis",
+      "candidate": false,
+      "score": 0.0,
+      "reasons": {
+        "explicit_social_title": false,
+        "social_title": false,
+        "unrelated_search": false,
+        "social_message_ratio": 0.0
+      },
+      "topics": {
+        "general": 1
+      },
+      "sample_size": 0,
+      "baron_is_creator": false,
+      "baron_is_admin": false,
+      "permission_confirmed": false
+    }
+  ]
+}

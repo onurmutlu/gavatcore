@@ -1,0 +1,341 @@
+{
+  "version": 1,
+  "messages": [
+    {
+      "id": "general_01",
+      "topics": [
+        "general"
+      ],
+      "text": "Bugünün en keyifli anı neydi? Küçük şeyler de sayılır."
+    },
+    {
+      "id": "general_02",
+      "topics": [
+        "general"
+      ],
+      "text": "Sohbeti bir soruyla açayım: son zamanlarda seni en çok ne güldürdü?"
+    },
+    {
+      "id": "general_03",
+      "topics": [
+        "general"
+      ],
+      "text": "Bugünü tek kelimeyle anlatacak olsan hangi kelimeyi seçerdin?"
+    },
+    {
+      "id": "general_04",
+      "topics": [
+        "general"
+      ],
+      "text": "Sakin bir akşam mı, hareketli bir gün mü sana daha iyi geliyor?"
+    },
+    {
+      "id": "general_05",
+      "topics": [
+        "general"
+      ],
+      "text": "Bu aralar öğrendiğin küçük ama işe yarayan bir şey var mı?"
+    },
+    {
+      "id": "general_06",
+      "topics": [
+        "general"
+      ],
+      "text": "Biraz gündelik sohbet: bugün kendine ayırabildiğin bir zaman oldu mu?"
+    },
+    {
+      "id": "introduction_01",
+      "topics": [
+        "introduction"
+      ],
+      "text": "Tanışırken ilk konuştuğun konu genelde ne oluyor?"
+    },
+    {
+      "id": "introduction_02",
+      "topics": [
+        "introduction"
+      ],
+      "text": "Yeni bir sohbette ortak ilgi alanı bulmak için hangi soruyu sorarsın?"
+    },
+    {
+      "id": "introduction_03",
+      "topics": [
+        "introduction"
+      ],
+      "text": "Kendini üç kelimeyle anlatmak istesen neler seçerdin?"
+    },
+    {
+      "id": "introduction_04",
+      "topics": [
+        "introduction"
+      ],
+      "text": "Sohbeti güzel yapan sence merak mı, mizah mı, iyi dinlemek mi?"
+    },
+    {
+      "id": "introduction_05",
+      "topics": [
+        "introduction"
+      ],
+      "text": "Yeni tanıştığın biriyle konuşurken seni en rahat hissettiren şey ne?"
+    },
+    {
+      "id": "introduction_06",
+      "topics": [
+        "introduction"
+      ],
+      "text": "Buraya yeni katılanlar için: hangi konularda sohbet etmekten hoşlanıyorsunuz?"
+    },
+    {
+      "id": "music_01",
+      "topics": [
+        "music"
+      ],
+      "text": "Bu konuşmanın arka planında bir şarkı çalsa hangisi olurdu?"
+    },
+    {
+      "id": "music_02",
+      "topics": [
+        "music"
+      ],
+      "text": "Son günlerde tekrar tekrar açtığın bir parça var mı?"
+    },
+    {
+      "id": "music_03",
+      "topics": [
+        "music"
+      ],
+      "text": "Müzik dinlerken sözlere mi, melodiye mi daha çok dikkat edersin?"
+    },
+    {
+      "id": "music_04",
+      "topics": [
+        "music"
+      ],
+      "text": "Canlı dinlemek istediğin bir sanatçı veya grup var mı?"
+    },
+    {
+      "id": "music_05",
+      "topics": [
+        "music"
+      ],
+      "text": "Yürüyüşe çıkarken ne tür müzik iyi geliyor?"
+    },
+    {
+      "id": "music_06",
+      "topics": [
+        "music"
+      ],
+      "text": "Bir arkadaşına tek şarkı önerecek olsan hangisini seçerdin?"
+    },
+    {
+      "id": "film_01",
+      "topics": [
+        "film"
+      ],
+      "text": "Son izlediğin ve hakkında konuşmak istediğin bir film var mı?"
+    },
+    {
+      "id": "film_02",
+      "topics": [
+        "film"
+      ],
+      "text": "Film seçerken konu mu, oyuncular mı daha belirleyici oluyor?"
+    },
+    {
+      "id": "film_03",
+      "topics": [
+        "film"
+      ],
+      "text": "Bir akşamlık dizi önerisi arasan hangi türü seçerdin?"
+    },
+    {
+      "id": "film_04",
+      "topics": [
+        "film"
+      ],
+      "text": "Tekrar izlemekten sıkılmadığın bir film hangisi?"
+    },
+    {
+      "id": "film_05",
+      "topics": [
+        "film"
+      ],
+      "text": "Spoiler vermeden söyle: seni etkileyen son sahnenin duygusu neydi?"
+    },
+    {
+      "id": "film_06",
+      "topics": [
+        "film"
+      ],
+      "text": "Komedi mi, gizem mi, bilimkurgu mu bugün daha iyi gider?"
+    },
+    {
+      "id": "food_01",
+      "topics": [
+        "food"
+      ],
+      "text": "Bu muhabbetin yanına çay mı, kahve mi yakışır?"
+    },
+    {
+      "id": "food_02",
+      "topics": [
+        "food"
+      ],
+      "text": "Evde yapmayı sevdiğin pratik bir yemek var mı?"
+    },
+    {
+      "id": "food_03",
+      "topics": [
+        "food"
+      ],
+      "text": "Bugün canın en çok hangi yemeği çekiyor?"
+    },
+    {
+      "id": "food_04",
+      "topics": [
+        "food"
+      ],
+      "text": "Yeni bir lezzet denemeyi mi, bildiğin favoriyi mi seçersin?"
+    },
+    {
+      "id": "food_05",
+      "topics": [
+        "food"
+      ],
+      "text": "Kahvaltıda vazgeçemediğin tek şey ne?"
+    },
+    {
+      "id": "food_06",
+      "topics": [
+        "food"
+      ],
+      "text": "Sohbet uzayınca tatlı mı, tuzlu bir atıştırmalık mı iyi gider?"
+    },
+    {
+      "id": "hobby_01",
+      "topics": [
+        "hobby"
+      ],
+      "text": "Sırf keyif için yaptığın bir uğraş var mı?"
+    },
+    {
+      "id": "hobby_02",
+      "topics": [
+        "hobby"
+      ],
+      "text": "Yeni bir hobiye başlamak için bir günün olsa neyi denerdin?"
+    },
+    {
+      "id": "hobby_03",
+      "topics": [
+        "hobby"
+      ],
+      "text": "Oyun oynarken rekabet mi, beraber vakit geçirmek mi daha eğlenceli?"
+    },
+    {
+      "id": "hobby_04",
+      "topics": [
+        "hobby"
+      ],
+      "text": "Son okuduğun kitapta aklında kalan bir fikir var mı?"
+    },
+    {
+      "id": "hobby_05",
+      "topics": [
+        "hobby"
+      ],
+      "text": "El işi, fotoğraf, spor: hangisine daha yakın hissediyorsun?"
+    },
+    {
+      "id": "hobby_06",
+      "topics": [
+        "hobby"
+      ],
+      "text": "Boş bir öğleden sonrayı nasıl değerlendirmek istersin?"
+    },
+    {
+      "id": "travel_01",
+      "topics": [
+        "travel"
+      ],
+      "text": "Bir günlük kaçamak için deniz kenarı mı, doğa yürüyüşü mü seçerdin?"
+    },
+    {
+      "id": "travel_02",
+      "topics": [
+        "travel"
+      ],
+      "text": "Gezdiğin yerlerde en çok yemekleri mi, sokakları mı hatırlarsın?"
+    },
+    {
+      "id": "travel_03",
+      "topics": [
+        "travel"
+      ],
+      "text": "Yolculukta planlı olmak mı, biraz spontane davranmak mı hoşuna gider?"
+    },
+    {
+      "id": "travel_04",
+      "topics": [
+        "travel"
+      ],
+      "text": "Kendi şehrinde yeniden keşfetmek istediğin bir yer var mı?"
+    },
+    {
+      "id": "travel_05",
+      "topics": [
+        "travel"
+      ],
+      "text": "Gitmek istediğin bir yeri cazip yapan şey ne?"
+    },
+    {
+      "id": "travel_06",
+      "topics": [
+        "travel"
+      ],
+      "text": "Uzun yol sohbetlerinde hangi konu hiç bitmiyor?"
+    },
+    {
+      "id": "daily_01",
+      "topics": [
+        "daily"
+      ],
+      "text": "Yoğun bir günün ardından dinlenmek için ne yapıyorsun?"
+    },
+    {
+      "id": "daily_02",
+      "topics": [
+        "daily"
+      ],
+      "text": "Sabah insanı mısın, akşam saatlerinde mi daha enerjiksin?"
+    },
+    {
+      "id": "daily_03",
+      "topics": [
+        "daily"
+      ],
+      "text": "Bugün küçük de olsa yolunda giden bir şey oldu mu?"
+    },
+    {
+      "id": "daily_04",
+      "topics": [
+        "daily"
+      ],
+      "text": "Hafta sonu için en sade ve keyifli planın ne olurdu?"
+    },
+    {
+      "id": "daily_05",
+      "topics": [
+        "daily"
+      ],
+      "text": "Günlük rutinin içinde değiştirmek istediğin ufak bir alışkanlık var mı?"
+    },
+    {
+      "id": "daily_06",
+      "topics": [
+        "daily"
+      ],
+      "text": "Bir işi bitirdikten sonra kendine verdiğin küçük ödül ne?"
+    }
+  ]
+}
