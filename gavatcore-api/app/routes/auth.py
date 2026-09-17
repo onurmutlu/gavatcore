@@ -137,6 +137,8 @@ async def login(
             user=UserResponse.from_orm(user)
         )
         
+    except HTTPException:
+        raise
     except AuthenticationError as e:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -243,4 +245,4 @@ async def verify_token(
         "valid": True,
         "user_id": current_user.id,  # type: ignore
         "username": current_user.username
-    } 
+    }

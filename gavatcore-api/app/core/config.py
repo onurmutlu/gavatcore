@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     # Application
     ENVIRONMENT: str = Field(default="development", env="ENVIRONMENT")
     DEBUG: bool = Field(default=True, env="DEBUG")
+    PANEL_LOCAL_PREVIEW: bool = False
     SECRET_KEY: str = Field(default="your-secret-key-here", env="SECRET_KEY")
     
     # Database
@@ -86,7 +87,7 @@ class Settings(BaseSettings):
 
 
 # Create global settings instance
-settings = Settings()
+settings = Settings(_env_file=os.environ.get("GAVATCORE_ENV_FILE", ".env") or None)
 
 
 def get_subscription_limits(plan_name: str) -> dict:
@@ -190,4 +191,4 @@ def get_pricing() -> dict:
             "stars": settings.PRICING_DELUXE_TRY * 10,
             "duration": "30 days"
         }
-    } 
+    }

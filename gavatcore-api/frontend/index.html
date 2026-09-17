@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#112d29"><title>GavatCore · Kontrol paneli</title>
+  <link rel="icon" href="data:,"><link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <div id="preview" class="preview" hidden>YEREL ÖNİZLEME · Örnek bot kayıtları, gerçek yerel veritabanı. Telegram bağlantısı yok.</div>
+  <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+  <main id="login-view" class="login-view">
+    <section class="intro">
+      <a class="brand" href="./"><span class="brand-mark">G</span> GavatCore <span class="brand-sub">/ PANEL</span></a>
+      <div><p class="eyebrow">KONTROL SİZDE</p><h1>Botlarınız.<br>Tek bir çalışma alanı.</h1><p class="intro-copy">Durumu takip edin, yapılandırmaları yönetin.<br>Operasyonunuzu tek yerden görün.</p></div>
+      <span class="intro-footer">GAVATCORE &nbsp; / &nbsp; OPERASYON PANELİ</span>
+    </section>
+    <section class="login-box">
+      <p class="eyebrow">TEKRAR MERHABA</p><h2>Çalışma alanınıza giriş yapın</h2>
+      <p class="muted">Panel hesabınızla devam edin.</p>
+      <form id="login-form">
+        <label for="username">Kullanıcı adı</label><input id="username" name="username" autocomplete="username" required maxlength="50">
+        <label for="password">Şifre</label><input id="password" name="password" type="password" autocomplete="current-password" required>
+        <p id="login-error" class="form-error" role="alert" hidden></p>
+        <button id="login-submit" class="primary" type="submit">Giriş yap <span aria-hidden="true">↗</span></button>
+      </form>
+      <p id="preview-login" class="help" hidden>Yerel deneme hesabı: <strong>panel_local</strong><br>Şifre: <strong>local-panel-only</strong></p>
+      <p class="help">Bu giriş, Telegram hesabınıza doğrulama kodu göndermez.</p>
+    </section>
+  </main>
+  <div id="workspace" class="workspace" hidden>
+    <aside class="sidebar">
+      <a class="brand" href="./"><span class="brand-mark">G</span> GavatCore</a>
+      <p class="nav-caption">ÇALIŞMA ALANI</p>
+      <a class="nav-link selected" href="#bots" aria-current="page"><span aria-hidden="true">▦</span> Bot yönetimi <span class="nav-arrow">↗</span></a>
+      <div class="sidebar-bottom"><span class="avatar" id="avatar">G</span><div><strong id="account-name"></strong><small>Panel hesabı</small></div><button id="logout" class="icon-button" aria-label="Çıkış yap" title="Çıkış yap">↪</button></div>
+    </aside>
+    <main class="main-content" id="bots">
+      <header class="topbar"><span>Çalışma alanı <span class="slash">/</span> <strong>Bot yönetimi</strong></span><span class="connection" id="connection">Bağlanıyor…</span></header>
+      <section class="page-heading"><div><p class="eyebrow">OPERASYONA GENEL BAKIŞ</p><h1>Bot yönetimi</h1><p class="muted">Botlarınızın son durumunu ve kayıtlı ayarlarını takip edin.</p></div><button id="refresh" class="secondary">↻ &nbsp; Yenile</button></section>
+      <section class="stats" aria-label="Bot istatistikleri">
+        <article><span>Toplam bot</span><strong id="total">—</strong><small>Hesabınıza bağlı kayıtlar</small></article>
+        <article><span>Çevrimiçi</span><strong id="online">—</strong><small>Son kayıtlı bağlantı durumu</small></article>
+        <article><span>Gönderilen mesaj</span><strong id="messages">—</strong><small>Bot kayıtlarındaki toplam</small></article>
+        <article><span>Hata durumunda</span><strong id="errors">—</strong><small>İnceleme bekleyen botlar</small></article>
+      </section>
+      <section class="bot-section">
+        <div class="section-heading"><div><h2>Botlarınız <span id="count" class="count">0</span></h2><p id="updated" class="muted">Veriler bekleniyor</p></div><div class="filters"><label class="sr-only" for="search">Bot ara</label><input id="search" type="search" placeholder="Bot adı veya kişilik ara"><label class="sr-only" for="filter">Durum filtresi</label><select id="filter"><option value="all">Tüm durumlar</option><option value="online">Çevrimiçi</option><option value="offline">Çevrimdışı</option><option value="error">Hatalı</option></select></div></div>
+        <div id="data-error" class="data-error" role="alert" hidden></div>
+        <div id="loading" class="empty" role="status">Botlar yükleniyor…</div>
+        <div id="empty" class="empty" hidden><span aria-hidden="true">▦</span><h3>Henüz bot yok</h3><p>Bu hesaba bağlı bir bot kaydı bulunamadı.</p></div>
+        <div id="bot-list" class="bot-list"></div>
+      </section>
+      <div class="capability-note"><span aria-hidden="true">ⓘ</span><p id="capability-reason">Süreç yönetimi kontrol ediliyor…</p></div>
+      <footer class="page-footer"><span>GavatCore / Kontrol paneli</span><span>Veriler 30 saniyede bir yenilenir</span></footer>
+    </main>
+  </div>
+  <dialog id="detail-dialog" aria-labelledby="detail-name">
+    <div class="dialog-heading"><div><p class="eyebrow">BOT DETAYI</p><h2 id="detail-name"></h2></div><button id="close-detail" class="icon-button" aria-label="Detayı kapat">×</button></div>
+    <p id="detail-status" class="muted"></p>
+    <dl id="detail-metrics" class="detail-metrics"></dl>
+    <section class="error-record"><h3>Son kayıtlı hata</h3><p id="last-error"></p></section>
+    <form id="settings-form">
+      <h3>Bot ayarları</h3><p class="help">Kaydetme, yapılandırmayı günceller. Çalışan süreçlere otomatik uygulanmaz.</p>
+      <label for="reply-mode">Yanıt modu</label><select id="reply-mode"><option value="manual">Manuel</option><option value="manualplus">Manuel Plus</option><option value="hybrid">Hibrit</option><option value="gpt">GPT</option></select>
+      <label class="check-label"><input type="checkbox" id="scheduler-enabled"> Zamanlayıcı etkin</label>
+      <label for="scheduler-interval">Zamanlayıcı aralığı (saniye)</label><input id="scheduler-interval" type="number" min="30" max="86400" required>
+      <p id="save-message" role="status" aria-live="polite"></p>
+      <button id="save-settings" type="submit" class="primary">Ayarları kaydet</button>
+    </form>
+    <div class="process-actions"><button class="secondary" disabled>Başlat</button><button class="secondary" disabled>Durdur</button><span class="help">Süreç yöneticisi bağlı değil.</span></div>
+  </dialog>
+</body>
+</html>

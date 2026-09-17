@@ -11,19 +11,19 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sess
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import MetaData
 import structlog
+from app.core.config import settings
 
 logger = structlog.get_logger("gavatcore.database")
 
 # Database URL - will be imported from config later
-DATABASE_URL = "postgresql+asyncpg://gavatcore:password@localhost/gavatcore_saas"
+DATABASE_URL = settings.DATABASE_URL
 
 # Create async engine
 engine = create_async_engine(
     DATABASE_URL,
     echo=False,  # Set to True for SQL logging in development
     pool_pre_ping=True,
-    pool_size=10,
-    max_overflow=20
+    **({} if DATABASE_URL.startswith("sqlite") else {"pool_size": 10, "max_overflow": 20})
 )
 
 # Create async session factory
@@ -82,4 +82,4 @@ async def drop_tables():
 async def close_db():
     """Close database connection"""
     await engine.dispose()
-    logger.info("🔒 Database connection closed") 
+    logger.info("🔒 Database connection closed")

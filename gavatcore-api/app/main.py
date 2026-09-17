@@ -9,10 +9,12 @@ Production-ready Bot-as-a-Service platform
 import os
 import sys
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 import structlog
 
 # Add parent directory to path for GavatCore imports
@@ -57,6 +59,7 @@ async def lifespan(app: FastAPI):
     
     # Shutdown
     logger.info("🛑 Shutting down GavatCore SaaS API...")
+    await engine.dispose()
 
 
 # Create FastAPI app
@@ -136,6 +139,12 @@ app.include_router(bots.router, prefix="/api/bots", tags=["Bots"])
 app.include_router(users.router, prefix="/api/users", tags=["Users"])
 from app.routes.communication import router as communication_router
 app.include_router(communication_router, prefix="/api/analysis", tags=["Analysis"])
+
+from app.routes.panel import router as panel_router
+app.include_router(panel_router, prefix="/api/panel", tags=["Panel"])
+panel_dist = Path(__file__).resolve().parents[1] / "frontend" / "dist"
+if panel_dist.is_dir():
+    app.mount("/panel", StaticFiles(directory=panel_dist, html=True), name="panel")
 
 
 if __name__ == "__main__":

@@ -60,6 +60,10 @@ test_*.json
 
 # Dağıtım ve Paketleme
 dist/
+.local/
+node_modules/
+playwright-report/
+test-results/
 build/
 *.egg-info/
 *.egg

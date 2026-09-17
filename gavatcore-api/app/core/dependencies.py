@@ -39,6 +39,8 @@ async def get_current_user(
     try:
         # Verify token
         token_data = auth_service.verify_token(credentials.credentials)
+        if token_data.get("type") != "access":
+            raise HTTPException(status_code=401, detail="Access token required")
         user_id = token_data.get("user_id")
         
         if not user_id:
@@ -84,4 +86,4 @@ async def get_current_active_user(
 
 def get_auth_service() -> AuthService:
     """Get authentication service instance"""
-    return auth_service 
+    return auth_service

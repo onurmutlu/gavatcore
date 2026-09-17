@@ -1,0 +1,15 @@
+# Isolated web-panel runtime, verified on Python 3.13.
+# Install into a separate environment; do not replace the bot engine's dependencies.
+fastapi==0.104.1
+uvicorn==0.24.0
+sqlalchemy==2.0.41
+greenlet==3.2.2
+aiosqlite==0.21.0
+asyncpg==0.30.0
+structlog==23.1.0
+pydantic==2.13.5
+pydantic-settings==2.15.0
+email-validator==2.3.0
+PyJWT==2.14.0
+bcrypt==5.0.0
+stripe==15.6.1
