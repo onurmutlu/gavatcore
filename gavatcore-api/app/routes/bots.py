@@ -273,13 +273,6 @@ async def start_bot(
                 detail="Bot instance not found"
             )
         
-        if bot_instance.is_active:  # type: ignore
-            return {
-                "success": True,
-                "message": "Bot is already running",
-                "bot_id": bot_id
-            }
-        
         # Start bot process
         await bot_launcher._start_bot_process(bot_instance, db)
         
@@ -404,8 +397,7 @@ async def delete_bot(
             )
         
         # Stop bot first if running
-        if bot_instance.is_active:  # type: ignore
-            await bot_launcher.stop_bot_instance(bot_instance, db)
+        await bot_launcher.stop_bot_instance(bot_instance, db)
         
         # Delete from database
         await db.delete(bot_instance)

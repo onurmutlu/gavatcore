@@ -8,6 +8,7 @@ Individual session management for each bot
 
 import asyncio
 import os
+from pathlib import Path
 from typing import Dict, Any, Optional
 from telethon import TelegramClient
 from telethon.errors import SessionPasswordNeededError, PhoneCodeInvalidError
@@ -26,10 +27,10 @@ class UserbotSession:
         self.is_running = False
         
         # Session file path
-        self.session_path = f"sessions/{bot_name}.session"
+        self.session_path = config.get("session_file", f"sessions/{bot_name}.session")
         
         # Ensure sessions directory exists
-        os.makedirs("sessions", exist_ok=True)
+        Path(self.session_path).parent.mkdir(parents=True, exist_ok=True)
     
     async def initialize(self):
         """Initialize Telegram client"""
@@ -78,6 +79,8 @@ class UserbotSession:
             # Check if already authorized
             if not await self.client.is_user_authorized():
                 logger.info(f"📱 {self.bot_name} requires phone authorization")
+                if self.config.get("non_interactive"):
+                    raise RuntimeError("Session is not authorized; complete Telegram login before starting")
                 await self._handle_authorization()
             
             # Start the client (no await needed for start method)
@@ -87,6 +90,8 @@ class UserbotSession:
             self._setup_handlers()
             
             self.is_running = True
+            if self.config.get("non_interactive"):
+                print("GAVATCORE_SESSION_READY", flush=True)
             logger.info(f"✅ {self.bot_name} session started successfully")
             
             # Keep session alive
@@ -161,6 +166,8 @@ class UserbotSession:
             
         except Exception as e:
             logger.error(f"❌ Admin handler setup error: {e}")
+            if self.config.get("non_interactive"):
+                raise
     
     def _setup_gpt_handlers(self):
         """Setup GPT response handlers"""
@@ -177,6 +184,8 @@ class UserbotSession:
             
         except Exception as e:
             logger.error(f"❌ GPT handler setup error: {e}")
+            if self.config.get("non_interactive"):
+                raise
     
     def _setup_common_handlers(self):
         """Setup common event handlers"""
@@ -193,6 +202,8 @@ class UserbotSession:
             
         except Exception as e:
             logger.error(f"❌ Common handler setup error: {e}")
+            if self.config.get("non_interactive"):
+                raise
     
     def _setup_coin_handlers(self):
         """Setup coin system handlers"""
@@ -233,6 +244,8 @@ class UserbotSession:
             
         except Exception as e:
             logger.error(f"❌ Coin handler setup error: {e}")
+            if self.config.get("non_interactive"):
+                raise
     
     async def _keep_alive(self):
         """Keep the session alive"""
@@ -275,3 +288,38 @@ class UserbotSession:
             'phone': self.config.get('phone'),
             'session_file': self.session_path
         } 
+
+
+async def _run_config(config):
+    """Run one already-authorized session without interactive login prompts."""
+    import signal
+
+    config["non_interactive"] = True
+    session = UserbotSession(config["bot_name"], config, health_monitor=None)
+    loop = asyncio.get_running_loop()
+    task = asyncio.current_task()
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        try:
+            loop.add_signal_handler(sig, task.cancel)
+        except NotImplementedError:
+            pass  # Windows terminate() still kills/reaps the owned child.
+    try:
+        await session.initialize()
+        await session.start()
+    finally:
+        await session.stop()
+
+
+if __name__ == "__main__":
+    import argparse
+    import json
+
+    parser = argparse.ArgumentParser(description="Run one GavatCore userbot session")
+    parser.add_argument("--config", required=True, type=Path)
+    args = parser.parse_args()
+    with args.config.open() as handle:
+        config = json.load(handle)
+    try:
+        asyncio.run(_run_config(config))
+    except (KeyboardInterrupt, asyncio.CancelledError):
+        pass

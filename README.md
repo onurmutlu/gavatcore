@@ -6,28 +6,14 @@
 
 ---
 
-## 🎯 **TEK GİRİŞ NOKTASI - UNIFIED ENTRY POINT**
+## Çalıştırma giriş noktaları
 
-**✨ Yeni Özellik**: Tüm sistem bileşenleri artık tek bir `main.py` dosyası üzerinden yönetiliyor!
+- `main.py`: sabit yapılandırılmış legacy Telegram userbot yöneticisi. `--all`, `--api` ve `--bot` seçenekleri yoktur.
+- `gavatcore-api/app/main.py`: SaaS FastAPI uygulaması; aşağıdaki Uvicorn komutuyla çalıştırılır.
+- `userbot_session.py --config <dosya>`: SaaS başlatıcısının kullandığı, önceden yetkilendirilmiş tek Telegram session'ı.
 
-**✨ New Feature**: All system components are now managed through a single `main.py` file!
-
-```bash
-# 🌟 Tüm sistemi başlat / Start entire system
-python3 start.py --all
-
-# 🔍 Monitoring ile başlat / Start with monitoring
-python3 launch_with_monitor.py --api
-
-# 🤖 Sadece botları başlat / Start bots only
-python3 start.py --bot
-
-# 🔌 Sadece API'leri başlat / Start APIs only
-python3 start.py --api
-
-# 🎮 Özelleştirilmiş başlatma / Custom startup
-python3 start.py --userbot --flask-api --token-api
-```
+`start.py` mevcut değildir. Bot süreç yönetimi **tek API worker / tek replica** gerektirir; `--reload` kullanmayın.
+[Bot yaşam döngüsü ve doğrulama](docs/BOT_LIFECYCLE.md).
 
 ---
 
@@ -35,10 +21,9 @@ python3 start.py --userbot --flask-api --token-api
 
 ```
 gavatcore/
-├── 🚀 start.py                 # 🎯 BAŞLATICI / STARTUP SCRIPT (recommended)
 ├── 🔍 launch_with_monitor.py   # Complete launcher with monitoring
 ├── 📊 monitor.py               # Real-time monitoring system
-├── 🔧 main.py                  # Unified entry point system
+├── 🔧 main.py                  # Legacy userbot manager
 ├── 🔄 legacy_entry_points.py   # Legacy mapping reference
 ├── 🔌 apis/                    # API Servisleri / API Services
 │   ├── production_bot_api.py   # Ana bot API (Port 5050)
@@ -111,12 +96,11 @@ gavatcore/
 
 ## ✨ **ÖZELLİKLER / FEATURES**
 
-### 🎯 **Unified Entry Point System**
-- **Tek Komut**: Tüm sistem bileşenleri tek `main.py` ile yönetiliyor
-- **Modüler Başlatma**: Sadece ihtiyacınız olan bileşenleri başlatın
-- **CLI Kontrolü**: Zengin komut satırı seçenekleri
-- **Sağlık Kontrolü**: Otomatik servis sağlık kontrolü
-- **Graceful Shutdown**: Temiz sistem kapatma
+### Bot süreç yönetimi
+- Hazır sinyalinden sonra aktif durumuna geçiş
+- Süreç kapanışı doğrulandıktan sonra durdurma durumu
+- Başlatma zaman aşımı, kontrollü sonlandırma ve kill fallback
+- Arka plan durum güncellemeleri için bağımsız DB oturumları
 
 ### 🤖 **Gelişmiş Bot Yönetimi / Advanced Bot Management**
 - **3 Ana Bot**: Lara (Flörtöz Yayıncı), BabaGavat (Sokak Zekası), Geisha (Gizemli Moderatör)
@@ -154,7 +138,7 @@ gavatcore/
 ### 1. **Kurulum / Installation**
 ```bash
 # Repository'yi klonlayın / Clone repository
-git clone https://github.com/username/gavatcore.git
+git clone https://github.com/onurmutlu/gavatcore.git
 cd gavatcore
 
 # Bağımlılıkları yükleyin / Install dependencies
@@ -175,94 +159,23 @@ cp infrastructure/config/env.template .env
 # Redis, PostgreSQL, MongoDB ayarlarını yapın
 ```
 
-### 3. **🎯 Yeni Unified System ile Başlatma / New Unified System Startup**
+### 3. SaaS API'yi çalıştırma
 
-#### **Basit Başlatma / Simple Startup**
+Repo kökünden, bağımlılıkları ve ortam değişkenlerini hazırladıktan sonra:
+
 ```bash
-# Varsayılan: Userbot + Flask API
-# Default: Userbot + Flask API
+PYTHONPATH="$PWD:$PWD/gavatcore-api" python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1
+```
+
+Bot başlatmak için Telethon ve kullanılan handler bağımlılıkları da kurulu olmalıdır. Telegram session'ı önceden yetkilendirilmiş olmalıdır; API içinde telefon kodu/2FA girişi yapılmaz. Yeni bot oluşturma henüz Telegram onboarding işleminin yerini almaz.
+
+Legacy userbot yöneticisini ayrı çalıştırmak için:
+
+```bash
 python main.py
-
-# Tüm sistemi başlat / Start entire system
-python main.py --all
-
-# Debug modu / Debug mode
-python main.py --all --debug
 ```
 
-#### **Bileşen Grupları / Component Groups**
-```bash
-# Sadece botları başlat / Start bots only
-python main.py --bot
-
-# Sadece API'leri başlat / Start APIs only
-python main.py --api
-
-# Botlar + API'ler / Bots + APIs
-python main.py --bot --api
-```
-
-#### **Özel Bileşenler / Individual Components**
-```bash
-# Telegram userbot sistemi / Telegram userbot system
-python main.py --userbot
-
-# Bot yönetim sistemi / Bot management system
-python main.py --bot-manager
-
-# Flask API sunucusu / Flask API server
-python main.py --flask-api
-
-# XP Token API / XP Token API
-python main.py --token-api
-
-# FastAPI SaaS platformu / FastAPI SaaS platform
-python main.py --saas-api
-
-# GavatCore Engine
-python main.py --engine
-```
-
-#### **Sistem Seçenekleri / System Options**
-```bash
-# Debug logging aktif / Enable debug logging
-python main.py --userbot --debug
-
-# Başlık banner'ı gizle / Hide startup banner
-python main.py --all --no-banner
-
-# Yardım menüsü / Help menu
-python main.py --help
-```
-
-### 4. **🔄 Legacy System Desteği / Legacy System Support**
-
-Eski entry point'ler hala çalışıyor ancak **deprecated** durumda:
-
-```bash
-# ❌ ESKİ / OLD (Still works but deprecated)
-python run.py
-python gavatcore_ultimate_run.py
-python launchers/gavatcore_ultimate_launcher.py
-
-# ✅ YENİ / NEW (Recommended)
-python main.py --flask-api --token-api --userbot
-python main.py --all
-python main.py --userbot
-```
-
-Migration kılavuzu için:
-```bash
-python legacy_entry_points.py
-```
-
----
-
-## 📚 **DOKÜMANTASYON / DOCUMENTATION**
-
-Daha fazla rehber, mimari doküman ve optimizasyon ipuçları için [docs/README.md](docs/README.md) dosyasına bakın.
-
-**Logging Standardization**: Tüm loglama işlemleri için `infrastructure/config/logger.py` içindeki `get_logger()` fonksiyonunu kullanın.
+Aynı session dosyasını iki başlatıcıda eşzamanlı kullanmayın. Doğrulama ve mevcut sınırlar için [BOT_LIFECYCLE.md](docs/BOT_LIFECYCLE.md).
 
 ---
 
@@ -582,7 +495,7 @@ export LOG_LEVEL=info
 ### **Development Workflow**
 ```bash
 # Geliştirme ortamı kurulumu / Development environment setup
-git clone https://github.com/your-username/gavatcore.git
+git clone https://github.com/onurmutlu/gavatcore.git
 cd gavatcore
 
 # Virtual environment oluştur / Create virtual environment
@@ -600,7 +513,7 @@ pre-commit install
 pytest tests/ -v
 
 # Geliştirme sunucusunu başlat / Start development server
-python main.py --userbot --debug
+python main.py
 ```
 
 ---
@@ -781,3 +694,4 @@ MIT License - See [LICENSE](LICENSE) file for details.
 ---
 
 *Son güncelleme / Last updated: 2025-07-18*
+

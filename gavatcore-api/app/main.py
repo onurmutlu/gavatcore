@@ -55,11 +55,14 @@ async def lifespan(app: FastAPI):
     
     logger.info("✅ GavatCore SaaS API started successfully")
     
-    yield
-    
-    # Shutdown
-    logger.info("🛑 Shutting down GavatCore SaaS API...")
-    await engine.dispose()
+    try:
+        yield
+    finally:
+        logger.info("🛑 Shutting down GavatCore SaaS API...")
+        try:
+            await bots.bot_launcher.shutdown()
+        finally:
+            await engine.dispose()
 
 
 # Create FastAPI app
@@ -157,3 +160,4 @@ if __name__ == "__main__":
         reload=settings.DEBUG,
         log_level="info"
     ) 
+
