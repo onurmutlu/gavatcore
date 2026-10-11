@@ -438,6 +438,23 @@ SESSION_NAME: str = telegram_config.session_name
 BOT_USERNAME: str = telegram_config.bot_username
 BOT_TOKEN: Optional[str] = telegram_config.bot_token
 ADMIN_BOT_TOKEN: Optional[str] = os.getenv("ADMIN_BOT_TOKEN")  # Admin bot token
+
+
+def _parse_admin_id(raw: Optional[str]) -> int:
+    """Parse GAVATCORE_ADMIN_ID; invalid or missing values yield 0.
+
+    0 is never a valid Telegram user id, so an unset value fails closed
+    (no user can match it).
+    """
+    try:
+        value = int(raw or "0")
+    except (ValueError, TypeError):
+        return 0
+    return value if value > 0 else 0
+
+
+# Imported by core.onboarding_flow, core.session_watcher and adminbot.commands.
+GAVATCORE_ADMIN_ID: int = _parse_admin_id(os.getenv("GAVATCORE_ADMIN_ID"))
 TELEGRAM_API_ID: int = telegram_config.api_id
 TELEGRAM_API_HASH: str = telegram_config.api_hash
 
@@ -871,7 +888,7 @@ __all__ = [
     
     # Legacy compatibility
     "API_ID", "API_HASH", "SESSION_NAME", "BOT_USERNAME", "BOT_TOKEN",
-    "ADMIN_BOT_TOKEN", "TELEGRAM_API_ID", "TELEGRAM_API_HASH",
+    "ADMIN_BOT_TOKEN", "GAVATCORE_ADMIN_ID", "TELEGRAM_API_ID", "TELEGRAM_API_HASH",
     "MONGO_URI", "MONGO_DATABASE", "REDIS_URL", "REDIS_TTL", "DATABASE_URL",
     "OPENAI_API_KEY", "OPENAI_MODEL", "OPENAI_TURBO_MODEL", "OPENAI_VISION_MODEL", "OPENAI_MAX_TOKENS",
     "AUTHORIZED_USERS", "ALLOWED_GROUPS", "FEATURES",
