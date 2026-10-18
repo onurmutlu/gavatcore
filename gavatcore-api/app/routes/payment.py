@@ -327,7 +327,7 @@ async def get_subscription_status(
         stmt = select(Subscription).where(
             Subscription.user_id == current_user.id,  # type: ignore
             Subscription.is_active == True  # type: ignore
-        )
+        ).order_by(Subscription.expires_at.desc())
         result = await db.execute(stmt)
         subscription = result.scalars().first()
         
