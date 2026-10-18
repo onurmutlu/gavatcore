@@ -174,6 +174,8 @@ async def create_stripe_checkout(
             "currency": checkout_data.get("currency")
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Failed to create Stripe checkout: {e}")
         raise HTTPException(
@@ -280,7 +282,9 @@ async def handle_payment_success(payment_intent: Dict[str, Any], db: AsyncSessio
             # Don't fail the payment if bot creation fails
         
     except Exception as e:
+        await db.rollback()
         logger.error(f"Failed to handle payment success: {e}")
+        raise
 
 
 async def handle_payment_failure(payment_intent: Dict[str, Any], db: AsyncSession):
@@ -307,7 +311,9 @@ async def handle_payment_failure(payment_intent: Dict[str, Any], db: AsyncSessio
         logger.info(f"Payment failed for user {payment.user_id}: {failure_reason}")
         
     except Exception as e:
+        await db.rollback()
         logger.error(f"Failed to handle payment failure: {e}")
+        raise
 
 
 @router.get("/subscription/status", response_model=SubscriptionStatusResponse)
@@ -323,7 +329,7 @@ async def get_subscription_status(
             Subscription.is_active == True  # type: ignore
         )
         result = await db.execute(stmt)
-        subscription = result.scalar_one_or_none()
+        subscription = result.scalars().first()
         
         if not subscription:
             return SubscriptionStatusResponse(
