@@ -67,7 +67,25 @@ class Store:
                 created REAL NOT NULL
             );
             CREATE INDEX IF NOT EXISTS dm_history_user_id ON dm_history(user,id);
+            CREATE TABLE IF NOT EXISTS payment_issues(
+                charge TEXT PRIMARY KEY, user INTEGER, stars INTEGER, payload TEXT,
+                reason TEXT, created REAL);
+            CREATE TABLE IF NOT EXISTS delivery_state(
+                order_id TEXT PRIMARY KEY, attempts INTEGER DEFAULT 0, last_attempt REAL);
+            CREATE TABLE IF NOT EXISTS refunds(charge TEXT PRIMARY KEY, created REAL);
         """)
+
+    def record_issue(self, payment, user, reason):
+        """Keep a payment the operator must look at (refund or manual delivery)."""
+        with self.db:
+            self.db.execute(
+                "INSERT OR IGNORE INTO payment_issues VALUES(?,?,?,?,?,?)",
+                (payment.get("telegram_payment_charge_id"), user, payment.get("total_amount"),
+                 payment.get("invoice_payload"), reason, time.time()),
+            )
+
+    def is_refunded(self, charge):
+        return bool(charge) and self.db.execute("SELECT 1 FROM refunds WHERE charge=?", (charge,)).fetchone() is not None
 
     def order(self, user, product):
         payload = uuid.uuid4().hex
@@ -226,12 +244,79 @@ class StarsShop:
     def __init__(self, api, config, store):
         self.api, self.config, self.store = api, config, store
 
+    MAX_DELIVERY_ATTEMPTS = 5
+    DELIVERY_RETRY_SECONDS = 300
+
     async def deliver(self, row):
-        if row["delivered"]:
+        if row["delivered"] or self.store.is_refunded(row["charge"]):
             return
         await self.api("sendMessage", chat_id=row["user"], text=row["content"], protect_content=True)
         with self.store.db:
             self.store.db.execute("UPDATE orders SET delivered=1 WHERE id=?", (row["id"],))
+
+    async def try_deliver(self, row):
+        """Deliver without letting one unreachable buyer block the whole update queue.
+
+        The paid charge is already stored, so a failure here is retried later by
+        redeliver() or by the buyer's /orders command instead of raising."""
+        try:
+            await self.deliver(row)
+        except Exception as exc:
+            with self.store.db:
+                self.store.db.execute(
+                    "INSERT INTO delivery_state(order_id,attempts,last_attempt) VALUES(?,1,?) "
+                    "ON CONFLICT(order_id) DO UPDATE SET attempts=attempts+1, last_attempt=excluded.last_attempt",
+                    (row["id"], time.time()),
+                )
+            log.warning("Stars teslimatı başarısız: order=%s error=%s", row["id"], type(exc).__name__)
+
+    async def redeliver(self, now=None):
+        """Retry paid-but-undelivered orders; after too many failures hand them to the operator."""
+        now = time.time() if now is None else now
+        rows = self.store.db.execute(
+            "SELECT o.* FROM orders o LEFT JOIN delivery_state d ON d.order_id=o.id "
+            "WHERE o.charge IS NOT NULL AND o.delivered=0 "
+            "AND NOT EXISTS (SELECT 1 FROM refunds r WHERE r.charge=o.charge) "
+            "AND COALESCE(d.attempts,0)<? AND COALESCE(d.last_attempt,0)<=?",
+            (self.MAX_DELIVERY_ATTEMPTS, now - self.DELIVERY_RETRY_SECONDS),
+        ).fetchall()
+        for row in rows:
+            await self.try_deliver(row)
+            state = self.store.db.execute(
+                "SELECT attempts FROM delivery_state WHERE order_id=?", (row["id"],)
+            ).fetchone()
+            if state and state["attempts"] >= self.MAX_DELIVERY_ATTEMPTS:
+                self.store.record_issue(
+                    {"telegram_payment_charge_id": row["charge"], "total_amount": row["stars"],
+                     "invoice_payload": row["id"]},
+                    row["user"], "delivery_failed")
+                log.error("Stars teslimatı %s denemede başarısız, operatör gerekli: order=%s",
+                          self.MAX_DELIVERY_ATTEMPTS, row["id"])
+
+    async def refund(self, charge):
+        """Refund a Stars payment by charge id. Returns False if it was already refunded."""
+        order = self.store.db.execute("SELECT user FROM orders WHERE charge=?", (charge,)).fetchone()
+        issue = None if order else self.store.db.execute(
+            "SELECT user FROM payment_issues WHERE charge=?", (charge,)).fetchone()
+        owner = order or issue
+        if not owner:
+            raise ValueError("Bu ödeme kimliği için sipariş veya kayıtlı sorun yok")
+        if self.store.is_refunded(charge):
+            return False
+        await self.api("refundStarPayment", user_id=owner["user"], telegram_payment_charge_id=charge)
+        with self.store.db:
+            self.store.db.execute("INSERT OR IGNORE INTO refunds VALUES(?,?)", (charge, time.time()))
+        return True
+
+    def record_failed_update(self, update, exc):
+        """Last resort for an update that kept failing: never lose a paid charge."""
+        message = update.get("message", {})
+        payment = message.get("successful_payment")
+        if payment:
+            self.store.record_issue(payment, message.get("from", {}).get("id"),
+                                    f"update_failed:{type(exc).__name__}")
+        log.error("Güncelleme %s atlandı (%s)%s", update.get("update_id"), type(exc).__name__,
+                  "; ödeme kaydı payment_issues tablosuna alındı" if payment else "")
 
     async def update(self, update):
         query = update.get("pre_checkout_query")
@@ -246,15 +331,26 @@ class StarsShop:
         user = message["from"]["id"]
         payment = message.get("successful_payment")
         if payment:
+            # A payment that cannot be matched is recorded for the operator instead of
+            # raising: raising would keep this update at the head of the queue forever.
+            charge = payment["telegram_payment_charge_id"]
             row = self.store.validate(payment, user)
             if not row:
-                raise ValueError("Ödeme sipariş ile eşleşmiyor; operatör incelemesi gerekli")
-            charge = payment["telegram_payment_charge_id"]
+                self.store.record_issue(payment, user, "no_matching_order")
+                log.error("Ödeme sipariş ile eşleşmiyor; operatör incelemesi gerekli: charge=%s", charge)
+                return
             if row["charge"] and row["charge"] != charge:
-                raise ValueError("Siparişin farklı bir ödeme kaydı var")
+                self.store.record_issue(payment, user, "order_has_other_charge")
+                log.error("Siparişin farklı bir ödeme kaydı var: order=%s charge=%s", row["id"], charge)
+                return
+            taken = self.store.db.execute("SELECT id FROM orders WHERE charge=?", (charge,)).fetchone()
+            if taken and taken["id"] != row["id"]:
+                self.store.record_issue(payment, user, "charge_used_by_other_order")
+                log.error("Ödeme kimliği başka siparişte kayıtlı: charge=%s", charge)
+                return
             with self.store.db:
                 self.store.db.execute("UPDATE orders SET charge=? WHERE id=?", (charge, row["id"]))
-            await self.deliver(row)
+            await self.try_deliver(row)
             return
         text = message.get("text", "")
         command, _, argument = text.partition(" ")
@@ -264,7 +360,7 @@ class StarsShop:
         elif command == "/orders":
             rows = self.store.db.execute("SELECT * FROM orders WHERE user=? AND charge IS NOT NULL", (user,)).fetchall()
             for row in rows:
-                await self.deliver(row)
+                await self.try_deliver(row)
             reply = "Ödenmiş siparişlerin kontrol edildi." if rows else "Ödenmiş siparişin bulunmuyor."
         elif command == "/buy" and self.config["sales_enabled"]:
             product = self.config["products"].get(argument.strip())
@@ -280,3 +376,25 @@ class StarsShop:
             reply = "Baron içerik mağazası. Destek: /paysupport · Siparişler: /orders\n"
             reply += "\n".join(f"{p['title']} — {p['stars']} ⭐ · /buy {key}" for key, p in self.config["products"].items()) if self.config["sales_enabled"] else "Satış henüz açık değil."
         await self.api("sendMessage", chat_id=user, text=reply)
+
+
+MAX_UPDATE_FAILURES = 3
+
+
+async def process_update(shop, update, failures):
+    """Run one Telegram update so a single bad update can never stall the queue.
+
+    Returns when the polling offset may advance. While retries remain the original
+    exception is re-raised (the caller sleeps and fetches the same update again);
+    after MAX_UPDATE_FAILURES the update is recorded for the operator and skipped."""
+    update_id = update["update_id"]
+    try:
+        await shop.update(update)
+    except Exception as exc:
+        failures[update_id] = failures.get(update_id, 0) + 1
+        if failures[update_id] < MAX_UPDATE_FAILURES:
+            raise
+        failures.pop(update_id)
+        shop.record_failed_update(update, exc)
+    else:
+        failures.pop(update_id, None)

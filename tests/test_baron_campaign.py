@@ -4,6 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
 
@@ -45,16 +46,98 @@ class ShopTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(len(self.calls), 1)
         self.assertEqual(self.calls[0][1]["text"], self.product["content"])
 
-    async def test_failed_delivery_can_retry(self):
+    async def fail_api(self, *args, **kwargs):
+        raise RuntimeError("offline")
+
+    async def test_failed_delivery_does_not_raise_and_retries_later(self):
         original = self.shop.api
-        async def fail(*args, **kwargs):
-            raise RuntimeError("offline")
-        self.shop.api = fail
-        with self.assertRaises(RuntimeError):
-            await self.shop.update(self.paid_update())
+        self.shop.api = self.fail_api
+        await self.shop.update(self.paid_update())  # must not raise: the charge is stored
+        row = self.store.db.execute("SELECT charge, delivered FROM orders").fetchone()
+        self.assertEqual((row["charge"], row["delivered"]), ("charge1", 0))
         self.shop.api = original
-        await self.shop.update(self.paid_update())
+        await self.shop.redeliver()  # too soon: retry delay has not passed
+        self.assertEqual(self.calls, [])
+        await self.shop.redeliver(now=time.time() + self.shop.DELIVERY_RETRY_SECONDS + 1)
         self.assertEqual(len(self.calls), 1)
+        self.assertEqual(self.store.db.execute("SELECT delivered FROM orders").fetchone()[0], 1)
+
+    async def test_buyer_command_retries_failed_delivery(self):
+        original = self.shop.api
+        self.shop.api = self.fail_api
+        await self.shop.update(self.paid_update())
+        self.shop.api = original
+        await self.shop.update({"message": {"chat": {"type": "private"}, "from": {"id": 123}, "text": "/orders"}})
+        self.assertEqual([call[0] for call in self.calls], ["sendMessage", "sendMessage"])
+        self.assertEqual(self.calls[0][1]["text"], self.product["content"])
+
+    async def test_redelivery_gives_up_and_hands_over_to_operator(self):
+        self.shop.api = self.fail_api
+        await self.shop.update(self.paid_update())
+        later = time.time()
+        for _ in range(self.shop.MAX_DELIVERY_ATTEMPTS + 2):
+            later += self.shop.DELIVERY_RETRY_SECONDS + 1
+            await self.shop.redeliver(now=later)
+        attempts = self.store.db.execute("SELECT attempts FROM delivery_state").fetchone()[0]
+        self.assertEqual(attempts, self.shop.MAX_DELIVERY_ATTEMPTS)
+        issue = self.store.db.execute("SELECT charge, reason FROM payment_issues").fetchone()
+        self.assertEqual((issue["charge"], issue["reason"]), ("charge1", "delivery_failed"))
+
+    async def test_unmatched_payment_is_recorded_not_raised(self):
+        unknown = {**self.payment, "invoice_payload": "unknown", "telegram_payment_charge_id": "orphan"}
+        await self.shop.update({"message": {"chat": {"type": "private"}, "from": {"id": 123}, "successful_payment": unknown}})
+        issue = self.store.db.execute("SELECT charge, user, reason FROM payment_issues").fetchone()
+        self.assertEqual((issue["charge"], issue["user"], issue["reason"]), ("orphan", 123, "no_matching_order"))
+        self.assertEqual(self.calls, [])
+
+    async def test_charge_used_by_another_order_is_recorded_not_raised(self):
+        await self.shop.update(self.paid_update())
+        second = self.store.order(123, self.product)
+        replay = {**self.payment, "invoice_payload": second}
+        await self.shop.update({"message": {"chat": {"type": "private"}, "from": {"id": 123}, "successful_payment": replay}})
+        issue = self.store.db.execute("SELECT reason FROM payment_issues").fetchone()
+        self.assertEqual(issue["reason"], "charge_used_by_other_order")
+
+    async def test_bad_update_cannot_block_the_queue(self):
+        poison = {"update_id": 1, "message": {"chat": {"type": "private"}, "from": {"id": 123},
+                                              "successful_payment": {**self.payment, "currency": None}}}
+        good = {"update_id": 2, **self.paid_update()}
+        original = self.shop.update
+
+        async def update(update):
+            if update["update_id"] == 1:
+                raise KeyError("broken update")
+            await original(update)
+
+        self.shop.update = update
+        failures = {}
+        for _ in range(campaign.MAX_UPDATE_FAILURES - 1):
+            with self.assertRaises(KeyError):
+                await campaign.process_update(self.shop, poison, failures)
+        await campaign.process_update(self.shop, poison, failures)  # last failure: skipped, offset may advance
+        self.assertEqual(failures, {})
+        issue = self.store.db.execute("SELECT charge, reason FROM payment_issues").fetchone()
+        self.assertEqual((issue["charge"], issue["reason"]), ("charge1", "update_failed:KeyError"))
+        await campaign.process_update(self.shop, good, failures)  # the buyer behind it is served
+        self.assertEqual(len(self.calls), 1)
+
+    async def test_refund_calls_bot_api_once_and_stops_delivery(self):
+        await self.shop.update(self.paid_update())
+        self.calls.clear()
+        self.assertTrue(await self.shop.refund("charge1"))
+        self.assertFalse(await self.shop.refund("charge1"))
+        self.assertEqual(self.calls, [("refundStarPayment", {"user_id": 123, "telegram_payment_charge_id": "charge1"})])
+        self.store.db.execute("UPDATE orders SET delivered=0")
+        await self.shop.redeliver(now=time.time() + self.shop.DELIVERY_RETRY_SECONDS + 1)
+        self.assertEqual(len(self.calls), 1)  # nothing is delivered for a refunded charge
+
+    async def test_refund_unmatched_payment_and_unknown_charge(self):
+        unknown = {**self.payment, "invoice_payload": "unknown", "telegram_payment_charge_id": "orphan"}
+        await self.shop.update({"message": {"chat": {"type": "private"}, "from": {"id": 123}, "successful_payment": unknown}})
+        self.assertTrue(await self.shop.refund("orphan"))
+        self.assertEqual(self.calls[-1], ("refundStarPayment", {"user_id": 123, "telegram_payment_charge_id": "orphan"}))
+        with self.assertRaises(ValueError):
+            await self.shop.refund("never-seen")
 
     def test_wrong_user_amount_currency_and_expired_order(self):
         self.assertIsNone(self.store.validate(self.payment, 456))
