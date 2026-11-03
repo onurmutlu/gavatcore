@@ -14,6 +14,14 @@ sys.path.insert(0, str(ROOT))
 from services.telegram.baron_campaign import StarsShop, Store, load_config, process_update
 
 
+def make_licenses(config):
+    """LicenseChecker only when a product sells a license; keeps plain shops free of its imports."""
+    if not any("license_days" in product for product in config["products"].values()):
+        return None
+    from core.license_checker import LicenseChecker
+    return LicenseChecker()
+
+
 def make_api(session, token):
     """Bot API caller shared with launchers/baron_stars_refund.py."""
     async def api(method, **payload):
@@ -46,7 +54,7 @@ async def main():
         webhook = await api("getWebhookInfo")
         if webhook.get("url"):
             raise SystemExit("Botta webhook etkin; mevcut entegrasyonu kaldırmadan polling başlatılamaz")
-        shop = StarsShop(api, config, store)
+        shop = StarsShop(api, config, store, make_licenses(config))
         offset_row = store.db.execute("SELECT value FROM state WHERE key='offset'").fetchone()
         offset = offset_row[0] if offset_row else 0
         failures = {}

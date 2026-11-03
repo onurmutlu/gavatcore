@@ -44,6 +44,11 @@ def load_config(path=CONFIG):
             raise ValueError("Ürün başlığı veya açıklaması geçersiz")
         if not 1 <= len(product["content"]) <= 4096:
             raise ValueError("Teslim edilecek metin veya bağlantı gerekli (1–4096 karakter)")
+        days = product.get("license_days")
+        if "license_days" in product and (
+            not isinstance(days, int) or isinstance(days, bool) or not 1 <= days <= 3650
+        ):
+            raise ValueError("license_days 1–3650 arasında tam sayı olmalı")
     if config["sales_enabled"] and (not config["products"] or not config["support"]):
         raise ValueError("Satış için ürün ve destek iletişimi gerekli")
     return config
@@ -73,7 +78,13 @@ class Store:
             CREATE TABLE IF NOT EXISTS delivery_state(
                 order_id TEXT PRIMARY KEY, attempts INTEGER DEFAULT 0, last_attempt REAL);
             CREATE TABLE IF NOT EXISTS refunds(charge TEXT PRIMARY KEY, created REAL);
+            CREATE TABLE IF NOT EXISTS license_grants(
+                charge TEXT PRIMARY KEY, user INTEGER, days INTEGER, created REAL);
         """)
+        # Older databases predate paid licenses; add the column in place, keeping their orders.
+        if "license_days" not in {row[1] for row in self.db.execute("PRAGMA table_info(orders)")}:
+            with self.db:
+                self.db.execute("ALTER TABLE orders ADD COLUMN license_days INTEGER")
 
     def record_issue(self, payment, user, reason):
         """Keep a payment the operator must look at (refund or manual delivery)."""
@@ -90,8 +101,9 @@ class Store:
     def order(self, user, product):
         payload = uuid.uuid4().hex
         with self.db:
-            self.db.execute("INSERT INTO orders(id,user,stars,content,created) VALUES(?,?,?,?,?)",
-                            (payload, user, product["stars"], product["content"], time.time()))
+            self.db.execute("INSERT INTO orders(id,user,stars,content,created,license_days) VALUES(?,?,?,?,?,?)",
+                            (payload, user, product["stars"], product["content"], time.time(),
+                             product.get("license_days")))
         return payload
 
     def validate(self, payment, user, checkout=False):
@@ -241,14 +253,38 @@ def campaign_report(config, store):
 
 
 class StarsShop:
-    def __init__(self, api, config, store):
-        self.api, self.config, self.store = api, config, store
+    def __init__(self, api, config, store, licenses=None):
+        """licenses: object with extend_license(user_id, days) / deactivate_license(user_id),
+        normally core.license_checker.LicenseChecker. Required for products with license_days."""
+        self.api, self.config, self.store, self.licenses = api, config, store, licenses
+        if licenses is None and any("license_days" in p for p in config["products"].values()):
+            raise ValueError("license_days olan ürünler için lisans yöneticisi gerekli")
 
     MAX_DELIVERY_ATTEMPTS = 5
     DELIVERY_RETRY_SECONDS = 300
 
+    def grant_license(self, row):
+        """Activate or extend the buyer's license once per paid charge (idempotent).
+
+        Extends first and records the grant after: a crash in between can at worst give one
+        extra period on replay, never a paid buyer without a license. Raises on failure so
+        the caller counts it as a failed attempt and retries later."""
+        days = row["license_days"]
+        if not days or self.store.is_refunded(row["charge"]):
+            return
+        if self.store.db.execute("SELECT 1 FROM license_grants WHERE charge=?", (row["charge"],)).fetchone():
+            return
+        self.licenses.extend_license(row["user"], days)
+        with self.store.db:
+            self.store.db.execute("INSERT OR IGNORE INTO license_grants VALUES(?,?,?,?)",
+                                  (row["charge"], row["user"], days, time.time()))
+        log.info("Lisans etkinleştirildi: user=%s days=%s order=%s", row["user"], days, row["id"])
+
     async def deliver(self, row):
-        if row["delivered"] or self.store.is_refunded(row["charge"]):
+        if self.store.is_refunded(row["charge"]):
+            return
+        self.grant_license(row)
+        if row["delivered"]:
             return
         await self.api("sendMessage", chat_id=row["user"], text=row["content"], protect_content=True)
         with self.store.db:
@@ -275,7 +311,9 @@ class StarsShop:
         now = time.time() if now is None else now
         rows = self.store.db.execute(
             "SELECT o.* FROM orders o LEFT JOIN delivery_state d ON d.order_id=o.id "
-            "WHERE o.charge IS NOT NULL AND o.delivered=0 "
+            "WHERE o.charge IS NOT NULL "
+            "AND (o.delivered=0 OR (o.license_days IS NOT NULL "
+            "AND NOT EXISTS (SELECT 1 FROM license_grants g WHERE g.charge=o.charge))) "
             "AND NOT EXISTS (SELECT 1 FROM refunds r WHERE r.charge=o.charge) "
             "AND COALESCE(d.attempts,0)<? AND COALESCE(d.last_attempt,0)<=?",
             (self.MAX_DELIVERY_ATTEMPTS, now - self.DELIVERY_RETRY_SECONDS),
@@ -295,7 +333,7 @@ class StarsShop:
 
     async def refund(self, charge):
         """Refund a Stars payment by charge id. Returns False if it was already refunded."""
-        order = self.store.db.execute("SELECT user FROM orders WHERE charge=?", (charge,)).fetchone()
+        order = self.store.db.execute("SELECT user, license_days FROM orders WHERE charge=?", (charge,)).fetchone()
         issue = None if order else self.store.db.execute(
             "SELECT user FROM payment_issues WHERE charge=?", (charge,)).fetchone()
         owner = order or issue
@@ -306,6 +344,14 @@ class StarsShop:
         await self.api("refundStarPayment", user_id=owner["user"], telegram_payment_charge_id=charge)
         with self.store.db:
             self.store.db.execute("INSERT OR IGNORE INTO refunds VALUES(?,?)", (charge, time.time()))
+        granted = order and order["license_days"] and self.licenses is not None and self.store.db.execute(
+            "SELECT 1 FROM license_grants WHERE charge=?", (charge,)).fetchone()
+        if granted:
+            # The money is already back, so a failure here must not hide the refund; log it loudly.
+            try:
+                self.licenses.deactivate_license(order["user"])
+            except Exception as exc:
+                log.error("İade edildi ama lisans kapatılamadı: user=%s error=%s", order["user"], type(exc).__name__)
         return True
 
     def record_failed_update(self, update, exc):
@@ -350,6 +396,7 @@ class StarsShop:
                 return
             with self.store.db:
                 self.store.db.execute("UPDATE orders SET charge=? WHERE id=?", (charge, row["id"]))
+            row = self.store.db.execute("SELECT * FROM orders WHERE id=?", (row["id"],)).fetchone()
             await self.try_deliver(row)
             return
         text = message.get("text", "")

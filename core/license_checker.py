@@ -59,6 +59,15 @@ class LicenseChecker:
         license_data = data.get(user_id_str)
         if license_data:
             if license_data.get("is_active"):
+                # A paid license must end on expires_at. Entries without that field
+                # (older manual activations) keep their previous open-ended behaviour.
+                expires_at = license_data.get("expires_at")
+                if expires_at:
+                    try:
+                        if datetime.datetime.fromisoformat(expires_at) <= datetime.datetime.now():
+                            return "inactive"
+                    except (TypeError, ValueError):
+                        pass
                 return "active"
             return "inactive"
         return "demo"
@@ -237,6 +246,34 @@ class LicenseChecker:
         log_event(uid, f"✅ Lisans AKTİF edildi ({days} gün)")
         
         # Bot hizmetlerini yeniden aktif et
+        self.reactivate_bot_services(user_id)
+
+    def extend_license(self, user_id: int, days: int):
+        """Add days to a license: an unexpired one is extended, otherwise a new period starts now.
+
+        Used for paid purchases so renewing early never throws away remaining days."""
+        data = self.load_licenses()
+        uid = str(user_id)
+        now = datetime.datetime.now()
+        current = data.get(uid) or {}
+        start, total_days, activated_at = now, days, now.isoformat()
+        if current.get("is_active") and current.get("expires_at"):
+            try:
+                existing = datetime.datetime.fromisoformat(current["expires_at"])
+            except (TypeError, ValueError):
+                existing = None
+            if existing and existing > now:
+                start = existing
+                total_days = int(current.get("license_days") or 0) + days
+                activated_at = current.get("activated_at", activated_at)
+        data[uid] = {
+            "is_active": True,
+            "activated_at": activated_at,
+            "expires_at": (start + datetime.timedelta(days=days)).isoformat(),
+            "license_days": total_days,
+        }
+        self.save_licenses(data)
+        log_event(uid, f"✅ Lisans uzatıldı (+{days} gün)")
         self.reactivate_bot_services(user_id)
 
     def deactivate_license(self, user_id: int):

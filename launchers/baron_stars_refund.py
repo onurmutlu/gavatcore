@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from launchers.baron_stars_shop import make_api
+from launchers.baron_stars_shop import make_api, make_licenses
 from services.telegram.baron_campaign import StarsShop, Store, load_config
 
 
@@ -53,7 +53,8 @@ async def main():
         if not args.yes and input(f"{args.charge} ödemesi iade edilsin mi? [e/H] ").strip().lower() != "e":
             raise SystemExit("İptal edildi")
         async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=40)) as session:
-            shop = StarsShop(make_api(session, token), load_config(), store)
+            config = load_config()
+            shop = StarsShop(make_api(session, token), config, store, make_licenses(config))
             try:
                 refunded = await shop.refund(args.charge)
             except (ValueError, RuntimeError) as exc:
