@@ -15,6 +15,10 @@ from telethon import TelegramClient, events
 from telethon.errors import FloodWaitError, UserBannedInChannelError, ChatWriteForbiddenError
 from ai_conversation_optimizer import AIConversationOptimizer
 import sqlite3
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class AIConversationLauncher:
     def __init__(self):
@@ -308,7 +312,7 @@ class AIConversationLauncher:
         
         try:
             # Telegram client oluştur
-            client = TelegramClient(session_file, api_id=29943673, api_hash="c5d8076c4d6d9d6e8b8b8b8b8b8b8b8b")
+            client = TelegramClient(session_file, api_id=int(os.environ["ARAYISVIPS_API_ID"]), api_hash=os.environ["ARAYISVIPS_API_HASH"])
             await client.start()
             
             # Bot bilgilerini al
