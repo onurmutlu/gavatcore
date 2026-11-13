@@ -11,7 +11,22 @@ from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from services.telegram.baron_campaign import StarsShop, Store, load_config
+from services.telegram.baron_campaign import StarsShop, Store, load_config, process_update
+
+
+def make_api(session, token):
+    """Bot API caller shared with launchers/baron_stars_refund.py."""
+    async def api(method, **payload):
+        async with session.post(f"https://api.telegram.org/bot{token}/{method}", json=payload) as response:
+            result = await response.json()
+        if not result.get("ok"):
+            delay = result.get("parameters", {}).get("retry_after", 0)
+            if delay:
+                await asyncio.sleep(delay)
+            raise RuntimeError(f"Telegram {method} başarısız ({result.get('error_code')})")
+        return result["result"]
+
+    return api
 
 
 async def main():
@@ -24,16 +39,7 @@ async def main():
         raise SystemExit("config/baron_campaign.json içinde shop_username gerekli")
     store = Store()
     async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=40)) as session:
-        async def api(method, **payload):
-            async with session.post(f"https://api.telegram.org/bot{token}/{method}", json=payload) as response:
-                result = await response.json()
-            if not result.get("ok"):
-                delay = result.get("parameters", {}).get("retry_after", 0)
-                if delay:
-                    await asyncio.sleep(delay)
-                raise RuntimeError(f"Telegram {method} başarısız ({result.get('error_code')})")
-            return result["result"]
-
+        api = make_api(session, token)
         me = await api("getMe")
         if me["username"].lower() != config["shop_username"].lstrip("@").lower():
             raise SystemExit("Token, yapılandırılan mağaza botuna ait değil")
@@ -43,6 +49,7 @@ async def main():
         shop = StarsShop(api, config, store)
         offset_row = store.db.execute("SELECT value FROM state WHERE key='offset'").fetchone()
         offset = offset_row[0] if offset_row else 0
+        failures = {}
         logging.info("Stars mağazası hazır: @%s (satış=%s)", me["username"], config["sales_enabled"])
         try:
             while True:
@@ -50,10 +57,14 @@ async def main():
                     updates = await api("getUpdates", offset=offset, timeout=25,
                                         allowed_updates=["message", "pre_checkout_query"])
                     for update in updates:
-                        await shop.update(update)
+                        # Raises only while retries remain; after that the update is recorded
+                        # and skipped so one bad update cannot block every later payment.
+                        await process_update(shop, update, failures)
                         offset = update["update_id"] + 1
                         with store.db:
                             store.db.execute("INSERT OR REPLACE INTO state VALUES('offset',?)", (offset,))
+                    # Paid orders whose delivery failed earlier (buyer offline, network error).
+                    await shop.redeliver()
                 except Exception as exc:
                     # Never log request URLs: they contain the bot token.
                     logging.error("Stars işlemi tamamlanamadı: %s; kayıt yeniden denenecek", type(exc).__name__)

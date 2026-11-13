@@ -45,6 +45,20 @@ teslimat durumu ve polling konumu `data/baron_campaign.sqlite3` içinde saklanı
 Bu dosyayı koruyun ve yedekleyin. Başarısız teslimat yeniden denenir; `/orders`
 yalnızca ödenmiş, teslim edilmemiş içerikleri yeniden dener. Telegram gönderimi ile
 yerel kayıt arasındaki çökmede aynı içerik iki kez teslim edilebilir; ek ücret alınmaz.
+
+Tek bir bozuk güncelleme kuyruğu bloke etmez. Sipariş ile eşleşmeyen ödemeler,
+başka siparişe ait charge ID'ler ve 3 denemede işlenemeyen güncellemeler `payment_issues`
+tablosuna alınır. Teslimat başarısız olursa her 5 dakikada bir, en fazla 5 kez yeniden
+denenir; sonra yine `payment_issues` içine düşer. Operatör araçları:
+
+```sh
+.venv/bin/python launchers/baron_stars_refund.py --issues
+.venv/bin/python launchers/baron_stars_refund.py <telegram_payment_charge_id>
+```
+
+İade, Bot API `refundStarPayment` ile yapılır ve `refunds` tablosuna işlenir; iade edilen
+ödeme için içerik bir daha teslim edilmez. Yeni tablolar mevcut veritabanına ilk
+açılışta otomatik eklenir, mevcut siparişler etkilenmez.
 Beklenmeyen ödeme/veri hatası polling'i o kayıtta tutar ve operatör incelemesi gerektirir.
 İadeler operatör tarafından kayıtlı charge ID ile `refundStarPayment` üzerinden yapılır;
 otomatik iade arayüzü bu sürüme dahil değildir.

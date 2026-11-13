@@ -11,13 +11,16 @@ import logging
 from telethon import TelegramClient, events, Button
 from telethon.errors import SessionPasswordNeededError
 import os
+from dotenv import load_dotenv
 from datetime import datetime
 import json
 
 # Configuration
-API_ID = 21724912
-API_HASH = "1c5c96c5ced4ddc84b63ea97a20bc283"
-BOT_TOKEN = "7719767896:AAGjQGn7dNKvSAVQUUVnzjqEjZhkRyPXCjw"  # GavatCore Panel Bot
+# Credentials live in .env (never in source); see .env.example.
+load_dotenv()
+API_ID = int(os.getenv("PANEL_BOT_API_ID") or 0)
+API_HASH = os.getenv("PANEL_BOT_API_HASH", "")
+BOT_TOKEN = os.getenv("PANEL_BOT_TOKEN", "")
 PANEL_URL = "https://gavatcore-panel.vercel.app/"
 
 # Setup logging
@@ -29,6 +32,8 @@ logger = logging.getLogger(__name__)
 
 class GavatCorePanelBot:
     def __init__(self):
+        if not (API_ID and API_HASH and BOT_TOKEN):
+            raise SystemExit(".env içinde PANEL_BOT_API_ID, PANEL_BOT_API_HASH ve PANEL_BOT_TOKEN gerekli")
         self.client = TelegramClient('gavatcore_panel_bot', API_ID, API_HASH)
         self.admins = [1328613028]  # Admin user IDs
         self.stats = {

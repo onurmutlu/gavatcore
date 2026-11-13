@@ -14,8 +14,8 @@ from telethon import TelegramClient
 from utilities.scheduler_utils import spam_loop
 
 # API bilgileri
-API_ID = 29830823
-API_HASH = "0016dc6411c9e6f11e5cf0be3dd0b4f3"
+API_ID = int(os.environ["TELEGRAM_API_ID"])
+API_HASH = os.environ["TELEGRAM_API_HASH"]
 
 async def test_spam_loop():
     print("🧪 Spam loop await testi başlıyor...")

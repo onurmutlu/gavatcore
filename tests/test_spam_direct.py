@@ -15,8 +15,8 @@ from pathlib import Path
 import json
 
 # API bilgileri (config.py'den alınmalı ama test için sabit)
-API_ID = 29830823
-API_HASH = "0016dc6411c9e6f11e5cf0be3dd0b4f3"
+API_ID = int(os.environ["TELEGRAM_API_ID"])
+API_HASH = os.environ["TELEGRAM_API_HASH"]
 
 async def test_spam():
     print("🧪 Spam test başlıyor...")
